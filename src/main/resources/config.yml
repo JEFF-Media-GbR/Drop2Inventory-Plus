@@ -1,0 +1,192 @@
+##########################
+##### Drop2Inventory #####
+##########################
+
+#
+# Please note that players will need the permission drop2inventory.use to use this plugin
+#
+
+# When set to true, Drop2Inventory is always enabled and cannot be disabled by players
+# I suggest you set it to true if you use Drop2Inventory to reduce server lag
+always-enabled: false
+
+# Whether automatic drop collection is enabled by default for new players
+# If set to false, players will have to enter /drop2inv once to enable automatic drop collection
+enabled-by-default: false
+
+# when set to true, block drops will be automatically collected if the plugin is enabled
+collect-block-drops: true
+
+# when set to true, block experience orbs will be automatically collected if the plugin is enabled
+collect-block-exp: true
+
+# when set to true, mob/entity drops will be automatically collected if the plugin is enabled
+collect-mob-drops: true
+
+# when set to true, mob/entity experience orbs will be automatically collected if the plugin is enabled
+collect-mob-exp: true
+
+# when set to true, items will automaticall converted to blocks when mining them,
+# e.g. 9 diamonds -> 1 diamond_block etc
+auto-condense: false
+
+# when set to true, players with automatic drop collection DISABLED will be
+# shown a message on how to enable Drop2Inventory
+# when they break a block for the first time.
+# consider setting this to true when you set enabled-by-default to false.
+# see also -> message-when-breaking-block
+show-message-when-breaking-block: true
+
+# when set to true, players with automatic drop collection ENABLED will be
+# shown a message on how to disable Drop2Inventory
+# when they break a block for the first time.
+# consider setting this to true when you set enabled-by-default to true.
+# see also -> message-when-breaking-block2
+show-message-when-breaking-block-and-collection-is-enabled: false
+
+# when set to true, the messages are shown again when a player
+# logs out and back in and then breaks a block again.
+show-message-again-after-logout: true
+
+# when enabled, players need the permissions "drop2inventory.tool.pickaxe"
+# to auto pickup blocks farmed with a pickaxe, "drop2inventory.tool.hoe" for
+# blocks farmed with a hoe, etc.
+# tip: you probably do NOT want this enabled^^
+permissions-per-tool: false
+
+# when enabled, Drop2Inventory tries to detect items that other plugins drop
+# using the World#dropItem methods.
+# This allows Drop2Inventory to detect block drops that other plugins create
+# in ominous ways.
+detect-legacy-drops: true
+
+# when enabled, Drop2Inventory will only put stuff into the hotbar when
+# the regular inventory is full.
+# when disabled, Items will be put into the hotbar if possible (default
+# and vanilla behaviour)
+# Consider enabling this when your players want to level their mcMMO
+# "unarmed" skill
+avoid-hotbar: false
+
+# Should we check for updates?
+# When enabled, a message is printed in the console if a new version has
+# been found, and OPs will be notified when they join the server.
+# When set to true, we will check for updates on startup and every 24 hours
+# When set to on-startup, we will only check on startup
+# When set to false, don't check for updates
+check-for-updates: true
+
+#########################
+#### disabled worlds ####
+#########################
+
+# You can disable automatic drop collection for certain worlds.
+# Each worlds's name has to be on a separate line, starting
+# with a hyphen and followed by a space
+
+# Example:
+#
+# disabled-worlds:
+# - world
+# - world_nether
+
+disabled-worlds:
+
+#################################
+#### disabled/enabled blocks ####
+#################################
+
+# You can disable automatic drop collection for certain blocks.
+# This can be helpful if you use plugins that change certain block drops
+# because Drop2Inventory only detects "vanilla" drops.
+# Each block's material name has to be on a separate line, starting
+# with a hyphen and followed by a space
+
+# Example:
+#
+# disabled-blocks:
+# - spawner
+# - grass_block
+
+# If you wish to use a whitelist instead of a blacklist,
+# change the "disabled-blocks:" to "enabled-blocks:"
+
+disabled-blocks:
+
+#################################
+#### disabled/enabled mobs  ####
+#################################
+
+# You can disable automatic drop collection for certain mob types.
+# This can be helpful if you use plugins that change certain mob drops
+# because Drop2Inventory only detects "vanilla" drops.
+# Each mob's name has to be on a separate line, starting
+# with a hyphen and followed by a space
+
+# Example:
+#
+# disabled-mobs:
+# - bat
+# - cave_spider
+
+# If you wish to use a whitelist instead of a blacklist,
+# change the "disabled-mobs:" to "enabled-mobs:"
+
+disabled-mobs:
+
+#########################
+##### localization ######
+#########################
+
+# Available color codes:
+# &0 Black        &6 Gold       &c Red
+# &1 Dark Blue    &7 Gray       &d Light Purple
+# &2 Dark Green   &8 Dark Gray  &e Yellow
+# &3 Dark Aqua    &9 Blue       &f White
+# &4 Dark Red     &a Green
+# &5 Dark Purple  &b Aqua
+
+# Available formatting codes:
+# &k Obfuscated   &m Strikethrough
+# &l Bold         &o Italic
+# &n Underline    &r Reset
+
+##### English
+message-disabled: "&7Automatic drop collection has been &cdisabled&7."
+message-enabled: "&7Automatic drop collection has been &aenabled&7."
+message-when-breaking-block: "&7Hint: Type &6/drop2inventory&7 or &6/drop2inv&7 to enable automatic drop collection."
+message-when-breaking-block2: "&7Hint: Type &6/drop2inventory&7 or &6/drop2inv&7 to disable automatic drop collection."
+
+##### Chinese Simplified
+#message-disabled: "&7自动掉落物收集已 &c关闭&7."
+#message-enabled: "&7自动掉落物收集已 &a开启&7."
+#message-when-breaking-block: "&7提示: 输入 &6/drop2inventory&7 或 &6/drop2inv&7 以启用自动掉落物收集."
+#message-when-breaking-block2: "&7提示: 输入 &6/drop2inventory&7 或 &6/drop2inv&7 以关闭自动掉落物收集."
+
+##### German
+#message-disabled: "&7Automatisches Einsammeln &cdeaktiviert&7."
+#message-enabled: "&7Automatisches Einsammeln &aaktiviert&7."
+#message-when-breaking-block: "&7Hinweis: Benutze &6/drop2inventory&7 oder &6/drop2inv&7 um das automatische Einsammeln zu aktivieren."
+#message-when-breaking-block2: "&7Hinweis: Benutze &6/drop2inventory&7 oder &6/drop2inv&7 um das automatische Einsammeln zu deaktivieren."
+
+##### Spanish
+#message-disabled: "&7La coleccion automatica de dropeos ha sido &cdeshabilitada&7."
+#message-enabled: "&7La coleccion automatica de dropeos ha sido &ahabilitada&7."
+#message-when-breaking-block: "&7Drop2Inventory: Utiliza &6/drop2inventory&7 o &6/drop2inv&7 para habilitar la coleccion automatica de dropeos."
+#message-when-breaking-block2: "&7Drop2Inventory: Utiliza &6/drop2inventory&7 o &6/drop2inv&7 para deshabilitar la coleccion automatica de dropeos."
+
+##### Turkish
+#message-disabled: "&7Otomatik toplama &cdeaktifleştirildi&7."
+#message-enabled: "&7Otomatik toplama &aktifleştirildi&7."
+#message-when-breaking-block: "&7İpucu: Otomatik toplamayı aktifleştirmek için &6/drop2inventory&7 ya da &6/drop2inv&7 yazınız."
+#message-when-breaking-block2: "&7İpucu: Otomatik toplamayı deaktifleştirmek için &6/drop2inventory&7 ya da &6/drop2inv&7 yazınız."
+
+#########################
+#####     Done!     #####
+#########################
+
+# you do not want this
+debug: false
+
+# please do not change the following line manually!
+config-version: 15
