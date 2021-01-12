@@ -5,8 +5,8 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>de.jeff_media</groupId>
-    <artifactId>Drop2Inventory</artifactId>
-    <version>4.8.1-SNAPSHOT</version>
+    <artifactId>Drop2InventoryPlus</artifactId>
+    <version>1.0.0</version>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -14,7 +14,24 @@
     </properties>
 
     <build>
-
+        <resources>
+            <resource>
+                <directory>src/main/resources</directory>
+                <filtering>true</filtering>
+                <includes>
+                    <include>**/plugin.yml</include>
+                    <include>**/version.txt</include>
+                </includes>
+            </resource>
+            <resource>
+                <directory>src/main/resources</directory>
+                <filtering>false</filtering>
+                <excludes>
+                    <exclude>**/plugin.yml</exclude>
+                    <exclude>**/version.txt</exclude>
+                </excludes>
+            </resource>
+        </resources>
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -30,7 +47,7 @@
                 <artifactId>maven-jar-plugin</artifactId>
                 <version>3.1.0</version>
                 <configuration>
-                    <finalName>Drop2Inventory</finalName>
+                    <finalName>Drop2InventoryPlus</finalName>
                 </configuration>
             </plugin>
             <plugin>
@@ -41,11 +58,11 @@
                     <relocations>
                         <relocation>
                             <pattern>org.bstats</pattern>
-                            <shadedPattern>de.jeff_media.Drop2Inventory</shadedPattern>
+                            <shadedPattern>de.jeff_media.Drop2InventoryPlus</shadedPattern>
                         </relocation>
                         <relocation>
                             <pattern>de.jeff_media.PluginUpdateChecker</pattern>
-                            <shadedPattern>de.jeff_media.Drop2Inventory</shadedPattern>
+                            <shadedPattern>de.jeff_media.Drop2InventoryPlus</shadedPattern>
                         </relocation>
                     </relocations>
                 </configuration>
@@ -89,16 +106,20 @@
             <id>jeff-media-gbr</id>
             <url>https://repo.jeff-media.de/maven2</url>
         </repository>
+        <repository>
+            <id>placeholderapi</id>
+            <url>https://repo.extendedclip.com/content/repositories/placeholderapi/</url>
+        </repository>
     </repositories>
 
     <dependencies>
-    <!--This adds the Spigot API artifact to the build -->
-    <dependency>
-        <groupId>org.spigotmc</groupId>
-        <artifactId>spigot-api</artifactId>
-        <version>1.16.1-R0.1-SNAPSHOT</version>
-        <scope>provided</scope>
-    </dependency>
+        <!--This adds the Spigot API artifact to the build -->
+        <dependency>
+            <groupId>org.spigotmc</groupId>
+            <artifactId>spigot-api</artifactId>
+            <version>1.16.1-R0.1-SNAPSHOT</version>
+            <scope>provided</scope>
+        </dependency>
         <!--<dependency>
             <groupId>nl.sandergielisse</groupId>
             <artifactId>bannerboard</artifactId>
@@ -117,9 +138,21 @@
             <scope>compile</scope>
         </dependency>
         <dependency>
+            <groupId>de.jeff_media</groupId>
+            <artifactId>PluginProtect</artifactId>
+            <version>1.0.0</version> <!-- Check latest version first -->
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
             <groupId>org.jetbrains</groupId>
             <artifactId>annotations</artifactId>
             <version>19.0.0</version>
+        </dependency>
+        <dependency>
+            <groupId>me.clip</groupId>
+            <artifactId>placeholderapi</artifactId>
+            <version>2.10.9</version>
+            <scope>provided</scope>
         </dependency>
     </dependencies>
 

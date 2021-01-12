@@ -26,7 +26,8 @@ collect-mob-drops: true
 # when set to true, mob/entity experience orbs will be automatically collected if the plugin is enabled
 collect-mob-exp: true
 
-# when set to true, items will automaticall converted to blocks when mining them,
+# when set to true, items will automatically converted to blocks when mining them
+# if the player has the permission "drop2inventory.autocondense"
 # e.g. 9 diamonds -> 1 diamond_block etc
 auto-condense: false
 
@@ -51,7 +52,6 @@ show-message-again-after-logout: true
 # when enabled, players need the permissions "drop2inventory.tool.pickaxe"
 # to auto pickup blocks farmed with a pickaxe, "drop2inventory.tool.hoe" for
 # blocks farmed with a hoe, etc.
-# tip: you probably do NOT want this enabled^^
 permissions-per-tool: false
 
 # when enabled, Drop2Inventory tries to detect items that other plugins drop
@@ -59,6 +59,9 @@ permissions-per-tool: false
 # This allows Drop2Inventory to detect block drops that other plugins create
 # in ominous ways.
 detect-legacy-drops: true
+
+# When using "detect-legacy-drops", ignore items spawning on hoppers
+ignore-items-on-hoppers: true
 
 # when enabled, Drop2Inventory will only put stuff into the hotbar when
 # the regular inventory is full.
@@ -169,6 +172,12 @@ message-when-breaking-block2: "&7Hint: Type &6/drop2inventory&7 or &6/drop2inv&7
 #message-when-breaking-block: "&7Hinweis: Benutze &6/drop2inventory&7 oder &6/drop2inv&7 um das automatische Einsammeln zu aktivieren."
 #message-when-breaking-block2: "&7Hinweis: Benutze &6/drop2inventory&7 oder &6/drop2inv&7 um das automatische Einsammeln zu deaktivieren."
 
+##### Russian
+#message-disabled: "&7Автоматический сбор дропа &cотключен&7."
+#message-enabled: "&7Автоматический сбор дропа &aвключен&7."
+#message-when-breaking-block: "&7Подсказка: Введите &6/drop2inventory&7 или &6/drop2inv&7 чтобы включить автоматический сбор дропа."
+#message-when-breaking-block2: "&7Подсказка: Введите &6/drop2inventory&7 или &6/drop2inv&7 чтобы отключить автоматический сбор дропа."
+
 ##### Spanish
 #message-disabled: "&7La coleccion automatica de dropeos ha sido &cdeshabilitada&7."
 #message-enabled: "&7La coleccion automatica de dropeos ha sido &ahabilitada&7."
@@ -189,4 +198,4 @@ message-when-breaking-block2: "&7Hint: Type &6/drop2inventory&7 or &6/drop2inv&7
 debug: false
 
 # please do not change the following line manually!
-config-version: 15
+config-version: 115

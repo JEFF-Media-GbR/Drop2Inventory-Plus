@@ -1,4 +1,4 @@
-package de.jeff_media.Drop2Inventory;
+package de.jeff_media.Drop2InventoryPlus;
 
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
@@ -17,7 +17,7 @@ public class HotbarStuffer {
         filler = new ItemStack(Material.DIRT);
         filler.setAmount(64);
         ItemMeta meta = filler.getItemMeta();
-        meta.setLore(Arrays.asList(new String[]{"§cDrop2Inventory Hotbar filler"}));
+        meta.setLore(Arrays.asList(new String[]{"§cDrop2Inventory Hotbar filler","§4If you can see this, please","§4create a bug report."}));
         meta.setDisplayName("§cDrop2Inventory Hotbar filler");
         filler.setItemMeta(meta);
     }
@@ -43,11 +43,7 @@ public class HotbarStuffer {
     }
 
     public void unstuffHotbar(PlayerInventory inv) {
-        //for(int i = 0; i < 9; i++) {
-            //if(inv.getItem(i) != null && inv.getItem(i).isSimilar(filler)) {
-                inv.remove(filler);
-            //}
-        //}
+        inv.remove(filler);
     }
 
 }

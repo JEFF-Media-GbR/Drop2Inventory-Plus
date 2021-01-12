@@ -1,19 +1,14 @@
-package de.jeff_media.Drop2Inventory;
+package de.jeff_media.Drop2InventoryPlus;
 
-import jdk.jfr.internal.LogLevel;
 import org.bukkit.Material;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
-import org.jetbrains.annotations.Nullable;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
-import java.util.Objects;
 
 public class IngotCondenser {
 

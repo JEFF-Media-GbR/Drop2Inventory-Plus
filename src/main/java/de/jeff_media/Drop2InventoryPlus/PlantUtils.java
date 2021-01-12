@@ -1,4 +1,4 @@
-package de.jeff_media.Drop2Inventory;
+package de.jeff_media.Drop2InventoryPlus;
 
 import org.bukkit.Material;
 import org.bukkit.block.Block;

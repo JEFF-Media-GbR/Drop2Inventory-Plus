@@ -1,6 +1,6 @@
-main: de.jeff_media.Drop2Inventory.Main
-name: Drop2Inventory
-version: 4.8.1-SNAPSHOT
+main: de.jeff_media.Drop2InventoryPlus.Main
+name: Drop2InventoryPlus
+version: ${project.version}
 api-version: 1.13
 description: Items dropped by breaking blocks will be put into your inventory
 author: mfnalex
@@ -11,12 +11,14 @@ softdepend:
   - WorldGuard
   - Jobs
   - CoreProtect
+  - PlaceholderAPI
+  - Drop2Inventory
 permissions:
   drop2inventory.use:
     description: Allows usage of Drop2Inventory
 commands:
   drop2inventory:
-    description: Toggle automatic drop collection
-    usage: /<command>
+    description: Toggle automatic drop collection for the current or another player
+    usage: /<command> [player]
     aliases: drop2inv
     permission: drop2inventory.use
