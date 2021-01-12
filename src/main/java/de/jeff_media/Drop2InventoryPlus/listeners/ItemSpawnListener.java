@@ -6,6 +6,7 @@ import de.jeff_media.Drop2InventoryPlus.PlayerSetting;
 import org.bukkit.GameMode;
 import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.block.Block;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -32,21 +33,22 @@ public class ItemSpawnListener implements @NotNull Listener {
     }
 
     @EventHandler(priority=EventPriority.HIGHEST)
-    public void onItemDrop(PlayerDropItemEvent e) {
+    public void onItemDrop(PlayerDropItemEvent playerDropItemEvent) {
         main.debug("###PlayerDropItemEvent");
-        drops.add(e.getItemDrop().getUniqueId());
+        drops.add(playerDropItemEvent.getItemDrop().getUniqueId());
     }
 
     @EventHandler(priority= EventPriority.HIGHEST)
-    public void onItemSpawn(ItemSpawnEvent e) {
+    public void onItemSpawn(ItemSpawnEvent itemSpawnEvent) {
         main.debug("###ItemSpawnEvent");
+        main.debug(itemSpawnEvent.getEntity().getItemStack().toString());
 
-        if(drops.contains(e.getEntity().getUniqueId())) {
-            drops.remove(e.getEntity().getUniqueId());
+        if(drops.contains(itemSpawnEvent.getEntity().getUniqueId())) {
+            drops.remove(itemSpawnEvent.getEntity().getUniqueId());
             return;
         }
 
-        if(main.isWorldDisabled(e.getLocation().getWorld().getName())) {
+        if(main.isWorldDisabled(itemSpawnEvent.getLocation().getWorld().getName())) {
             return;
         }
 
@@ -55,21 +57,21 @@ public class ItemSpawnListener implements @NotNull Listener {
             return;
         }
         main.debug("detecting legacy drop...");
-        if(e.getEntity() == null) return;
-        if(e.getEntity().getItemStack()==null) return;
-        ItemStack is = e.getEntity().getItemStack();
+        if(itemSpawnEvent.getEntity() == null) return;
+        if(itemSpawnEvent.getEntity().getItemStack()==null) return;
+        ItemStack is = itemSpawnEvent.getEntity().getItemStack();
         if(is.getType() == Material.AIR) return;
         if(is.getAmount() == 0) return;
 
         // ignore-items-on-hoppers
         if(main.getConfig().getBoolean("ignore-items-on-hoppers")) {
-            if(isAboveHopper(e.getLocation())) {
+            if(isAboveHopper(itemSpawnEvent.getLocation())) {
                 return;
             }
         }
 
         Player player;
-        player = getNearestPlayer(e.getLocation());
+        player = getNearestPlayer(itemSpawnEvent.getLocation());
 
         if(player==null) return;
         main.debug("Nearest player: "+player.getName());
@@ -84,15 +86,18 @@ public class ItemSpawnListener implements @NotNull Listener {
         main.registerPlayer(player);
 
         if (player.getGameMode() == GameMode.CREATIVE) {
+            main.debug("R: Creative");
             return;
         }
 
         // disabled block?
         if (!main.utils.isBlockEnabled(is.getType())) {
+            main.debug("R: Block disabled");
             return;
         }
 
         if (!main.getConfig().getBoolean(Config.COLLECT_BLOCK_DROPS)) {
+            main.debug("R: Collect Block Drops disabled");
             return;
         }
 
@@ -117,29 +122,39 @@ public class ItemSpawnListener implements @NotNull Listener {
 
         main.debug("Player "+player.getName()+" collected legacy drop "+is);
 
-        main.utils.addOrDrop(is,player,e.getLocation());
-        e.getEntity().remove();
+        main.utils.addOrDrop(is,player,itemSpawnEvent.getLocation());
+        itemSpawnEvent.getEntity().remove();
     }
 
     private boolean isAboveHopper(Location location) {
-        for(int i = 0; i <= 7; i++) {
-            if(location.getBlock().getRelative(0,i,0).getType()==Material.HOPPER) {
-                main.debug("ItemSpawn above Hopper detected");
-                return true;
+
+        int vRange = main.getConfig().getInt(Config.IGNORE_ITEMS_ON_HOPPERS_VERTICAL_RANGE);
+        int hRange = main.getConfig().getInt(Config.IGNORE_ITEMS_ON_HOPPERS_HORIZONTAL_RANGE);
+
+        for(int y = 0; y <= vRange; y++) {
+            for(int x = -hRange; x <= hRange; x++) {
+                for(int z = -hRange; z <= hRange; z++) {
+                    Block current = location.getBlock().getRelative(x, -y, z);
+                    main.debug("  Hopper Check: " + current.getType() + " @ " + current.getLocation());
+                    if (current.getType() == Material.HOPPER) {
+                        main.debug("ItemSpawn above Hopper detected");
+                        return true;
+                    }
+                }
             }
         }
         return false;
     }
 
-    private boolean isInvFull(Player p) {
-        for(ItemStack i : p.getInventory().getStorageContents()) {
+    private boolean isInvFull(Player player) {
+        for(ItemStack i : player.getInventory().getStorageContents()) {
             if(i == null || i.getAmount()==0 || i.getType()==Material.AIR) return false;
         }
         return true;
     }
 
     @Nullable
-    private Player getNearestPlayer(Location location) throws NoSuchMethodError {
+    private Player getNearestPlayer(Location location) {
 
         ArrayList<Player> players = new ArrayList<>();
         double detectionRange = main.getConfig().getDouble(Config.DETECT_LEGACY_DROPS_RANGE);

@@ -15,9 +15,11 @@ public class Config {
     public static final String DETECT_LEGACY_DROPS = "detect-legacy-drops";
     public static final String DETECT_LEGACY_DROPS_RANGE = "detect-legacy-drops-range";
     public static final String IGNORE_ITEMS_ON_HOPPERS = "ignore-items-on-hoppers";
-    public static final String IGNORE_ITEMS_ON_HOPPERS_RANGE = "ignore-items-on-hoppers-range";
+    public static final String IGNORE_ITEMS_ON_HOPPERS_VERTICAL_RANGE = "ignore-items-on-hoppers-vertical-range";
+    public static final String IGNORE_ITEMS_ON_HOPPERS_HORIZONTAL_RANGE = "ignore-items-on-hoppers-horizontal-range";
     public static final String AVOID_HOTBAR = "avoid-hotbar";
     public static final String CHECK_FOR_UPDATES = "check-for-updates";
+    public static final String UPDATE_CHECK_INTERVAL = "check-interval";
     public static final String DISABLED_WORLDS = "disabled-worlds";
     public static final String DISABLED_BLOCKS = "disabled-blocks";
     public static final String ENABLED_BLOCKS = "enabled-blocks";
@@ -27,4 +29,6 @@ public class Config {
     public static final String CONFIG_VERSION = "config-version";
 
     public static final String WARN_WHEN_INVENTORY_IS_FULL = "warn-when-inventory-is-full";
+
+    public static final String EVENT_PRIO_BLOCKDROPITEMEVENT = "block-drop-item-event-priority";
 }

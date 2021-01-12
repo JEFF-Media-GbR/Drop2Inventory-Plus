@@ -25,10 +25,50 @@ public class BlockDropItemListener implements @NotNull Listener {
         this.main = main;
     }
 
+    @EventHandler(priority = EventPriority.MONITOR)
+    public void onBlockDropItemMonitor(BlockDropItemEvent event) {
+        if(main.blockDropItemPrio == EventPriority.MONITOR) {
+            onBlockDropItem(event);
+        }
+    }
+
     @EventHandler(priority = EventPriority.HIGHEST)
-    public void onItemDrop(BlockDropItemEvent event) {
-        main.debug("");
-        main.debug("###BlockDropItemEvent");
+    public void onBlockDropItemHighest(BlockDropItemEvent event) {
+        if(main.blockDropItemPrio == EventPriority.HIGHEST) {
+            onBlockDropItem(event);
+        }
+    }
+
+    @EventHandler(priority = EventPriority.HIGH)
+    public void onBlockDropItemHigh(BlockDropItemEvent event) {
+        if(main.blockDropItemPrio == EventPriority.HIGH) {
+            onBlockDropItem(event);
+        }
+    }
+
+    @EventHandler(priority = EventPriority.NORMAL)
+    public void onBlockDropItemNormal(BlockDropItemEvent event) {
+        if(main.blockDropItemPrio == EventPriority.NORMAL) {
+            onBlockDropItem(event);
+        }
+    }
+
+    @EventHandler(priority = EventPriority.LOW)
+    public void onBlockDropItemLow(BlockDropItemEvent event) {
+        if(main.blockDropItemPrio == EventPriority.LOW) {
+            onBlockDropItem(event);
+        }
+    }
+
+    @EventHandler(priority = EventPriority.LOWEST)
+    public void onBlockDropItemLowest(BlockDropItemEvent event) {
+        if(main.blockDropItemPrio == EventPriority.LOWEST) {
+            onBlockDropItem(event);
+        }
+    }
+
+    public void onBlockDropItem(BlockDropItemEvent event) {
+        main.debug("###BlockDropItemEvent "+main.blockDropItemPrio.name());
         List<Item> items = event.getItems();
 
         if(main.debug) {

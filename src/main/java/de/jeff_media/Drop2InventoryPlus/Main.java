@@ -6,8 +6,10 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.UUID;
 
+import com.google.common.base.Enums;
 import de.jeff_media.Drop2InventoryPlus.commands.CommandMain;
 import de.jeff_media.Drop2InventoryPlus.listeners.BlockDropItemListener;
+import de.jeff_media.Drop2InventoryPlus.listeners.GenericListener;
 import de.jeff_media.Drop2InventoryPlus.listeners.ItemSpawnListener;
 import de.jeff_media.PluginProtect.PluginProtect;
 import de.jeff_media.PluginUpdateChecker.PluginUpdateChecker;
@@ -16,13 +18,13 @@ import org.bukkit.*;
 import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
+import org.bukkit.event.EventPriority;
 import org.bukkit.plugin.java.JavaPlugin;
 
 
 public class Main extends JavaPlugin {
 
-	final int currentConfigVersion = 115;
-
+	final int currentConfigVersion = 116;
 	PluginUpdateChecker updateChecker;
 	public Messages messages;
 	public Utils utils;
@@ -30,26 +32,17 @@ public class Main extends JavaPlugin {
 	IngotCondenser ingotCondenser;
 	ItemSpawnListener itemSpawnListener;
 	HotbarStuffer hotbarStuffer;
-
 	public HashMap<String, PlayerSetting> perPlayerSettings;
-
 	ArrayList<Material> disabledBlocks;
 	ArrayList<String> disabledWorlds;
-
 	boolean blocksIsWhitelist = false;
-
 	ArrayList<String> disabledMobs;
-
 	boolean mobsIsWhitelist = false;
-
 	public final int mcVersion = Utils.getMcVersion(Bukkit.getBukkitVersion());
 	boolean usingMatchingConfig = true;
-
-	private static final int updateCheckInterval = 86400;
-
 	public boolean debug = false;
-
 	public static final String uid = "%%__USER__%%";
+	public EventPriority blockDropItemPrio;
 
 	public void reload() {
 		createConfig();
@@ -65,11 +58,12 @@ public class Main extends JavaPlugin {
 		updateChecker = new PluginUpdateChecker(this,"https://api.jeff-media.de/drop2inventoryplus/drop2inventoryplus-latest-version.txt",
 				null,null,"https://paypal.me/mfnalex");
 		if (getConfig().getString(Config.CHECK_FOR_UPDATES, "true").equalsIgnoreCase("true")) {
-			updateChecker.check(updateCheckInterval);
+			updateChecker.check(getConfig().getInt(Config.UPDATE_CHECK_INTERVAL)*60*60);
 		} else if (getConfig().getString(Config.CHECK_FOR_UPDATES, "true").equalsIgnoreCase("on-startup")) {
 			updateChecker.check();
 		}
 		// Update Checker end
+		blockDropItemPrio = Enums.getIfPresent(EventPriority.class,getConfig().getString(Config.EVENT_PRIO_BLOCKDROPITEMEVENT).toUpperCase()).or(EventPriority.HIGH);
 	}
 
 	public void onEnable() {
@@ -96,23 +90,15 @@ public class Main extends JavaPlugin {
 		itemSpawnListener = new ItemSpawnListener(this);
 		CommandMain commandMain = new CommandMain(this);
 		hotbarStuffer = new HotbarStuffer(this);
-		
 
-
-		//this.getServer().getPluginManager().registerEvents(new GenericListener(this), this);
-		//this.getServer().getPluginManager().registerEvents(itemSpawnListener,this);
+		this.getServer().getPluginManager().registerEvents(new GenericListener(this), this);
+		this.getServer().getPluginManager().registerEvents(itemSpawnListener,this);
 		this.getServer().getPluginManager().registerEvents(new BlockDropItemListener(this),this);
 
 		utils = new Utils(this);
 		mendingUtils = new MendingUtils(this);
 
-
-
 		Metrics metrics = new Metrics(this,9970);
-
-
-
-
 		
 		this.getCommand("drop2inventory").setExecutor(commandMain);
 
@@ -188,6 +174,7 @@ public class Main extends JavaPlugin {
 		getConfig().addDefault(Config.ENABLED_BY_DEFAULT, false);
 		getConfig().addDefault(Config.ALWAYS_ENABLED,false);
 		getConfig().addDefault(Config.CHECK_FOR_UPDATES, "true");
+		getConfig().addDefault(Config.UPDATE_CHECK_INTERVAL,4);
 		getConfig().addDefault(Config.SHOW_MESSAGE_WHEN_BREAKING_BLOCK, true);
 		getConfig().addDefault(Config.SHOW_MESSAGE_WHEN_BREAKING_BLOCK_AND_COLLECTION_IS_ENABLED, false);
 		getConfig().addDefault(Config.SHOW_MESSAGE_AGAIN_AFTER_LOGOUT, true);
@@ -199,9 +186,10 @@ public class Main extends JavaPlugin {
 		getConfig().addDefault(Config.DETECT_LEGACY_DROPS,true);
 		getConfig().addDefault(Config.DETECT_LEGACY_DROPS_RANGE,6.0D);
 		getConfig().addDefault(Config.IGNORE_ITEMS_ON_HOPPERS,true);
-		getConfig().addDefault(Config.IGNORE_ITEMS_ON_HOPPERS_RANGE,7.0D);
+		getConfig().addDefault(Config.IGNORE_ITEMS_ON_HOPPERS_VERTICAL_RANGE,7.0D);
 		getConfig().addDefault(Config.AVOID_HOTBAR,false);
 		getConfig().addDefault(Config.WARN_WHEN_INVENTORY_IS_FULL,true);
+		getConfig().addDefault(Config.EVENT_PRIO_BLOCKDROPITEMEVENT,"HIGH");
 	}
 
 	private void migrateFromFreeVersion() {
