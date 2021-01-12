@@ -27,7 +27,7 @@ public class PlantUtils {
     };
 
     public PlantUtils() {
-        plants = new LinkedList<Material>();
+        plants = new LinkedList<>();
         for(String s : plantNames) {
             if(Material.getMaterial(s) != null) {
                 plants.add(Material.getMaterial(s));

@@ -54,7 +54,7 @@ public class Main extends JavaPlugin {
 	public void reload() {
 		createConfig();
 		reloadConfig();
-		perPlayerSettings = new HashMap<String, PlayerSetting>();
+		perPlayerSettings = new HashMap<>();
 		messages = new Messages(this);
 		ingotCondenser = new IngotCondenser(this);
 
@@ -65,12 +65,11 @@ public class Main extends JavaPlugin {
 		updateChecker = new PluginUpdateChecker(this,"https://api.jeff-media.de/drop2inventoryplus/drop2inventoryplus-latest-version.txt",
 				null,null,"https://paypal.me/mfnalex");
 		if (getConfig().getString(Config.CHECK_FOR_UPDATES, "true").equalsIgnoreCase("true")) {
-			updateChecker.check((long) updateCheckInterval);
+			updateChecker.check(updateCheckInterval);
 		} else if (getConfig().getString(Config.CHECK_FOR_UPDATES, "true").equalsIgnoreCase("on-startup")) {
 			updateChecker.check();
 		}
 		// Update Checker end
-		return;
 	}
 
 	public void onEnable() {
@@ -272,7 +271,7 @@ public class Main extends JavaPlugin {
 		// server ;) I am sometimes getting stacktraces although it is clearly stated that /reload is NOT
 		// supported. So, here is a quick fix
 		if(perPlayerSettings == null) {
-			perPlayerSettings = new HashMap<String, PlayerSetting>();
+			perPlayerSettings = new HashMap<>();
 		}
 		registerPlayer(p);
 		// End of quick fix

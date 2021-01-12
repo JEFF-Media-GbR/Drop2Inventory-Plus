@@ -17,7 +17,7 @@ public class HotbarStuffer {
         filler = new ItemStack(Material.DIRT);
         filler.setAmount(64);
         ItemMeta meta = filler.getItemMeta();
-        meta.setLore(Arrays.asList(new String[]{"§cDrop2Inventory Hotbar filler","§4If you can see this, please","§4create a bug report."}));
+        meta.setLore(Arrays.asList("§cDrop2Inventory Hotbar filler","§4If you can see this, please","§4create a bug report."));
         meta.setDisplayName("§cDrop2Inventory Hotbar filler");
         filler.setItemMeta(meta);
     }

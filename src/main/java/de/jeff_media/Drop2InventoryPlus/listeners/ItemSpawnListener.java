@@ -18,9 +18,8 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
-import java.util.Collections;
+import java.util.Comparator;
 import java.util.UUID;
-import java.util.function.Predicate;
 
 public class ItemSpawnListener implements @NotNull Listener {
 
@@ -29,7 +28,7 @@ public class ItemSpawnListener implements @NotNull Listener {
 
     public ItemSpawnListener(Main main) {
         this.main=main;
-        drops = new ArrayList<UUID>();
+        drops = new ArrayList<>();
     }
 
     @EventHandler(priority=EventPriority.HIGHEST)
@@ -142,26 +141,13 @@ public class ItemSpawnListener implements @NotNull Listener {
     @Nullable
     private Player getNearestPlayer(Location location) throws NoSuchMethodError {
 
-        ArrayList<Player> players = new ArrayList<Player>();
+        ArrayList<Player> players = new ArrayList<>();
         double detectionRange = main.getConfig().getDouble(Config.DETECT_LEGACY_DROPS_RANGE);
-        for(Entity e : location.getWorld().getNearbyEntities(location, detectionRange, detectionRange, detectionRange, new Predicate<Entity>() {
-            @Override
-            public boolean test(Entity entity) {
-                return entity instanceof Player && !((Player) entity).isDead();
-            }
-        })) {
+        for(Entity e : location.getWorld().getNearbyEntities(location, detectionRange, detectionRange, detectionRange, entity -> entity instanceof Player && !entity.isDead())) {
             players.add((Player) e);
         }
 
-        Collections.sort(players, (o1, o2) -> {
-            if(o1.getLocation().distance(location) > o2.getLocation().distance(location)) {
-                return 1;
-            }
-            if(o1.getLocation().distance(location) < o2.getLocation().distance(location)) {
-                return -1;
-            }
-            return 0;
-        });
+        players.sort(Comparator.comparingDouble(o -> o.getLocation().distance(location)));
 
         if(players.size()>0) return players.get(0);
         return null;

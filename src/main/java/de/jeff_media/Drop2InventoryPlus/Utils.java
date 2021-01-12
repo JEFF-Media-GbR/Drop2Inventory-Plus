@@ -9,6 +9,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -78,7 +79,7 @@ public class Utils {
     }
 
     public void addOrDrop(ItemStack[] items, Player player, @Nullable Location dropLocation) {
-        main.debug("addOrDrop[] "+items+" -> "+player);
+        main.debug("addOrDrop[] "+ Arrays.toString(items) +" -> "+player);
         if (main.getConfig().getBoolean(Config.AVOID_HOTBAR)) {
             main.debug("  avoid-hotbar enabled");
             main.hotbarStuffer.stuffHotbar(player.getInventory());

@@ -240,7 +240,7 @@ public class GenericListener implements org.bukkit.event.Listener {
             // Note:
             // Chorus flower only drop themselves when broken directly,
             // but not when they drop because the chorus plant is broken
-            ArrayList<Block> chorusTree = new ArrayList<Block>();
+            ArrayList<Block> chorusTree = new ArrayList<>();
             event.setDropItems(false);
              PlantUtils.getChorusTree(event.getBlock(),chorusTree);
             int extraAmountChorusPlant = PlantUtils.getAmountInList(chorusTree,Material.CHORUS_PLANT);
