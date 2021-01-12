@@ -1,4 +1,4 @@
-package de.jeff_media.Drop2Inventory;
+package de.jeff_media.Drop2InventoryPlus;
 
 import java.io.*;
 import java.nio.charset.StandardCharsets;
@@ -14,33 +14,29 @@ import org.bukkit.configuration.file.YamlConfiguration;
 
 public class ConfigUpdater {
 
-    Main plugin;
+    Main main;
 
-    ConfigUpdater(Main plugin) {
-        this.plugin = plugin;
+    ConfigUpdater(Main main) {
+        this.main = main;
     }
-
-    // Admins hate config updates. Just relax and let AngelChest update to the newest
-    // config version
-    // Don't worry! Your changes will be kept
 
     void updateConfig() {
 
         try {
-            Files.deleteIfExists(new File(plugin.getDataFolder().getAbsolutePath()+File.separator+"config.old.yml").toPath());
+            Files.deleteIfExists(new File(main.getDataFolder().getAbsolutePath()+File.separator+"config.old.yml").toPath());
         } catch (IOException e) {
 
         }
 
-        Utils.renameFileInPluginDir(plugin, "config.yml", "config.old.yml");
+        Utils.renameFileInPluginDir(main, "config.yml", "config.old.yml");
 
-        plugin.saveDefaultConfig();
+        main.saveDefaultConfig();
 
-        File oldConfigFile = new File(plugin.getDataFolder().getAbsolutePath() + File.separator + "config.old.yml");
+        File oldConfigFile = new File(main.getDataFolder().getAbsolutePath() + File.separator + "config.old.yml");
         FileConfiguration oldConfig = YamlConfiguration.loadConfiguration(oldConfigFile);
 
         if(oldConfig.getBoolean("debug")) {
-            plugin.debug=true;
+            main.debug=true;
             /*if(plugin.debug) {
                 plugin.getLogger().warning("WARNING: oldConfig.debug != plugin.debug");
                 plugin.debug=true;
@@ -66,7 +62,7 @@ public class ConfigUpdater {
         try {
 
             Scanner scanner = new Scanner(
-                    new File(plugin.getDataFolder().getAbsolutePath() + File.separator + "config.yml"),"UTF-8");
+                    new File(main.getDataFolder().getAbsolutePath() + File.separator + "config.yml"),"UTF-8");
             while (scanner.hasNextLine()) {
                 linesInDefaultConfig.add(scanner.nextLine() + "");
             }
@@ -83,18 +79,18 @@ public class ConfigUpdater {
             }
             else if (line.startsWith("disabled-blocks:")) {
                 newline = null;
-                newLines.add(plugin.blocksIsWhitelist ? "enabled-blocks:" : "disabled-blocks:");
-                if (plugin.disabledBlocks != null) {
-                    for (Material mat : plugin.disabledBlocks) {
+                newLines.add(main.blocksIsWhitelist ? "enabled-blocks:" : "disabled-blocks:");
+                if (main.disabledBlocks != null) {
+                    for (Material mat : main.disabledBlocks) {
                         newLines.add("- " + mat.name());
                     }
                 }
             }
             else if (line.startsWith("disabled-mobs:")) {
                 newline = null;
-                newLines.add(plugin.mobsIsWhitelist ? "enabled-mobs" : "disabled-mobs:");
-                if (plugin.disabledMobs != null) {
-                    for (String mob : plugin.disabledMobs) {
+                newLines.add(main.mobsIsWhitelist ? "enabled-mobs" : "disabled-mobs:");
+                if (main.disabledMobs != null) {
+                    for (String mob : main.disabledMobs) {
                         newLines.add("- " + mob);
                     }
                 }
@@ -102,8 +98,8 @@ public class ConfigUpdater {
             else if (line.startsWith("disabled-worlds:")) {
                 newline = null;
                 newLines.add("disabled-worlds:");
-                if (plugin.disabledWorlds != null) {
-                    for (String world : plugin.disabledWorlds) {
+                if (main.disabledWorlds != null) {
+                    for (String world : main.disabledWorlds) {
                         newLines.add("- " + world);
                     }
                 }
@@ -134,7 +130,7 @@ public class ConfigUpdater {
         BufferedWriter fw;
         String[] linesArray = newLines.toArray(new String[linesInDefaultConfig.size()]);
         try {
-            fw = Files.newBufferedWriter(new File(plugin.getDataFolder().getAbsolutePath() + File.separator + "config.yml").toPath(), StandardCharsets.UTF_8);
+            fw = Files.newBufferedWriter(new File(main.getDataFolder().getAbsolutePath() + File.separator + "config.yml").toPath(), StandardCharsets.UTF_8);
             for (int i = 0; i < linesArray.length; i++) {
                 fw.write(linesArray[i] + "\n");
             }

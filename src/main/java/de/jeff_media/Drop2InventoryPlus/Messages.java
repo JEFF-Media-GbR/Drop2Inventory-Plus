@@ -1,4 +1,4 @@
-package de.jeff_media.Drop2Inventory;
+package de.jeff_media.Drop2InventoryPlus;
 
 import org.bukkit.ChatColor;
 
@@ -6,7 +6,7 @@ public class Messages {
 
 	Main plugin;
 
-	final String MSG_ACTIVATED, MSG_DEACTIVATED, MSG_COMMANDMESSAGE, MSG_COMMANDMESSAGE2;
+	final public String MSG_ACTIVATED, MSG_DEACTIVATED, MSG_COMMANDMESSAGE, MSG_COMMANDMESSAGE2;
 
 	Messages(Main plugin) {
 		this.plugin = plugin;
