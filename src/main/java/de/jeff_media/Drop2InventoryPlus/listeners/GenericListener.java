@@ -1,6 +1,8 @@
-package de.jeff_media.Drop2InventoryPlus;
+package de.jeff_media.Drop2InventoryPlus.listeners;
 
+import de.jeff_media.Drop2InventoryPlus.*;
 import org.bukkit.GameMode;
+import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.block.Furnace;
@@ -20,112 +22,112 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-public class Listener implements org.bukkit.event.Listener {
+public class GenericListener implements org.bukkit.event.Listener {
 
-    Main plugin;
+    private final Main main;
     Random random = new Random();
     boolean onlyDamaged;
     PlantUtils plantUtils = new PlantUtils();
 
-    Listener(Main plugin) {
-        this.plugin = plugin;
-        boolean onlyDamaged = plugin.mcVersion >= 16 ? true : false;
+    public GenericListener(Main main) {
+        this.main = main;
+        boolean onlyDamaged = main.mcVersion >= 16 ? true : false;
     }
 
     @EventHandler
     public void onPlayerJoin(PlayerJoinEvent event) {
-        plugin.debug("###PlayerJoinEvent");
-        plugin.registerPlayer(event.getPlayer());
+        main.debug("###PlayerJoinEvent");
+        main.registerPlayer(event.getPlayer());
 
 
     }
 
     @EventHandler
     public void onPlayerQuit(PlayerQuitEvent event) {
-        plugin.debug("###PlayerQuitEvent");
-        plugin.unregisterPlayer(event.getPlayer());
+        main.debug("###PlayerQuitEvent");
+        main.unregisterPlayer(event.getPlayer());
     }
 
     @EventHandler(priority = EventPriority.HIGHEST)
     public void onEntityDeath(EntityDeathEvent event) {
-        plugin.debug("###EntityDeathEvent");
+        main.debug("###EntityDeathEvent");
 
-        LivingEntity entity = event.getEntity();
-        if (entity.getKiller() == null) {
-            plugin.debug("Return: entity.getKiller = null");
+        LivingEntity victim = event.getEntity();
+        if (victim.getKiller() == null) {
+            main.debug("Return: victim.getKiller = null");
             return;
         }
 
-        if(plugin.isWorldDisabled(event.getEntity().getWorld().getName())) {
+        if(main.isWorldDisabled(victim.getWorld().getName())) {
             return;
         }
 
-        if(!(entity.getKiller() instanceof Player)) {
-            plugin.debug("Return: entity.getKiller ! instanceof player");
+        if(!(victim.getKiller() instanceof Player)) {
+            main.debug("Return: victim.getKiller ! instanceof player");
             return;
         }
 
-        Player p = entity.getKiller();
+        Player killer = victim.getKiller();
 
-        if (!entity.getKiller().hasPermission("drop2inventory.use")) {
-            plugin.debug("Return: entity.getKiller ! permission drop2inventory.use");
+        if (!killer.hasPermission("drop2inventory.use")) {
+            main.debug("Return: victim.getKiller ! permission drop2inventory.use");
             return;
         }
 
         // Fix for /reload
-        plugin.registerPlayer(entity.getKiller());
+        main.registerPlayer(victim.getKiller());
 
-        if (!plugin.enabled(entity.getKiller())) {
-            plugin.debug("entity.getKiller ! drop2Inv enabled");
+        if (!main.enabled(killer)) {
+            main.debug("victim.getKiller ! drop2Inv enabled");
             return;
         }
 
         // Mobs drop stuff in Creative mode
-        //if (entity.getKiller().getGameMode() == GameMode.CREATIVE) {
+        //if (victim.getKiller().getGameMode() == GameMode.CREATIVE) {
         //    return;
         //}
 
-        if (!plugin.utils.isMobEnabled(entity)) {
-            plugin.debug("not enabled for entity type "+entity.getType().name());
+        if (!main.utils.isMobEnabled(victim)) {
+            main.debug("not enabled for victim type "+victim.getType().name());
             return;
         }
 
 
-        if (plugin.getConfig().getBoolean("collect-mob-exp")) {
+        if (main.getConfig().getBoolean(Config.COLLECT_MOB_EXP)) {
             int exp = event.getDroppedExp();
 
-            if(MendingUtils.hasMending(plugin.utils.getItemInMainHand(p),false)) {
-                exp = plugin.mendingUtils.tryMending(p.getInventory(), exp, onlyDamaged);
+            if(MendingUtils.hasMending(killer.getInventory().getItemInMainHand(),false)) {
+                exp = main.mendingUtils.tryMending(killer.getInventory(), exp, onlyDamaged);
             }
 
             event.setDroppedExp(0);
-            entity.getKiller().giveExp(exp);
+            victim.getKiller().giveExp(exp);
         }
-        if (!plugin.getConfig().getBoolean("collect-mob-drops")) {
+        if (!main.getConfig().getBoolean(Config.COLLECT_MOB_DROPS)) {
             return;
         }
 
-        //entity.getKiller().sendMessage("You have killed entity "+entity.getName());
+        //victim.getKiller().sendMessage("You have killed victim "+victim.getName());
 
         List<ItemStack> drops = event.getDrops();
-        plugin.debug("Dropping contents for entity kill to player inv");
-        plugin.utils.addOrDrop(drops.toArray(new ItemStack[0]),entity.getKiller());
+        main.debug("Dropping contents for victim kill to player inv");
+        main.utils.addOrDrop(drops.toArray(new ItemStack[0]),victim.getKiller(),victim.getLocation());
         event.getDrops().clear();
     }
 
     @EventHandler(priority = EventPriority.MONITOR) // Monitor because some plugins like BannerBoard are too stupid to listen on LOWEST when they only want to cancel events regarding their own stuff...
     public void onItemFrameRemoveItem(EntityDamageByEntityEvent event) {
-        plugin.debug("###EntityDamageByEntityEvent");
+        main.debug("###EntityDamageByEntityEvent");
         if(!(event.getDamager() instanceof Player)) return;
         Player p = (Player) event.getDamager();
         if(event.isCancelled()) {
-            plugin.debug("EntityDamageByEntityEvent is cancelled");
+            main.debug("EntityDamageByEntityEvent is cancelled");
             return;
         }
-        plugin.debug("EntityDamageByEntityEvent is NOT cancelled");
-        if(!isDrop2InvEnabled(p,plugin.getPlayerSetting(p))) return;
+        main.debug("EntityDamageByEntityEvent is NOT cancelled");
+        if(!isDrop2InvEnabled(p, main.getPlayerSetting(p))) return;
 
-        if(plugin.isWorldDisabled(p.getWorld().getName())) {
+        if(main.isWorldDisabled(p.getWorld().getName())) {
             return;
         }
 
@@ -133,8 +135,8 @@ public class Listener implements org.bukkit.event.Listener {
             ItemFrame frame = (ItemFrame) event.getEntity();
             ItemStack content = frame.getItem();
             if(content != null && content.getType()!=Material.AIR) {
-                plugin.debug("The frame contained "+content.toString());
-                plugin.utils.addOrDrop(content,p);
+                main.debug("The frame contained "+content.toString());
+                main.utils.addOrDrop(content,p,frame.getLocation());
             } else {
                 return;
             }
@@ -145,32 +147,33 @@ public class Listener implements org.bukkit.event.Listener {
 
     @EventHandler(priority = EventPriority.MONITOR) // Monitor because some plugins like BannerBoard are too stupid to listen on LOWEST when they only want to cancel events regarding their own stuff...
     public void onHangingBreak(HangingBreakByEntityEvent event) {
-        plugin.debug("###HangingBreakByEntityEvent");
+        main.debug("###HangingBreakByEntityEvent");
         if(!(event.getRemover() instanceof Player)) {
             return;
         }
         Player p = (Player) event.getRemover();
-        if(plugin.isWorldDisabled(p.getName())) {
+        Location dropLocation = event.getEntity().getLocation();
+        if(main.isWorldDisabled(p.getName())) {
             return;
         }
         if(event.isCancelled()) return;
-        if(!isDrop2InvEnabled(p,plugin.getPlayerSetting(p))) return;
-        plugin.debug("Player removed a Hanging");
+        if(!isDrop2InvEnabled(p, main.getPlayerSetting(p))) return;
+        main.debug("Player removed a Hanging");
         if(event.getEntity() instanceof ItemFrame) {
-            plugin.debug("It was an Item frame.");
+            main.debug("It was an Item frame.");
             ItemFrame frame = (ItemFrame) event.getEntity();
             ItemStack content = frame.getItem();
             if(content != null) {
-                plugin.debug("The frame contained "+content.toString());
-                plugin.utils.addOrDrop(content,p);
+                main.debug("The frame contained "+content.toString());
+                main.utils.addOrDrop(content,p,dropLocation);
             }
-            plugin.utils.addOrDrop(new ItemStack(Material.ITEM_FRAME),p);
+            main.utils.addOrDrop(new ItemStack(Material.ITEM_FRAME),p,dropLocation);
             event.getEntity().remove();
             event.setCancelled(true);
         }
 
         if(event.getEntity() instanceof Painting) {
-            plugin.utils.addOrDrop(new ItemStack(Material.PAINTING),p);
+            main.utils.addOrDrop(new ItemStack(Material.PAINTING),p,dropLocation);
             event.getEntity().remove();
         }
 
@@ -181,7 +184,7 @@ public class Listener implements org.bukkit.event.Listener {
 
     @EventHandler(priority = EventPriority.HIGHEST)
     public void onBlockBreak(BlockBreakEvent event) {
-        plugin.debug("###BlockBreakEvent");
+        main.debug("###BlockBreakEvent");
         //System.out.println("BlockBreakEvent "+event.getBlock().getType().name());
 
 
@@ -198,11 +201,11 @@ public class Listener implements org.bukkit.event.Listener {
 
 
         // disabled block?
-        if (!plugin.utils.isBlockEnabled(event.getBlock().getType())) {
+        if (!main.utils.isBlockEnabled(event.getBlock().getType())) {
             return;
         }
 
-        if(plugin.isWorldDisabled(player.getWorld().getName())) {
+        if(main.isWorldDisabled(player.getWorld().getName())) {
             return;
         }
 
@@ -211,25 +214,27 @@ public class Listener implements org.bukkit.event.Listener {
 
 
 
-        PlayerSetting setting = plugin.perPlayerSettings.get(player.getUniqueId().toString());
+        PlayerSetting setting = main.perPlayerSettings.get(player.getUniqueId().toString());
 
         if (!isDrop2InvEnabled(player, setting)) return;
 
-        if (plugin.enabled(player) && plugin.getConfig().getBoolean("collect-block-exp")) {
+        if (main.enabled(player) && main.getConfig().getBoolean(Config.COLLECT_BLOCK_EXP)) {
             int experience = event.getExpToDrop();
-            if(MendingUtils.hasMending(plugin.utils.getItemInMainHand(event.getPlayer()),false)) {
-                experience = plugin.mendingUtils.tryMending(event.getPlayer().getInventory(), experience,onlyDamaged);
+            if(MendingUtils.hasMending(event.getPlayer().getInventory().getItemInMainHand(),false)) {
+                experience = main.mendingUtils.tryMending(event.getPlayer().getInventory(), experience,onlyDamaged);
             }
             event.getPlayer().giveExp(experience);
             event.setExpToDrop(0);
         }
+
+        Location dropLocation = event.getBlock().getLocation();
 
         if(plantUtils.isPlant(event.getBlock())) {
             event.setDropItems(false);
             ArrayList<Block> plant = PlantUtils.getPlant(event.getBlock());
             int extraAmount = plant.size();
             ItemStack plantItems = new ItemStack(PlantUtils.getPlantDrop(event.getBlock().getType()), extraAmount);
-            plugin.utils.addOrDrop(plantItems,event.getPlayer());
+            main.utils.addOrDrop(plantItems,event.getPlayer(),dropLocation);
             PlantUtils.destroyPlant(plant);
         } else if(PlantUtils.isChorusTree(event.getBlock())) {
             // Note:
@@ -248,22 +253,22 @@ public class Listener implements org.bukkit.event.Listener {
             }
 
             ItemStack flowerDrops = new ItemStack(Material.CHORUS_FRUIT, extraAmountChorusFruit);
-            plugin.utils.addOrDrop(flowerDrops,event.getPlayer());
+            main.utils.addOrDrop(flowerDrops,event.getPlayer(),dropLocation);
             PlantUtils.destroyPlant(chorusTree);
         } else if(event.getBlock().getState() instanceof Furnace) {
 
             FurnaceInventory finv = ((Furnace) event.getBlock().getState()).getInventory();
 
             if(finv.getFuel()!=null) {
-                plugin.utils.addOrDrop(finv.getFuel(),event.getPlayer());
+                main.utils.addOrDrop(finv.getFuel(),event.getPlayer(),dropLocation);
                 finv.setFuel(null);
             }
             if(finv.getSmelting()!=null) {
-                plugin.utils.addOrDrop(finv.getSmelting(),event.getPlayer());
+                main.utils.addOrDrop(finv.getSmelting(),event.getPlayer(),dropLocation);
                 finv.setSmelting(null);
             }
             if(finv.getResult()!=null) {
-                plugin.utils.addOrDrop(finv.getResult(),event.getPlayer());
+                main.utils.addOrDrop(finv.getResult(),event.getPlayer(),dropLocation);
                 finv.setResult(null);
             }
 
@@ -277,14 +282,14 @@ public class Listener implements org.bukkit.event.Listener {
 
     private boolean isDrop2InvEnabled(Player player, PlayerSetting setting) {
 
-        if(plugin.getConfig().getBoolean("always-enabled")) return true;
+        if(main.getConfig().getBoolean(Config.ALWAYS_ENABLED)) return true;
 
         if (!player.hasPermission("drop2inventory.use")) {
             return false;
         }
 
         // Fix for /reload
-        plugin.registerPlayer(player);
+        main.registerPlayer(player);
 
         if (player.getGameMode() == GameMode.CREATIVE) {
             return false;
@@ -292,22 +297,22 @@ public class Listener implements org.bukkit.event.Listener {
 
 
 
-        if (!plugin.getConfig().getBoolean("collect-block-drops")) {
+        if (!main.getConfig().getBoolean(Config.COLLECT_BLOCK_DROPS)) {
             return false;
         }
-        if (!plugin.enabled(player)) {
+        if (!main.enabled(player)) {
             if (!setting.hasSeenMessage) {
                 setting.hasSeenMessage = true;
-                if (plugin.getConfig().getBoolean("show-message-when-breaking-block")) {
-                    player.sendMessage(plugin.messages.MSG_COMMANDMESSAGE);
+                if (main.getConfig().getBoolean(Config.SHOW_MESSAGE_WHEN_BREAKING_BLOCK)) {
+                    player.sendMessage(main.messages.MSG_HINT_ENABLE);
                 }
             }
             return false;
         } else {
             if (!setting.hasSeenMessage) {
                 setting.hasSeenMessage = true;
-                if (plugin.getConfig().getBoolean("show-message-when-breaking-block-and-collection-is-enabled")) {
-                    player.sendMessage(plugin.messages.MSG_COMMANDMESSAGE2);
+                if (main.getConfig().getBoolean(Config.SHOW_MESSAGE_WHEN_BREAKING_BLOCK_AND_COLLECTION_IS_ENABLED)) {
+                    player.sendMessage(main.messages.MSG_HINT_DISABLE);
                 }
             }
         }

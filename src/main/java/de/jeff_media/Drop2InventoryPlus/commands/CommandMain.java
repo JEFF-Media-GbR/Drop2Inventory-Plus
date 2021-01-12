@@ -1,5 +1,6 @@
 package de.jeff_media.Drop2InventoryPlus.commands;
 
+import de.jeff_media.Drop2InventoryPlus.Config;
 import de.jeff_media.Drop2InventoryPlus.Main;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -23,7 +24,7 @@ public class CommandMain implements CommandExecutor {
 			return false;
 		}
 
-		if(args.length>0 && args[0].equalsIgnoreCase("debug")) {
+		if(args.length>0 && args[0].equalsIgnoreCase(Config.DEBUG)) {
 			return CommandDebug.run(main,sender,command,args);
 		}
 
@@ -58,16 +59,16 @@ public class CommandMain implements CommandExecutor {
 			return true;
 		}
 
-		if(main.getConfig().getBoolean("always-enabled")) {
+		if(main.getConfig().getBoolean(Config.ALWAYS_ENABLED)) {
 			sender.sendMessage(ChatColor.RED+"Drop2Inventory cannot be disabled.");
 			return true;
 		}
 		
 		main.togglePlayerSetting(p);
 		if(main.getPlayerSetting(p).enabled) {
-			sender.sendMessage(main.messages.MSG_ACTIVATED);
+			sender.sendMessage(main.messages.MSG_ENABLED);
 		} else {
-			sender.sendMessage(main.messages.MSG_DEACTIVATED);
+			sender.sendMessage(main.messages.MSG_DISABLED);
 		}
 		return true;
 		

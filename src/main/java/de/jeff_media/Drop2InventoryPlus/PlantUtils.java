@@ -26,7 +26,7 @@ public class PlantUtils {
             BlockFace.WEST,
     };
 
-    PlantUtils() {
+    public PlantUtils() {
         plants = new LinkedList<Material>();
         for(String s : plantNames) {
             if(Material.getMaterial(s) != null) {
@@ -35,7 +35,7 @@ public class PlantUtils {
         }
     }
 
-    static boolean isChorusTree(Block block) {
+    public static boolean isChorusTree(Block block) {
         if(block.getType().name().equals("CHORUS_PLANT")) return true;
         return false;
     }
@@ -47,7 +47,7 @@ public class PlantUtils {
         return false;
     }
 
-    boolean isPlant(Block block) {
+    public boolean isPlant(Block block) {
 
         Material mat = block.getType();
         for(Material p : plants) {
@@ -65,7 +65,7 @@ public class PlantUtils {
         return false;
     }
 
-    static ArrayList<Block> getPlant(Block block) {
+    public static ArrayList<Block> getPlant(Block block) {
         Material mat = block.getType();
         ArrayList<Block> blocks = new ArrayList<>();
         blocks.add(block);
@@ -96,11 +96,11 @@ public class PlantUtils {
         }
     }
 
-    static void destroyPlant(ArrayList<Block> blocks) {
+    public static void destroyPlant(ArrayList<Block> blocks) {
         blocks.forEach((b) -> b.setType(Material.AIR,true));
     }
 
-    static Material getPlantDrop(Material mat) {
+    public static Material getPlantDrop(Material mat) {
         switch(mat.name()) {
             case "KELP_PLANT":
                 return Material.getMaterial("KELP");
@@ -109,7 +109,7 @@ public class PlantUtils {
         }
     }
 
-    static int getAmountInList(ArrayList<Block> blocks, Material search) {
+    public static int getAmountInList(ArrayList<Block> blocks, Material search) {
         int i = 0;
         for(Block block : blocks) {
             if(block.getType()==search) i++;

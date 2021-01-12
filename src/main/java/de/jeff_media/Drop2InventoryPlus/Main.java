@@ -7,6 +7,9 @@ import java.util.HashMap;
 import java.util.UUID;
 
 import de.jeff_media.Drop2InventoryPlus.commands.CommandMain;
+import de.jeff_media.Drop2InventoryPlus.listeners.BlockDropItemListener;
+import de.jeff_media.Drop2InventoryPlus.listeners.GenericListener;
+import de.jeff_media.Drop2InventoryPlus.listeners.ItemSpawnListener;
 import de.jeff_media.PluginProtect.PluginProtect;
 import de.jeff_media.PluginUpdateChecker.PluginUpdateChecker;
 import org.bstats.bukkit.Metrics;
@@ -14,7 +17,6 @@ import org.bukkit.*;
 import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
-import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
 
 
@@ -25,12 +27,12 @@ public class Main extends JavaPlugin {
 	PluginUpdateChecker updateChecker;
 	public Messages messages;
 	public Utils utils;
-	MendingUtils mendingUtils;
+	public MendingUtils mendingUtils;
 	IngotCondenser ingotCondenser;
 	ItemSpawnListener itemSpawnListener;
 	HotbarStuffer hotbarStuffer;
 
-	HashMap<String, PlayerSetting> perPlayerSettings;
+	public HashMap<String, PlayerSetting> perPlayerSettings;
 
 	ArrayList<Material> disabledBlocks;
 	ArrayList<String> disabledWorlds;
@@ -40,16 +42,9 @@ public class Main extends JavaPlugin {
 	ArrayList<String> disabledMobs;
 
 	boolean mobsIsWhitelist = false;
-	boolean autoCondense = false;
 
-
-
-	final int mcVersion = Utils.getMcVersion(Bukkit.getBukkitVersion());
+	public final int mcVersion = Utils.getMcVersion(Bukkit.getBukkitVersion());
 	boolean usingMatchingConfig = true;
-	boolean enabledByDefault = false;
-	boolean showMessageWhenBreakingBlock = true;
-	boolean showMessageWhenBreakingBlockAndCollectionIsDisabled = false;
-	boolean showMessageAgainAfterLogout=true;
 
 	private static final int updateCheckInterval = 86400;
 
@@ -64,21 +59,15 @@ public class Main extends JavaPlugin {
 		messages = new Messages(this);
 		ingotCondenser = new IngotCondenser(this);
 
-		enabledByDefault = getConfig().getBoolean("enabled-by-default");
-		showMessageWhenBreakingBlock = getConfig().getBoolean("show-message-when-breaking-block");
-		showMessageWhenBreakingBlockAndCollectionIsDisabled = getConfig().getBoolean("show-message-when-breaking-block-and-collection-is-disabled");
-		showMessageAgainAfterLogout = getConfig().getBoolean("show-message-again-after-logout");
-		autoCondense = getConfig().getBoolean("auto-condense");
-
 		// Update Checker start
 		if(updateChecker != null) {
 			updateChecker.stop();
 		}
 		updateChecker = new PluginUpdateChecker(this,"https://api.jeff-media.de/drop2inventoryplus/drop2inventoryplus-latest-version.txt",
 				null,null,"https://paypal.me/mfnalex");
-		if (getConfig().getString("check-for-updates", "true").equalsIgnoreCase("true")) {
+		if (getConfig().getString(Config.CHECK_FOR_UPDATES, "true").equalsIgnoreCase("true")) {
 			updateChecker.check((long) updateCheckInterval);
-		} else if (getConfig().getString("check-for-updates", "true").equalsIgnoreCase("on-startup")) {
+		} else if (getConfig().getString(Config.CHECK_FOR_UPDATES, "true").equalsIgnoreCase("on-startup")) {
 			updateChecker.check();
 		}
 		// Update Checker end
@@ -112,9 +101,9 @@ public class Main extends JavaPlugin {
 		
 
 
-		this.getServer().getPluginManager().registerEvents(new Listener(this), this);
-		this.getServer().getPluginManager().registerEvents(itemSpawnListener,this);
-		this.getServer().getPluginManager().registerEvents(new DropListener(this),this);
+		//this.getServer().getPluginManager().registerEvents(new GenericListener(this), this);
+		//this.getServer().getPluginManager().registerEvents(itemSpawnListener,this);
+		this.getServer().getPluginManager().registerEvents(new BlockDropItemListener(this),this);
 
 		utils = new Utils(this);
 		mendingUtils = new MendingUtils(this);
@@ -149,21 +138,21 @@ public class Main extends JavaPlugin {
 
 		saveDefaultConfig();
 
-		if(getConfig().getBoolean("debug",false)) {
+		if(getConfig().getBoolean(Config.DEBUG,false)) {
 			debug=true;
 		}
 
-		if(getConfig().isSet("enabled-blocks")) {
+		if(getConfig().isSet(Config.ENABLED_BLOCKS)) {
 			blocksIsWhitelist=true;
 		}
-		if(getConfig().isSet("enabled-mobs")) {
+		if(getConfig().isSet(Config.ENABLED_MOBS)) {
 			mobsIsWhitelist=true;
 		}
 
 		disabledBlocks = new ArrayList<>();
 		disabledMobs = new ArrayList<>();
 		disabledWorlds = new ArrayList<>();
-		ArrayList<String> disabledBlocksStrings = (ArrayList<String>) (blocksIsWhitelist ? getConfig().getStringList("enabled-blocks") : getConfig().getStringList("disabled-blocks"));
+		ArrayList<String> disabledBlocksStrings = (ArrayList<String>) (blocksIsWhitelist ? getConfig().getStringList(Config.ENABLED_BLOCKS) : getConfig().getStringList(Config.DISABLED_BLOCKS));
 		for(String s : disabledBlocksStrings) {
 			Material m = Material.getMaterial(s.toUpperCase());
 			if( m == null) {
@@ -173,16 +162,16 @@ public class Main extends JavaPlugin {
 				debug("Adding block to blocks " + (blocksIsWhitelist ? "whitelist" : "blacklist")+": "+m.name());
 			}
 		}
-		for(String s : (mobsIsWhitelist ? getConfig().getStringList("enabled-mobs") : getConfig().getStringList("disabled-mobs"))) {
+		for(String s : (mobsIsWhitelist ? getConfig().getStringList(Config.ENABLED_MOBS) : getConfig().getStringList(Config.DISABLED_MOBS))) {
 			disabledMobs.add(s.toLowerCase());
 			debug("Adding mob to mobs " + (mobsIsWhitelist ? "whitelist" : "blacklist") + ": "+s.toLowerCase());
 		}
-		for(String s : getConfig().getStringList("disabled-worlds")) {
+		for(String s : getConfig().getStringList(Config.DISABLED_WORLDS)) {
 			disabledWorlds.add(s.toLowerCase());
 			debug("Adding world to worlds blacklist: "+s.toLowerCase());
 		}
 
-		if (getConfig().getInt("config-version", 0) != currentConfigVersion) {
+		if (getConfig().getInt(Config.CONFIG_VERSION, 0) != currentConfigVersion) {
 			showOldConfigWarning();
 
 			ConfigUpdater configUpdater = new ConfigUpdater(this);
@@ -198,20 +187,23 @@ public class Main extends JavaPlugin {
 		}
 		
 		// Default settings
-		getConfig().addDefault("enabled-by-default", false);
-		getConfig().addDefault("always-enabled",false);
-		getConfig().addDefault("check-for-updates", "true");
-		getConfig().addDefault("show-message-when-breaking-block", true);
-		getConfig().addDefault("show-message-when-breaking-block-and-collection-is-enabled", false);
-		getConfig().addDefault("show-message-again-after-logout", true);
-		getConfig().addDefault("collect-block-drops", true);
-		getConfig().addDefault("collect-mob-drops", true);
-		getConfig().addDefault("collect-block-exp", true);
-		getConfig().addDefault("collect-mob-exp", true);
-		getConfig().addDefault("auto-condense",false);
-		getConfig().addDefault("detect-legacy-drops",true);
-		getConfig().addDefault("avoid-hotbar",false);
-		getConfig().addDefault("ignore-items-on-hoppers",true);
+		getConfig().addDefault(Config.ENABLED_BY_DEFAULT, false);
+		getConfig().addDefault(Config.ALWAYS_ENABLED,false);
+		getConfig().addDefault(Config.CHECK_FOR_UPDATES, "true");
+		getConfig().addDefault(Config.SHOW_MESSAGE_WHEN_BREAKING_BLOCK, true);
+		getConfig().addDefault(Config.SHOW_MESSAGE_WHEN_BREAKING_BLOCK_AND_COLLECTION_IS_ENABLED, false);
+		getConfig().addDefault(Config.SHOW_MESSAGE_AGAIN_AFTER_LOGOUT, true);
+		getConfig().addDefault(Config.COLLECT_BLOCK_DROPS, true);
+		getConfig().addDefault(Config.COLLECT_MOB_DROPS, true);
+		getConfig().addDefault(Config.COLLECT_BLOCK_EXP, true);
+		getConfig().addDefault(Config.COLLECT_MOB_EXP, true);
+		getConfig().addDefault(Config.AUTO_CONDENSE,false);
+		getConfig().addDefault(Config.DETECT_LEGACY_DROPS,true);
+		getConfig().addDefault(Config.DETECT_LEGACY_DROPS_RANGE,6.0D);
+		getConfig().addDefault(Config.IGNORE_ITEMS_ON_HOPPERS,true);
+		getConfig().addDefault(Config.IGNORE_ITEMS_ON_HOPPERS_RANGE,7.0D);
+		getConfig().addDefault(Config.AVOID_HOTBAR,false);
+		getConfig().addDefault(Config.WARN_WHEN_INVENTORY_IS_FULL,true);
 	}
 
 	private void migrateFromFreeVersion() {
@@ -225,7 +217,7 @@ public class Main extends JavaPlugin {
 		}
 	}
 
-	protected boolean isWorldDisabled(String worldName) {
+	public boolean isWorldDisabled(String worldName) {
 		return disabledWorlds.contains(worldName.toLowerCase());
 	}
 
@@ -252,13 +244,13 @@ public class Main extends JavaPlugin {
 			boolean activeForThisPlayer;
 
 			if (!playerFile.exists()) {
-				activeForThisPlayer = enabledByDefault;
+				activeForThisPlayer = getConfig().getBoolean(Config.ENABLED_BY_DEFAULT);
 			} else {
 				activeForThisPlayer = playerConfig.getBoolean("enabled");
 			}
 
 			PlayerSetting newSettings = new PlayerSetting(activeForThisPlayer);
-			if (!getConfig().getBoolean("show-message-again-after-logout")) {
+			if (!getConfig().getBoolean(Config.SHOW_MESSAGE_AGAIN_AFTER_LOGOUT)) {
 				newSettings.hasSeenMessage = playerConfig.getBoolean("hasSeenMessage");
 			}
 			
@@ -273,9 +265,9 @@ public class Main extends JavaPlugin {
 		perPlayerSettings.get(p.getUniqueId().toString()).enabled = !enabled;
 }
 	
-	boolean enabled(Player p) {
+	public boolean enabled(Player p) {
 
-		if(getConfig().getBoolean("always-enabled")) return true;
+		if(getConfig().getBoolean(Config.ALWAYS_ENABLED)) return true;
 		
 		// The following is for all the lazy server admins who use /reload instead of properly restarting their
 		// server ;) I am sometimes getting stacktraces although it is clearly stated that /reload is NOT
@@ -289,7 +281,7 @@ public class Main extends JavaPlugin {
 		return perPlayerSettings.get(p.getUniqueId().toString()).enabled;
 }
 	
-	void unregisterPlayer(Player p) {
+	public void unregisterPlayer(Player p) {
 		UUID uniqueId = p.getUniqueId();
 		if (perPlayerSettings.containsKey(uniqueId.toString())) {
 			PlayerSetting setting = perPlayerSettings.get(p.getUniqueId().toString());

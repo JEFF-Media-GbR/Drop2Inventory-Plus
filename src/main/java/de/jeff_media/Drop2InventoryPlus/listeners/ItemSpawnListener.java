@@ -1,5 +1,8 @@
-package de.jeff_media.Drop2InventoryPlus;
+package de.jeff_media.Drop2InventoryPlus.listeners;
 
+import de.jeff_media.Drop2InventoryPlus.Config;
+import de.jeff_media.Drop2InventoryPlus.Main;
+import de.jeff_media.Drop2InventoryPlus.PlayerSetting;
 import org.bukkit.GameMode;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -21,10 +24,10 @@ import java.util.function.Predicate;
 
 public class ItemSpawnListener implements @NotNull Listener {
 
-    Main main;
-    ArrayList<UUID> drops;
+    private final Main main;
+    public ArrayList<UUID> drops;
 
-    ItemSpawnListener(Main main) {
+    public ItemSpawnListener(Main main) {
         this.main=main;
         drops = new ArrayList<UUID>();
     }
@@ -48,7 +51,7 @@ public class ItemSpawnListener implements @NotNull Listener {
             return;
         }
 
-        if(!main.getConfig().getBoolean("detect-legacy-drops")) {
+        if(!main.getConfig().getBoolean(Config.DETECT_LEGACY_DROPS)) {
             main.debug("detect-legacy-drops = false");
             return;
         }
@@ -58,21 +61,30 @@ public class ItemSpawnListener implements @NotNull Listener {
         ItemStack is = e.getEntity().getItemStack();
         if(is.getType() == Material.AIR) return;
         if(is.getAmount() == 0) return;
-        Player p;
-        p = getNearestPlayer(e.getLocation());
 
-        if(p==null) return;
-        main.debug("Nearest player: "+p.getName());
+        // ignore-items-on-hoppers
+        if(main.getConfig().getBoolean("ignore-items-on-hoppers")) {
+            if(isAboveHopper(e.getLocation())) {
+                return;
+            }
+        }
 
-        if(isInvFull(p)) {
+        Player player;
+        player = getNearestPlayer(e.getLocation());
+
+        if(player==null) return;
+        main.debug("Nearest player: "+player.getName());
+
+        if(isInvFull(player)) {
             main.debug("Skipping collection because inv is full");
+            main.messages.sendActionBarMessage(player, main.messages.MSG_INVENTORY_FULL);
             return;
         }
 
         // Fix for /reload
-        main.registerPlayer(p);
+        main.registerPlayer(player);
 
-        if (p.getGameMode() == GameMode.CREATIVE) {
+        if (player.getGameMode() == GameMode.CREATIVE) {
             return;
         }
 
@@ -81,33 +93,43 @@ public class ItemSpawnListener implements @NotNull Listener {
             return;
         }
 
-        if (!main.getConfig().getBoolean("collect-block-drops")) {
+        if (!main.getConfig().getBoolean(Config.COLLECT_BLOCK_DROPS)) {
             return;
         }
 
 
-        PlayerSetting setting = main.perPlayerSettings.get(p.getUniqueId().toString());
+        PlayerSetting setting = main.perPlayerSettings.get(player.getUniqueId().toString());
 
-        if (!main.enabled(p)) {
+        if (!main.enabled(player)) {
             if (!setting.hasSeenMessage) {
                 setting.hasSeenMessage = true;
-                if (main.getConfig().getBoolean("show-message-when-breaking-block")) {
-                    p.sendMessage(main.messages.MSG_COMMANDMESSAGE);
+                if (main.getConfig().getBoolean(Config.SHOW_MESSAGE_WHEN_BREAKING_BLOCK)) {
+                    player.sendMessage(main.messages.MSG_HINT_ENABLE);
                 }
             }
             return;
         }
         if (!setting.hasSeenMessage) {
             setting.hasSeenMessage = true;
-            if (main.getConfig().getBoolean("show-message-when-breaking-block-and-collection-is-enabled")) {
-                p.sendMessage(main.messages.MSG_COMMANDMESSAGE2);
+            if (main.getConfig().getBoolean(Config.SHOW_MESSAGE_WHEN_BREAKING_BLOCK_AND_COLLECTION_IS_ENABLED)) {
+                player.sendMessage(main.messages.MSG_HINT_DISABLE);
             }
         }
 
-        main.debug("Player "+p.getName()+" collected legacy drop "+is);
+        main.debug("Player "+player.getName()+" collected legacy drop "+is);
 
-        main.utils.addOrDrop(is,p);
+        main.utils.addOrDrop(is,player,e.getLocation());
         e.getEntity().remove();
+    }
+
+    private boolean isAboveHopper(Location location) {
+        for(int i = 0; i <= 7; i++) {
+            if(location.getBlock().getRelative(0,i,0).getType()==Material.HOPPER) {
+                main.debug("ItemSpawn above Hopper detected");
+                return true;
+            }
+        }
+        return false;
     }
 
     private boolean isInvFull(Player p) {
@@ -121,7 +143,8 @@ public class ItemSpawnListener implements @NotNull Listener {
     private Player getNearestPlayer(Location location) throws NoSuchMethodError {
 
         ArrayList<Player> players = new ArrayList<Player>();
-        for(Entity e : location.getWorld().getNearbyEntities(location, 6, 6, 6, new Predicate<Entity>() {
+        double detectionRange = main.getConfig().getDouble(Config.DETECT_LEGACY_DROPS_RANGE);
+        for(Entity e : location.getWorld().getNearbyEntities(location, detectionRange, detectionRange, detectionRange, new Predicate<Entity>() {
             @Override
             public boolean test(Entity entity) {
                 return entity instanceof Player && !((Player) entity).isDead();

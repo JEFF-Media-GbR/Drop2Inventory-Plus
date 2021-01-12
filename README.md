@@ -13,3 +13,6 @@
 
 ## Todo
 List of blocks that will have a sound effect when picked up @hungvipso88 on discord
+
+## Added
+Inv full message

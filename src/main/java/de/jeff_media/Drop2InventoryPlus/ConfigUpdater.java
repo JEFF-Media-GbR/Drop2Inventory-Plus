@@ -35,14 +35,14 @@ public class ConfigUpdater {
         File oldConfigFile = new File(main.getDataFolder().getAbsolutePath() + File.separator + "config.old.yml");
         FileConfiguration oldConfig = YamlConfiguration.loadConfiguration(oldConfigFile);
 
-        if(oldConfig.getBoolean("debug")) {
+        if(oldConfig.getBoolean(Config.DEBUG)) {
             main.debug=true;
             /*if(plugin.debug) {
                 plugin.getLogger().warning("WARNING: oldConfig.debug != plugin.debug");
                 plugin.debug=true;
             }*/
             /*plugin.getLogger().warning("Test 1: " + plugin.blocksIsWhitelist);
-            plugin.getLogger().warning("Test 2: " + oldConfig.isSet("enabled-blocks"));*/
+            plugin.getLogger().warning("Test 2: " + oldConfig.isSet(Config.ENABLED_BLOCKS));*/
 
 
 
@@ -88,7 +88,7 @@ public class ConfigUpdater {
             }
             else if (line.startsWith("disabled-mobs:")) {
                 newline = null;
-                newLines.add(main.mobsIsWhitelist ? "enabled-mobs" : "disabled-mobs:");
+                newLines.add(main.mobsIsWhitelist ? Config.ENABLED_MOBS : "disabled-mobs:");
                 if (main.disabledMobs != null) {
                     for (String mob : main.disabledMobs) {
                         newLines.add("- " + mob);

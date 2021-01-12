@@ -1,5 +1,9 @@
-package de.jeff_media.Drop2InventoryPlus;
+package de.jeff_media.Drop2InventoryPlus.listeners;
 
+import de.jeff_media.Drop2InventoryPlus.Config;
+import de.jeff_media.Drop2InventoryPlus.Main;
+import de.jeff_media.Drop2InventoryPlus.PlayerSetting;
+import de.jeff_media.Drop2InventoryPlus.Utils;
 import org.bukkit.GameMode;
 import org.bukkit.World;
 import org.bukkit.entity.Item;
@@ -13,11 +17,11 @@ import org.jetbrains.annotations.NotNull;
 import java.util.List;
 
 
-public class DropListener implements @NotNull Listener {
+public class BlockDropItemListener implements @NotNull Listener {
 
     Main main;
 
-    DropListener(Main main) {
+    public BlockDropItemListener(Main main) {
         this.main = main;
     }
 
@@ -26,6 +30,13 @@ public class DropListener implements @NotNull Listener {
         main.debug("");
         main.debug("###BlockDropItemEvent");
         List<Item> items = event.getItems();
+
+        if(main.debug) {
+            for (Item item : event.getItems()) {
+                main.debug(item.getItemStack().toString());
+            }
+        }
+
         Player player = event.getPlayer();
         World world = event.getPlayer().getLocation().getWorld();
 
@@ -44,7 +55,7 @@ public class DropListener implements @NotNull Listener {
             return;
         }
 
-        if(main.getConfig().getBoolean("permissions-per-tool",false) && !(Utils.hasPermissionForThisTool(player.getInventory().getItemInMainHand().getType(),player))) {
+        if(main.getConfig().getBoolean(Config.PERMISSIONS_PER_TOOL,false) && !(Utils.hasPermissionForThisTool(player.getInventory().getItemInMainHand().getType(),player))) {
             main.debug("R: No Permission for tool");
             return;
         }
@@ -52,15 +63,18 @@ public class DropListener implements @NotNull Listener {
         main.registerPlayer(event.getPlayer());
 
         if (player.getGameMode() == GameMode.CREATIVE) {
+            main.debug("R: Creative");
             return;
         }
 
         // disabled block?
         if (!main.utils.isBlockEnabled(event.getBlockState().getType())) {
+            main.debug("R: Block disabled");
             return;
         }
 
-        if (!main.getConfig().getBoolean("collect-block-drops")) {
+        if (!main.getConfig().getBoolean(Config.COLLECT_BLOCK_DROPS)) {
+            main.debug("R: Block Drop Collection disabled");
             return;
         }
 
@@ -70,22 +84,25 @@ public class DropListener implements @NotNull Listener {
         if (!main.enabled(player)) {
             if (!setting.hasSeenMessage) {
                 setting.hasSeenMessage = true;
-                if (main.getConfig().getBoolean("show-message-when-breaking-block")) {
-                    player.sendMessage(main.messages.MSG_COMMANDMESSAGE);
+                if (main.getConfig().getBoolean(Config.SHOW_MESSAGE_WHEN_BREAKING_BLOCK)) {
+                    player.sendMessage(main.messages.MSG_HINT_ENABLE);
                 }
             }
+            main.debug("R: Player has Drop2Inv disabled");
             return;
         }
         if (!setting.hasSeenMessage) {
             setting.hasSeenMessage = true;
-            if (main.getConfig().getBoolean("show-message-when-breaking-block-and-collection-is-enabled")) {
-                player.sendMessage(main.messages.MSG_COMMANDMESSAGE2);
+            if (main.getConfig().getBoolean(Config.SHOW_MESSAGE_WHEN_BREAKING_BLOCK_AND_COLLECTION_IS_ENABLED)) {
+                player.sendMessage(main.messages.MSG_HINT_DISABLE);
             }
         }
 
+        main.debug("Collecting drops");
+
         for(Item item : items) {
             main.debug("Drop detected: "+item.getItemStack());
-            main.utils.addOrDrop(item.getItemStack(),event.getPlayer());
+            main.utils.addOrDrop(item.getItemStack(),event.getPlayer(),event.getBlock().getLocation());
         }
 
         event.setCancelled(true);

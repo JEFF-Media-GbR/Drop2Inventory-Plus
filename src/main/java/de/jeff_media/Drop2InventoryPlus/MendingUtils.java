@@ -17,7 +17,7 @@ public class MendingUtils {
         this.main=main;
     }
 
-    static boolean hasMending(@Nullable ItemStack item,boolean onlyDamaged) {
+    public static boolean hasMending(@Nullable ItemStack item, boolean onlyDamaged) {
         if(item==null) return false;
         if(!item.hasItemMeta()) return false;
         ItemMeta meta = item.getItemMeta();
@@ -45,10 +45,10 @@ public class MendingUtils {
         // onlyDamaged is true in 1.16+ and only tries to repair damaged items
 
         List<ItemStack> list = new ArrayList<>();
-        if(hasMending(main.utils.getItemInMainHand(inv),onlyDamaged)) list.add(inv.getItemInMainHand());
-        if(main.mcVersion>8) {
+        if(hasMending(inv.getItemInMainHand(),onlyDamaged)) list.add(inv.getItemInMainHand());
+        //if(main.mcVersion>8) {
             if(hasMending(inv.getItemInOffHand(),onlyDamaged)) list.add(inv.getItemInOffHand());
-        }
+        //}
         for(ItemStack item : inv.getArmorContents()) {
             if(hasMending(item,onlyDamaged)) {
                 list.add(item);
@@ -82,7 +82,7 @@ public class MendingUtils {
         }
     }
 
-    int tryMending(PlayerInventory inv, int exp, boolean onlyDamaged) {
+    public int tryMending(PlayerInventory inv, int exp, boolean onlyDamaged) {
         int repairs = 0;
         while(repairs < exp) {
             ItemStack item = getReparableItem(inv,onlyDamaged);

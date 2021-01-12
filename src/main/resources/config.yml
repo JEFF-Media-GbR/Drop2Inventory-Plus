@@ -31,6 +31,9 @@ collect-mob-exp: true
 # e.g. 9 diamonds -> 1 diamond_block etc
 auto-condense: false
 
+# shows an actionbar message to a player once their inventory is full
+warn-when-inventory-is-full: true
+
 # when set to true, players with automatic drop collection DISABLED will be
 # shown a message on how to enable Drop2Inventory
 # when they break a block for the first time.
@@ -59,9 +62,11 @@ permissions-per-tool: false
 # This allows Drop2Inventory to detect block drops that other plugins create
 # in ominous ways.
 detect-legacy-drops: true
+detect-legacy-drops-range: 6 #TODO
 
 # When using "detect-legacy-drops", ignore items spawning on hoppers
 ignore-items-on-hoppers: true
+ignore-items-on-hoppers-range: 7 #TODO
 
 # when enabled, Drop2Inventory will only put stuff into the hotbar when
 # the regular inventory is full.
