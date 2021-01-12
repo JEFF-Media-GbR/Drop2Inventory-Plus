@@ -25,13 +25,13 @@ import java.util.Random;
 public class GenericListener implements org.bukkit.event.Listener {
 
     private final Main main;
-    Random random = new Random();
+    final Random random = new Random();
     boolean onlyDamaged;
-    PlantUtils plantUtils = new PlantUtils();
+    final PlantUtils plantUtils = new PlantUtils();
 
     public GenericListener(Main main) {
         this.main = main;
-        boolean onlyDamaged = main.mcVersion >= 16 ? true : false;
+        boolean onlyDamaged = main.mcVersion >= 16;
     }
 
     @EventHandler

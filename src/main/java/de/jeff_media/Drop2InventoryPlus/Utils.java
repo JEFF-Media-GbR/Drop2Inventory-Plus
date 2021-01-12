@@ -1,8 +1,5 @@
 package de.jeff_media.Drop2InventoryPlus;
 
-import net.md_5.bungee.api.ChatMessageType;
-import net.md_5.bungee.api.chat.BaseComponent;
-import net.md_5.bungee.api.chat.TextComponent;
 import org.apache.commons.lang.math.NumberUtils;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -10,7 +7,6 @@ import org.bukkit.entity.Item;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.PlayerInventory;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.HashMap;
@@ -21,7 +17,7 @@ import java.io.File;
 
 public class Utils {
 
-    Main main;
+    final Main main;
 
     public Utils(Main main) {
         this.main = main;
@@ -49,13 +45,9 @@ public class Utils {
 
     public boolean isMobEnabled(LivingEntity mob) {
         if (!main.mobsIsWhitelist) {
-            if (main.disabledMobs.contains(mob.getType().name().toLowerCase()))
-                return false;
-            return true;
+            return !main.disabledMobs.contains(mob.getType().name().toLowerCase());
         }
-        if (main.disabledMobs.contains(mob.getType().name().toLowerCase()))
-            return true;
-        return false;
+        return main.disabledMobs.contains(mob.getType().name().toLowerCase());
     }
 
     public void addOrDrop(ItemStack item, Player player, @Nullable Location dropLocation) {

@@ -19,7 +19,7 @@ import java.util.List;
 
 public class BlockDropItemListener implements @NotNull Listener {
 
-    Main main;
+    final Main main;
 
     public BlockDropItemListener(Main main) {
         this.main = main;

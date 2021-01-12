@@ -14,7 +14,7 @@ import org.bukkit.configuration.file.YamlConfiguration;
 
 public class ConfigUpdater {
 
-    Main main;
+    final Main main;
 
     ConfigUpdater(Main main) {
         this.main = main;
@@ -25,7 +25,7 @@ public class ConfigUpdater {
         try {
             Files.deleteIfExists(new File(main.getDataFolder().getAbsolutePath()+File.separator+"config.old.yml").toPath());
         } catch (IOException e) {
-
+            main.getLogger().severe("Could not delete config.old.yml");
         }
 
         Utils.renameFileInPluginDir(main, "config.yml", "config.old.yml");

@@ -35,7 +35,7 @@ public class IngotCondenser {
         BufferedReader reader = new BufferedReader(new InputStreamReader(in));
         while(reader.ready()) {
             String line = reader.readLine();
-            String parts[] = line.split(",");
+            String[] parts = line.split(",");
             Material item = Material.getMaterial(parts[0].toUpperCase());
             Material block = Material.getMaterial(parts[2].toUpperCase());
             int number = Integer.valueOf(parts[1]);
@@ -82,9 +82,9 @@ public class IngotCondenser {
     }
 
     class CondensationMap {
-        Material item;
-        int number;
-        Material block;
+        final Material item;
+        final int number;
+        final Material block;
         CondensationMap(Material mat, int number, Material block) {
             this.item = mat;
             this.number = number;

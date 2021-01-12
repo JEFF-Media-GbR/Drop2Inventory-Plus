@@ -36,19 +36,15 @@ public class PlantUtils {
     }
 
     public static boolean isChorusTree(Block block) {
-        if(block.getType().name().equals("CHORUS_PLANT")) return true;
-        return false;
+        return block.getType() == Material.CHORUS_PLANT;
     }
 
     static boolean isPartOfChorusTree(Block block) {
         Material mat = block.getType();
-        if(mat.name().equals("CHORUS_PLANT")
-                || mat.name().equals("CHORUS_FLOWER")) return true;
-        return false;
+        return mat == Material.CHORUS_PLANT || mat == Material.CHORUS_FLOWER;
     }
 
     public boolean isPlant(Block block) {
-
         Material mat = block.getType();
         for(Material p : plants) {
             if(mat == p) {
@@ -60,9 +56,7 @@ public class PlantUtils {
 
     static boolean matchesPlant(Material origin, Material current) {
         if(origin==current) return true;
-        if(origin.name().equals("KELP_PLANT")
-                && current.name().equals("KELP")) return true;
-        return false;
+        return origin == Material.KELP_PLANT && current == Material.KELP;
     }
 
     public static ArrayList<Block> getPlant(Block block) {
@@ -101,9 +95,10 @@ public class PlantUtils {
     }
 
     public static Material getPlantDrop(Material mat) {
-        switch(mat.name()) {
-            case "KELP_PLANT":
-                return Material.getMaterial("KELP");
+        //noinspection SwitchStatementWithTooFewBranches
+        switch(mat) {
+            case KELP_PLANT:
+                return Material.KELP;
             default:
                 return mat;
         }

@@ -7,7 +7,7 @@ import org.bukkit.entity.Player;
 
 public class Messages {
 
-	Main plugin;
+	final Main plugin;
 
 	final public String
 			MSG_ENABLED,

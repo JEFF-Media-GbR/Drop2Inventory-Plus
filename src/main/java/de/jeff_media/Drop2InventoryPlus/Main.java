@@ -8,7 +8,6 @@ import java.util.UUID;
 
 import de.jeff_media.Drop2InventoryPlus.commands.CommandMain;
 import de.jeff_media.Drop2InventoryPlus.listeners.BlockDropItemListener;
-import de.jeff_media.Drop2InventoryPlus.listeners.GenericListener;
 import de.jeff_media.Drop2InventoryPlus.listeners.ItemSpawnListener;
 import de.jeff_media.PluginProtect.PluginProtect;
 import de.jeff_media.PluginUpdateChecker.PluginUpdateChecker;
@@ -22,7 +21,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 public class Main extends JavaPlugin {
 
-	int currentConfigVersion = 115;
+	final int currentConfigVersion = 115;
 
 	PluginUpdateChecker updateChecker;
 	public Messages messages;
@@ -50,9 +49,9 @@ public class Main extends JavaPlugin {
 
 	public boolean debug = false;
 
-	public static String uid = "%%__USER__%%";
+	public static final String uid = "%%__USER__%%";
 
-	public boolean reload() {
+	public void reload() {
 		createConfig();
 		reloadConfig();
 		perPlayerSettings = new HashMap<String, PlayerSetting>();
@@ -71,7 +70,7 @@ public class Main extends JavaPlugin {
 			updateChecker.check();
 		}
 		// Update Checker end
-		return false;
+		return;
 	}
 
 	public void onEnable() {

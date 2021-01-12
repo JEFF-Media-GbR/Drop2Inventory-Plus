@@ -11,7 +11,7 @@ import org.bukkit.entity.Player;
 
 public class CommandMain implements CommandExecutor {
 	
-	Main main;
+	final Main main;
 	
 	public CommandMain(Main main) {
 		this.main = main;

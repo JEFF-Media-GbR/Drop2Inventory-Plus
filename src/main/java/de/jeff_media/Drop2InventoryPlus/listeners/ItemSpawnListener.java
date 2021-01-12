@@ -25,7 +25,7 @@ import java.util.function.Predicate;
 public class ItemSpawnListener implements @NotNull Listener {
 
     private final Main main;
-    public ArrayList<UUID> drops;
+    public final ArrayList<UUID> drops;
 
     public ItemSpawnListener(Main main) {
         this.main=main;
