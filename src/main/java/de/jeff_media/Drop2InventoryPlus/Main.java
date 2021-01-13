@@ -11,7 +11,6 @@ import de.jeff_media.Drop2InventoryPlus.commands.CommandMain;
 import de.jeff_media.Drop2InventoryPlus.listeners.BlockDropItemListener;
 import de.jeff_media.Drop2InventoryPlus.listeners.GenericListener;
 import de.jeff_media.Drop2InventoryPlus.listeners.ItemSpawnListener;
-import de.jeff_media.PluginProtect.PluginProtect;
 import de.jeff_media.PluginUpdateChecker.PluginUpdateChecker;
 import org.bstats.bukkit.Metrics;
 import org.bukkit.*;
@@ -67,9 +66,6 @@ public class Main extends JavaPlugin {
 	}
 
 	public void onEnable() {
-
-		PluginProtect pp = new PluginProtect(this,"https://api.jeff-media.de/vfy.php",uid);
-		pp.check();
 
 		if(Bukkit.getPluginManager().getPlugin("Drop2Inventory")!=null) {
 			//Plugin oldPlugin = Bukkit.getPluginManager().getPlugin("Drop2Inventory");

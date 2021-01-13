@@ -18,6 +18,7 @@ List of blocks that will have a sound effect when picked up @hungvipso88 on disc
 Inv full message
 Hopper detection
 dispenser/dropper detection
+custom event priority
 
 ## To check
 dispenser detection
