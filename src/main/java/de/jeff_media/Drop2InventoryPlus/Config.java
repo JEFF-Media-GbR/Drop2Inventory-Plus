@@ -31,4 +31,6 @@ public class Config {
     public static final String WARN_WHEN_INVENTORY_IS_FULL = "warn-when-inventory-is-full";
 
     public static final String EVENT_PRIO_BLOCKDROPITEMEVENT = "block-drop-item-event-priority";
+
+    public static final String IGNORE_ITEMS_FROM_DISPENSERS = "ignore-items-from-dispensers";
 }

@@ -24,7 +24,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 public class Main extends JavaPlugin {
 
-	final int currentConfigVersion = 116;
+	final int currentConfigVersion = 117;
 	PluginUpdateChecker updateChecker;
 	public Messages messages;
 	public Utils utils;
@@ -190,6 +190,7 @@ public class Main extends JavaPlugin {
 		getConfig().addDefault(Config.AVOID_HOTBAR,false);
 		getConfig().addDefault(Config.WARN_WHEN_INVENTORY_IS_FULL,true);
 		getConfig().addDefault(Config.EVENT_PRIO_BLOCKDROPITEMEVENT,"HIGH");
+		getConfig().addDefault(Config.IGNORE_ITEMS_FROM_DISPENSERS, true);
 	}
 
 	private void migrateFromFreeVersion() {

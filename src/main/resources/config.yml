@@ -97,15 +97,21 @@ detect-legacy-drops-range: 6
 # When using "detect-legacy-drops", ignore items spawning on hoppers
 # The vertical range checks up to X blocks below the item for hoppers
 # The horizontal range additionaly checks to the sides.
-# Example: You set vertical range to 7 and horizontal to 0. That means
-# the hopper will be detected if it is up to 7 blocks below the item
+# Example: You set vertical range to 10 and horizontal to 0. That means
+# the hopper will be detected if it is up to 10 blocks below the item
 # and has the same x and z coordinate.
-# If you set the horizontal range to 1, the hopper can also be up to 1
+# If you set the horizontal range to 5, the hopper can also be up to 5
 # block away on the x and z axis from the item, while still being
 # detected.
 ignore-items-on-hoppers: true
-ignore-items-on-hoppers-vertical-range: 10
-ignore-items-on-hoppers-horizontal-range: 1
+ignore-items-on-hoppers-vertical-range: 20
+ignore-items-on-hoppers-horizontal-range: 5
+
+# When set to true, items from dispensers and droppers will not automatically
+# be collected by nearby players.
+# When set to false, items from dispensers and droppers will automatically
+# be collected by the closest player within "detect-legacy-drops-range" radius.
+ignore-items-from-dispensers: true
 
 #########################
 #### disabled worlds ####
@@ -242,4 +248,4 @@ message-when-breaking-block2: "&7Hint: Type &6/drop2inventory&7 or &6/drop2inv&7
 debug: false
 
 # please do not change the following line manually!
-config-version: 116
+config-version: 117

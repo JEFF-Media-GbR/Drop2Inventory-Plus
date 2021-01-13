@@ -7,11 +7,14 @@ import org.bukkit.GameMode;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
+import org.bukkit.block.BlockFace;
 import org.bukkit.entity.Entity;
+import org.bukkit.entity.Item;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
+import org.bukkit.event.block.BlockDispenseEvent;
 import org.bukkit.event.entity.ItemSpawnEvent;
 import org.bukkit.event.player.PlayerDropItemEvent;
 import org.bukkit.inventory.ItemStack;
@@ -63,17 +66,13 @@ public class ItemSpawnListener implements @NotNull Listener {
         if(is.getType() == Material.AIR) return;
         if(is.getAmount() == 0) return;
 
-        // ignore-items-on-hoppers
-        if(main.getConfig().getBoolean("ignore-items-on-hoppers")) {
-            if(isAboveHopper(itemSpawnEvent.getLocation())) {
-                return;
-            }
-        }
-
         Player player;
         player = getNearestPlayer(itemSpawnEvent.getLocation());
 
-        if(player==null) return;
+        if(player==null) {
+            main.debug("R: No player nearby.");
+            return;
+        }
         main.debug("Nearest player: "+player.getName());
 
         if(isInvFull(player)) {
@@ -101,7 +100,6 @@ public class ItemSpawnListener implements @NotNull Listener {
             return;
         }
 
-
         PlayerSetting setting = main.perPlayerSettings.get(player.getUniqueId().toString());
 
         if (!main.enabled(player)) {
@@ -120,13 +118,29 @@ public class ItemSpawnListener implements @NotNull Listener {
             }
         }
 
+        if(main.getConfig().getBoolean(Config.IGNORE_ITEMS_FROM_DISPENSERS)) {
+            if(isNearbyDispenser(itemSpawnEvent.getEntity())) {
+                main.debug("Ignoring this item because nearby dispenser was found.");
+                return;
+            }
+        }
+
+        if(main.getConfig().getBoolean(Config.IGNORE_ITEMS_ON_HOPPERS)) {
+            if(isAboveHopper(itemSpawnEvent.getLocation(),is)) {
+                main.debug("Ignoring this item because nearby hopper was found.");
+                return;
+            }
+        }
+
         main.debug("Player "+player.getName()+" collected legacy drop "+is);
 
         main.utils.addOrDrop(is,player,itemSpawnEvent.getLocation());
         itemSpawnEvent.getEntity().remove();
     }
 
-    private boolean isAboveHopper(Location location) {
+    private boolean isAboveHopper(Location location, ItemStack itemStack) {
+
+        main.debug("Checking if "+itemStack.toString()+" is above a hopper at "+location.toString());
 
         int vRange = main.getConfig().getInt(Config.IGNORE_ITEMS_ON_HOPPERS_VERTICAL_RANGE);
         int hRange = main.getConfig().getInt(Config.IGNORE_ITEMS_ON_HOPPERS_HORIZONTAL_RANGE);
@@ -135,12 +149,28 @@ public class ItemSpawnListener implements @NotNull Listener {
             for(int x = -hRange; x <= hRange; x++) {
                 for(int z = -hRange; z <= hRange; z++) {
                     Block current = location.getBlock().getRelative(x, -y, z);
-                    main.debug("  Hopper Check: " + current.getType() + " @ " + current.getLocation());
+                    //main.debug("  Hopper Check: " + current.getType() + " @ " + current.getLocation());
                     if (current.getType() == Material.HOPPER) {
                         main.debug("ItemSpawn above Hopper detected");
                         return true;
                     }
                 }
+            }
+        }
+        main.debug("No hopper nearby.");
+        return false;
+    }
+
+    private boolean isDispenserOrSimilar(Block block) {
+        return block.getType()==Material.DISPENSER || block.getType()==Material.DROPPER;
+    }
+
+    private boolean isNearbyDispenser(Item item) {
+        Location location = item.getLocation();
+        for(BlockFace face : BlockFace.values()) {
+            Block current = location.getBlock().getRelative(face);
+            if(isDispenserOrSimilar(current)) {
+                return true;
             }
         }
         return false;
