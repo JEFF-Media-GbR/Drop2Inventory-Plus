@@ -2,9 +2,52 @@
 ##### Drop2Inventory #####
 ##########################
 
+##########################
+#####  Permissions   #####
+##########################
+
+# drop2inventory.use
+#   Allows to use the /drop2inv command and use automatic drop collection
 #
-# Please note that players will need the permission drop2inventory.use to use this plugin
+# drop2inventory.others
+#   Allows to toggle Drop2Inventory for other players
 #
+# drop2inventory.autocondense
+#   Allows to use the auto-condense feature to turn ingots into blocks (see condense.txt)
+#
+# drop2inventory.tool.<tool>
+#   Allows to use Drop2Inventory for the specified tool when "permissions-per-tool" is enabled
+#   Available tools: pickaxe, axe, hoe, sword, shovel, hand
+#
+# drop2inventory.reload
+#   Allows to reload the config file
+#
+# drop2inventory.debug
+#   Allows to toggle debug mode
+
+##########################
+#####    Commands    #####
+##########################
+
+# You can also use "/drop2inventory" instead of "/drop2inv"
+
+# /drop2inv
+#   Permission: drop2inventory.use
+#   Toggle automatic drop collection for the current Player
+#
+# /drop2inv <player>
+#   Permission: drop2inventory.others
+#   Toggle automatic drop collection for <player>
+#
+# /drop2inv reload
+#   Permission: drop2inventory.reload
+#   Reloads the config file
+#
+# /drop2inv debug
+#   Permission: drop2inventory.debug
+#   Toggle debug mode
+
+
 
 # When set to true, Drop2Inventory is always enabled and cannot be disabled by players
 # I suggest you set it to true if you use Drop2Inventory to reduce server lag
@@ -105,7 +148,7 @@ detect-legacy-drops-range: 6
 # detected.
 ignore-items-on-hoppers: true
 ignore-items-on-hoppers-vertical-range: 20
-ignore-items-on-hoppers-horizontal-range: 5
+ignore-items-on-hoppers-horizontal-range: 3
 
 # When set to true, items from dispensers and droppers will not automatically
 # be collected by nearby players.

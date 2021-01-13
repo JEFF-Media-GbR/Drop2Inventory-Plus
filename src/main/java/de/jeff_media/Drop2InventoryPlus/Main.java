@@ -182,7 +182,8 @@ public class Main extends JavaPlugin {
 		getConfig().addDefault(Config.DETECT_LEGACY_DROPS,true);
 		getConfig().addDefault(Config.DETECT_LEGACY_DROPS_RANGE,6.0D);
 		getConfig().addDefault(Config.IGNORE_ITEMS_ON_HOPPERS,true);
-		getConfig().addDefault(Config.IGNORE_ITEMS_ON_HOPPERS_VERTICAL_RANGE,7.0D);
+		getConfig().addDefault(Config.IGNORE_ITEMS_ON_HOPPERS_VERTICAL_RANGE,20);
+		getConfig().addDefault(Config.IGNORE_ITEMS_ON_HOPPERS_HORIZONTAL_RANGE, 3);
 		getConfig().addDefault(Config.AVOID_HOTBAR,false);
 		getConfig().addDefault(Config.WARN_WHEN_INVENTORY_IS_FULL,true);
 		getConfig().addDefault(Config.EVENT_PRIO_BLOCKDROPITEMEVENT,"HIGH");

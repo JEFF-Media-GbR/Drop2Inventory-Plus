@@ -1,9 +1,6 @@
 package de.jeff_media.Drop2InventoryPlus.listeners;
 
-import de.jeff_media.Drop2InventoryPlus.Config;
-import de.jeff_media.Drop2InventoryPlus.Main;
-import de.jeff_media.Drop2InventoryPlus.PlayerSetting;
-import de.jeff_media.Drop2InventoryPlus.Utils;
+import de.jeff_media.Drop2InventoryPlus.*;
 import org.bukkit.GameMode;
 import org.bukkit.World;
 import org.bukkit.entity.Item;
@@ -90,7 +87,7 @@ public class BlockDropItemListener implements @NotNull Listener {
             return;
         }
 
-        if (!player.hasPermission("drop2inventory.use")) {
+        if (!player.hasPermission(Permissions.ALLOW_USE)) {
             main.debug("R: No Permission");
             return;
         }

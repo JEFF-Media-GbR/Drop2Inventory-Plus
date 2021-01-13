@@ -62,20 +62,20 @@ public class Utils {
     public static boolean hasPermissionForThisTool(Material mat, Player p) {
         String matt = mat.name().toLowerCase();
         if (matt.contains("_pickaxe")) {
-            return p.hasPermission("drop2inventory.tool.pickaxe");
+            return p.hasPermission(Permissions.ALLOW_TOOL_PICKAXE);
         }
         if (matt.contains("_axe")) {
-            return p.hasPermission("drop2inventory.tool.axe");
+            return p.hasPermission(Permissions.ALLOW_TOOL_AXE);
         }
         if (matt.contains("_hoe")) {
-            return p.hasPermission("drop2inventory.tool.hoe");
+            return p.hasPermission(Permissions.ALLOW_TOOL_HOE);
         }
         if (matt.contains("_sword")) {
-            return p.hasPermission("drop2inventory.tool.sword");
+            return p.hasPermission(Permissions.ALLOW_TOOL_SWORD);
         }
         if (matt.contains("_shovel")) {
-            return p.hasPermission("drop2inventory.tool.shovel");
-        } else return p.hasPermission("drop2inventory.tool.hand");
+            return p.hasPermission(Permissions.ALLOW_TOOL_SHOVEL);
+        } else return p.hasPermission(Permissions.ALLOW_TOOL_HAND);
     }
 
     public void addOrDrop(ItemStack[] items, Player player, @Nullable Location dropLocation) {
@@ -101,7 +101,7 @@ public class Utils {
                 main.messages.sendActionBarMessage(player, main.messages.MSG_INVENTORY_FULL);
             }
             if (main.getConfig().getBoolean(Config.AUTO_CONDENSE)
-                    && player.hasPermission(Permissions.AUTO_CONDENSE)) {
+                    && player.hasPermission(Permissions.ALLOW_AUTO_CONDENSE)) {
                 main.debug("Auto condensing " + item.getType().name());
                 main.ingotCondenser.condense(player.getInventory(), item.getType());
             }

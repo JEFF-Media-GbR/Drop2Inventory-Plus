@@ -1,11 +1,14 @@
-main: de.jeff_media.Drop2InventoryPlus.Main
-name: Drop2InventoryPlus
+main: ${spigot.main}
+name: ${spigot.name}
 version: ${project.version}
-api-version: 1.13
-description: All block and mob drops go directly into the player's inventory! Reduces lag and frustration!
-author: mfnalex
-prefix: Drop2Inventory
+description: ${spigot.description}
+prefix: ${spigot.prefix}
+authors: [mfnalex, JEFF Media GbR]
+website: "https://www.spigotmc.org/resources/authors/mfnalex.175238/"
 database: false
+api-version: "1.13"
+load: POSTWORLD
+
 softdepend:
   - WorldEdit
   - WorldGuard
@@ -13,9 +16,11 @@ softdepend:
   - CoreProtect
   - PlaceholderAPI
   - Drop2Inventory
+
 permissions:
   drop2inventory.use:
     description: Allows usage of Drop2Inventory
+
 commands:
   drop2inventory:
     description: Toggle automatic drop collection for the current or another player

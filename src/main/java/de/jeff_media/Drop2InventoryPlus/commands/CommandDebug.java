@@ -1,6 +1,7 @@
 package de.jeff_media.Drop2InventoryPlus.commands;
 
 import de.jeff_media.Drop2InventoryPlus.Main;
+import de.jeff_media.Drop2InventoryPlus.Permissions;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
@@ -14,7 +15,7 @@ public class CommandDebug {
 
     static boolean run(Main main, CommandSender sender, Command command, String[] args)  {
 
-        if(!sender.hasPermission("drop2inventory.debug")) {
+        if(!sender.hasPermission(Permissions.ALLOW_TOGGLE_DEBUG)) {
             sender.sendMessage(command.getPermissionMessage());
             return true;
         }

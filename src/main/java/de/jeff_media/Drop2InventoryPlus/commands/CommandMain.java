@@ -2,6 +2,7 @@ package de.jeff_media.Drop2InventoryPlus.commands;
 
 import de.jeff_media.Drop2InventoryPlus.Config;
 import de.jeff_media.Drop2InventoryPlus.Main;
+import de.jeff_media.Drop2InventoryPlus.Permissions;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
@@ -32,7 +33,7 @@ public class CommandMain implements CommandExecutor {
 			return CommandReload.run(main,sender,command,args);
 		}
 
-		if(args.length>0 && sender.hasPermission("drop2inventory.others")) {
+		if(args.length>0 && sender.hasPermission(Permissions.ALLOW_TOGGLE_OTHERS)) {
 			Player player = Bukkit.getPlayer(args[0]);
 			if(player == null) {
 				sender.sendMessage(ChatColor.RED+"Player "+ChatColor.DARK_RED+args[0]+ChatColor.RED+" not found.");
@@ -54,7 +55,7 @@ public class CommandMain implements CommandExecutor {
 
 		Player p = (Player) sender;
 
-		if(!sender.hasPermission("drop2inventory.use")) {
+		if(!sender.hasPermission(Permissions.ALLOW_USE)) {
 			sender.sendMessage(main.getCommand("drop2inventory").getPermissionMessage());
 			return true;
 		}

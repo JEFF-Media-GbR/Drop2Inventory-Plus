@@ -69,7 +69,7 @@ public class GenericListener implements org.bukkit.event.Listener {
 
         Player killer = victim.getKiller();
 
-        if (!killer.hasPermission("drop2inventory.use")) {
+        if (!killer.hasPermission(Permissions.ALLOW_USE)) {
             main.debug("Return: victim.getKiller ! permission drop2inventory.use");
             return;
         }
@@ -284,7 +284,7 @@ public class GenericListener implements org.bukkit.event.Listener {
 
         if(main.getConfig().getBoolean(Config.ALWAYS_ENABLED)) return true;
 
-        if (!player.hasPermission("drop2inventory.use")) {
+        if (!player.hasPermission(Permissions.ALLOW_USE)) {
             return false;
         }
 
