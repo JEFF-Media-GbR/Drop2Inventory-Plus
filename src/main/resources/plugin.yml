@@ -2,7 +2,7 @@ main: de.jeff_media.Drop2InventoryPlus.Main
 name: Drop2InventoryPlus
 version: ${project.version}
 api-version: 1.13
-description: Items dropped by breaking blocks will be put into your inventory
+description: All block and mob drops go directly into the player's inventory! Reduces lag and frustration!
 author: mfnalex
 prefix: Drop2Inventory
 database: false

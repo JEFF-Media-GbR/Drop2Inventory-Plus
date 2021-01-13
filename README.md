@@ -13,3 +13,12 @@
 
 ## Todo
 List of blocks that will have a sound effect when picked up @hungvipso88 on discord
+
+## Added
+Inv full message
+Hopper detection
+dispenser/dropper detection
+custom event priority
+
+## To check
+dispenser detection

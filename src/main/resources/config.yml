@@ -31,6 +31,9 @@ collect-mob-exp: true
 # e.g. 9 diamonds -> 1 diamond_block etc
 auto-condense: false
 
+# shows an actionbar message to a player once their inventory is full
+warn-when-inventory-is-full: true
+
 # when set to true, players with automatic drop collection DISABLED will be
 # shown a message on how to enable Drop2Inventory
 # when they break a block for the first time.
@@ -54,15 +57,6 @@ show-message-again-after-logout: true
 # blocks farmed with a hoe, etc.
 permissions-per-tool: false
 
-# when enabled, Drop2Inventory tries to detect items that other plugins drop
-# using the World#dropItem methods.
-# This allows Drop2Inventory to detect block drops that other plugins create
-# in ominous ways.
-detect-legacy-drops: true
-
-# When using "detect-legacy-drops", ignore items spawning on hoppers
-ignore-items-on-hoppers: true
-
 # when enabled, Drop2Inventory will only put stuff into the hotbar when
 # the regular inventory is full.
 # when disabled, Items will be put into the hotbar if possible (default
@@ -71,13 +65,53 @@ ignore-items-on-hoppers: true
 # "unarmed" skill
 avoid-hotbar: false
 
-# Should we check for updates?
-# When enabled, a message is printed in the console if a new version has
-# been found, and OPs will be notified when they join the server.
-# When set to true, we will check for updates on startup and every 24 hours
-# When set to on-startup, we will only check on startup
-# When set to false, don't check for updates
-check-for-updates: true
+#################################
+#####     Event priority    #####
+#################################
+
+# Normally, Drop2Inventory should run on the highest possible priority.
+# However, there are some plugins known to clear the BlockDropItemEvent's
+# drops list, for example EcoEnchants. This is bad as Drop2Inventory can
+# then detect some drops only using the "Legacy drop detection" (see below).
+# Please do not change this value unless you really know what it does or
+# if I told you to do so.
+# Available values are LOWEST, LOW, NORMAL, HIGH, HIGHEST, MONITOR
+block-drop-item-event-priority: HIGH
+
+#################################
+##### Legacy drop detection #####
+#################################
+
+# when enabled, Drop2Inventory tries to detect items that other plugins drop
+# using the World#dropItem methods.
+# This allows Drop2Inventory to detect block drops that other plugins create
+# in ominous ways.
+# This will also detect drops by dispensers, cactus farms etc. but you
+# can adjust that using the options below.
+# I suggest you leave all settings in this section untouched, unless your
+# server has huge automatic farms in which case you can either disable
+# this completely, or adjust the hopper settings below.
+detect-legacy-drops: true
+detect-legacy-drops-range: 6
+
+# When using "detect-legacy-drops", ignore items spawning on hoppers
+# The vertical range checks up to X blocks below the item for hoppers
+# The horizontal range additionaly checks to the sides.
+# Example: You set vertical range to 10 and horizontal to 0. That means
+# the hopper will be detected if it is up to 10 blocks below the item
+# and has the same x and z coordinate.
+# If you set the horizontal range to 5, the hopper can also be up to 5
+# block away on the x and z axis from the item, while still being
+# detected.
+ignore-items-on-hoppers: true
+ignore-items-on-hoppers-vertical-range: 20
+ignore-items-on-hoppers-horizontal-range: 5
+
+# When set to true, items from dispensers and droppers will not automatically
+# be collected by nearby players.
+# When set to false, items from dispensers and droppers will automatically
+# be collected by the closest player within "detect-legacy-drops-range" radius.
+ignore-items-from-dispensers: true
 
 #########################
 #### disabled worlds ####
@@ -136,6 +170,22 @@ disabled-blocks:
 # change the "disabled-mobs:" to "enabled-mobs:"
 
 disabled-mobs:
+
+##########################
+##### Update Checker #####
+##########################
+
+# Checks for updates (asynchronously).
+# When enabled, a message is printed in the console if a new
+# version has been found, and OPs will be notified when they join the server
+# When set to true, check for updates on startup and every X hours (see "check-interval" below)
+# When set to on-startup, only check on server startup
+# When set to false, don't check for updates
+check-for-updates: true
+
+# When you set "check-for-updates" to true, you can define the amount
+# of hours inbetween each update check.
+check-interval: 4
 
 #########################
 ##### localization ######
@@ -198,4 +248,4 @@ message-when-breaking-block2: "&7Hint: Type &6/drop2inventory&7 or &6/drop2inv&7
 debug: false
 
 # please do not change the following line manually!
-config-version: 115
+config-version: 117

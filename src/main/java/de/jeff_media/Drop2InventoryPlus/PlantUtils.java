@@ -26,8 +26,8 @@ public class PlantUtils {
             BlockFace.WEST,
     };
 
-    PlantUtils() {
-        plants = new LinkedList<Material>();
+    public PlantUtils() {
+        plants = new LinkedList<>();
         for(String s : plantNames) {
             if(Material.getMaterial(s) != null) {
                 plants.add(Material.getMaterial(s));
@@ -35,20 +35,16 @@ public class PlantUtils {
         }
     }
 
-    static boolean isChorusTree(Block block) {
-        if(block.getType().name().equals("CHORUS_PLANT")) return true;
-        return false;
+    public static boolean isChorusTree(Block block) {
+        return block.getType() == Material.CHORUS_PLANT;
     }
 
     static boolean isPartOfChorusTree(Block block) {
         Material mat = block.getType();
-        if(mat.name().equals("CHORUS_PLANT")
-                || mat.name().equals("CHORUS_FLOWER")) return true;
-        return false;
+        return mat == Material.CHORUS_PLANT || mat == Material.CHORUS_FLOWER;
     }
 
-    boolean isPlant(Block block) {
-
+    public boolean isPlant(Block block) {
         Material mat = block.getType();
         for(Material p : plants) {
             if(mat == p) {
@@ -60,12 +56,10 @@ public class PlantUtils {
 
     static boolean matchesPlant(Material origin, Material current) {
         if(origin==current) return true;
-        if(origin.name().equals("KELP_PLANT")
-                && current.name().equals("KELP")) return true;
-        return false;
+        return origin == Material.KELP_PLANT && current == Material.KELP;
     }
 
-    static ArrayList<Block> getPlant(Block block) {
+    public static ArrayList<Block> getPlant(Block block) {
         Material mat = block.getType();
         ArrayList<Block> blocks = new ArrayList<>();
         blocks.add(block);
@@ -96,20 +90,21 @@ public class PlantUtils {
         }
     }
 
-    static void destroyPlant(ArrayList<Block> blocks) {
+    public static void destroyPlant(ArrayList<Block> blocks) {
         blocks.forEach((b) -> b.setType(Material.AIR,true));
     }
 
-    static Material getPlantDrop(Material mat) {
-        switch(mat.name()) {
-            case "KELP_PLANT":
-                return Material.getMaterial("KELP");
+    public static Material getPlantDrop(Material mat) {
+        //noinspection SwitchStatementWithTooFewBranches
+        switch(mat) {
+            case KELP_PLANT:
+                return Material.KELP;
             default:
                 return mat;
         }
     }
 
-    static int getAmountInList(ArrayList<Block> blocks, Material search) {
+    public static int getAmountInList(ArrayList<Block> blocks, Material search) {
         int i = 0;
         for(Block block : blocks) {
             if(block.getType()==search) i++;

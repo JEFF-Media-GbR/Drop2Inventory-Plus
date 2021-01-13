@@ -35,10 +35,10 @@ public class IngotCondenser {
         BufferedReader reader = new BufferedReader(new InputStreamReader(in));
         while(reader.ready()) {
             String line = reader.readLine();
-            String parts[] = line.split(",");
+            String[] parts = line.split(",");
             Material item = Material.getMaterial(parts[0].toUpperCase());
             Material block = Material.getMaterial(parts[2].toUpperCase());
-            int number = Integer.valueOf(parts[1]);
+            int number = Integer.parseInt(parts[1]);
             if(item==null) {
                 //main.getLogger().info("Skipping unknown material "+parts[0]);
                 continue;
@@ -47,7 +47,7 @@ public class IngotCondenser {
                 //main.getLogger().info("Skipping unknown material "+parts[2]);
                 continue;
             }
-            condensationMap.put(item,new CondensationMap(item,number,block));
+            condensationMap.put(item, new CondensationMap(item, number, block));
         }
     }
 
@@ -81,10 +81,10 @@ public class IngotCondenser {
         }
     }
 
-    class CondensationMap {
-        Material item;
-        int number;
-        Material block;
+    static class CondensationMap {
+        final Material item;
+        final int number;
+        final Material block;
         CondensationMap(Material mat, int number, Material block) {
             this.item = mat;
             this.number = number;

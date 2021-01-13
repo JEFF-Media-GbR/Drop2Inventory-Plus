@@ -1,0 +1,75 @@
+[CENTER][B][SIZE=6][COLOR=#0080ff][I]You don't have to pick up the drops anymore! [/I][/COLOR][/SIZE][/B][/CENTER]
+
+[CENTER][URL='https://discord.jeff-media.de'][IMG]https://api.jeff-media.de/img/discord1.png[/IMG] [/URL]
+
+[ATTACH=full]383065[/ATTACH]
+[/CENTER]
+[COLOR=rgb(0, 0, 0)][SIZE=6]Why Premium?[/SIZE]
+[SIZE=4]The free version of Drop2Inventory will no longer be maintained because some people decided to leave bad reviews without even filing a bug report beforehand. That is also the reason why I dropped support for all version prior to 1.13. Dropping 1.8-1.12 support means it will be much easier and faster for me to add new features and fix bugs.
+[/SIZE][/COLOR]
+[COLOR=#000000][SIZE=4][B]Unlike the free version of Drop2Inventory, this version features the following new additions:[/B][/SIZE][/COLOR]
+[LIST]
+[*][COLOR=#000000][SIZE=4][B]mcMMO Support[/B][/SIZE][/COLOR]
+[*][COLOR=#000000][SIZE=4][B]Detection of hoppers (to not interrupt your auto farms)[/B] with configurable ranges[/SIZE][/COLOR]
+[*][COLOR=#000000][SIZE=4][B]Detection of dispensers / droppers[/B][/SIZE][/COLOR]
+[*][COLOR=#000000][SIZE=4][B]Ability to control auto-condensing of ingots [/B](and basically any other item [configurable]) via permissions[/SIZE][/COLOR]
+[*][COLOR=#000000][SIZE=4][B]Support for almost every 3rd party plugin[/B][/SIZE][/COLOR]
+[*][COLOR=#000000][SIZE=4][B]Custom event priorities in case other plugins cause trouble[/B][/SIZE][/COLOR]
+[*][COLOR=#000000][SIZE=4][B]Ability to show an action bar message when trying to pickup stuff while your inventory is full[/B][/SIZE][/COLOR]
+[*][COLOR=#000000][SIZE=4][B]Excluse support via Discord[/B][/SIZE][/COLOR]
+[*][COLOR=#000000][SIZE=4][B][B]Increased performance by huge amounts[/B][/B][/SIZE][/COLOR]
+[*][COLOR=#000000][SIZE=4][B]Many more features to come in the future[/B][/SIZE][/COLOR]
+[/LIST]
+
+[SIZE=6]What is this?[/SIZE]
+[SIZE=4][COLOR=#000000]When you break a block or kill a mob, the drops will get put directly into your inventory. If your inventory is full, the items will drop on the floor. Players need the permission [I][B]drop2inventory.use[/B] [/I]to use this feature. [/COLOR][COLOR=rgb(0, 0, 0)][B]The drop collection can be toggled per player[/B] using the command /drop2inv or /drop2inventory. You can also force every player to have Drop2Inventory enabled to reduce server lag by setting "always-enabled: true" in the config.yml.[/COLOR][/SIZE]
+[CENTER][/CENTER]
+
+[COLOR=#000000][SIZE=4][B][I]Block drops, experience, Fortune enchantment and tool damage works just like in vanilla. [/I][/B][I]That means you get a random amount of glowstone dust when breaking glowstone, seeds along with wheat, etc.[/I][B][I] Works also for blocks that need certain tools and the silk touch enchantment[/I].[/B][/SIZE][/COLOR]
+
+[COLOR=rgb(0, 0, 0)][SIZE=4][COLOR=rgb(0, 0, 0)]Feature requests and bug reports only in the discussion or on my Discord please.
+
+[B]WorldGuard etc. supported:[/B] Drop2Inventory will not put the drop into your inventory when other plugins cancel the BlockDropItemEvent.
+[B]You can also disable Drop2Inventory for certain blocks or mobs.[/B] This is useful if you use other plugins that change the drops of specific blocks/mobs. [B]You can also use a whitelist instead.[/B] See the config file for more information.[/COLOR][/SIZE]
+
+[COLOR=rgb(0, 0, 0)][SIZE=6][COLOR=rgb(0, 0, 0)][COLOR=rgb(0, 0, 0)][SIZE=6]Commands[/SIZE][/COLOR][/COLOR]
+[COLOR=#000000][SIZE=4][B]/drop2inv [/B]or [B]/drop2inventory[/B][/SIZE][/COLOR][/SIZE][/COLOR][/COLOR]
+[COLOR=rgb(0, 0, 0)][COLOR=rgb(0, 0, 0)][SIZE=6][COLOR=#000000][SIZE=4]Toggles automatic drop collection per player[/SIZE][/COLOR][/SIZE][/COLOR][/COLOR]
+[COLOR=rgb(0, 0, 0)][COLOR=rgb(0, 0, 0)][SIZE=6][COLOR=#000000][SIZE=4][I]Permission: drop2inventory.use[/I][/SIZE][/COLOR][/SIZE][/COLOR][/COLOR]
+
+[COLOR=rgb(0, 0, 0)][COLOR=rgb(0, 0, 0)][SIZE=6]Permissions[/SIZE][/COLOR][/COLOR]
+[COLOR=#000000][SIZE=4][B]drop2inventory.use[/B]
+Allows usage of automatic drop collection
+
+[COLOR=rgb(0, 0, 0)][SIZE=4][B]drop2inventory.autocondense[/B]
+Allows you to auto-condense your ingots into blocks (configurable, of course)
+
+[COLOR=rgb(0, 0, 0)][SIZE=4][B]drop2inventory.reload[/B]
+Allows to reload the config using "/drop2inv reload"[/SIZE][/COLOR][/SIZE][/COLOR][/SIZE][/COLOR]
+[COLOR=#000000][SIZE=4][/SIZE][/COLOR]
+[COLOR=rgb(0, 0, 0)][COLOR=rgb(0, 0, 0)][SIZE=6]Notes[/SIZE]
+[SIZE=4]All messages are customizable.
+
+Please contact me in the discussion or on Discord when you encounter any bugs or have any ideas for improvements.[/SIZE][/COLOR][/COLOR]
+
+[SIZE=6]Auto config update[/SIZE]
+The configuration file is automatically generated if it does not exist. On every new Drop2InventoryPlus release, the config file will be updated to include the newest options. Your changes will be kept.
+
+[SIZE=6]Videos[/SIZE]
+[SPOILER="Spanish"][MEDIA=youtube]f_ClHgzVBn0[/MEDIA][/SPOILER]
+
+[SIZE=6]Other Plugins by me[/SIZE]
+[SIZE=4]If you want to sort your chests automatically, try out ChestSort:[/SIZE]
+[URL='https://www.spigotmc.org/resources/1-13-chestsort.59773/'][1.8-1.16] ChestSort: Automatically sorts all your chests![/URL]
+
+No time for putting your stuff into the right chests? Try out InvUnload:
+[SIZE=4][URL='https://www.spigotmc.org/resources/1-13-alpha-invunload.60095/'][1.13-1.16] InvUnload: Automatically puts your stuff in the right chests![/URL][/SIZE]
+
+Tired of climbing trees like a monkey?
+[URL='https://www.spigotmc.org/resources/1-13-lumberjack.60306/'][1.13-1.16] LumberJack: Enable tree gravity for easy woodcutting.[/URL]
+
+May the odds be ever in your favor! Have an angel protect your loot when you die.
+[URL='https://www.spigotmc.org/resources/1-13-angelchest.60383/'][1.12-1.16] AngelChest: Stores your inventory in a protected chest when you die![/URL]
+
+BestTools automatically chooes the best tools for you and refills your hotbar when you run out of items.
+[URL='https://www.spigotmc.org/resources/besttools.81490/'][1.13-1.16] BestTools: Mine and build faster than ever before![/URL]

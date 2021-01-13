@@ -1,13 +1,15 @@
 package de.jeff_media.Drop2InventoryPlus;
 
 import org.apache.commons.lang.math.NumberUtils;
+import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.entity.Item;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.PlayerInventory;
+import org.jetbrains.annotations.Nullable;
 
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -16,7 +18,7 @@ import java.io.File;
 
 public class Utils {
 
-    Main main;
+    final Main main;
 
     public Utils(Main main) {
         this.main = main;
@@ -42,31 +44,22 @@ public class Utils {
         return false;
     }
 
-    boolean isMobEnabled(LivingEntity mob) {
+    public boolean isMobEnabled(LivingEntity mob) {
         if (!main.mobsIsWhitelist) {
-            if (main.disabledMobs.contains(mob.getType().name().toLowerCase()))
-                return false;
-            return true;
+            return !main.disabledMobs.contains(mob.getType().name().toLowerCase());
         }
-        if (main.disabledMobs.contains(mob.getType().name().toLowerCase()))
-            return true;
-        return false;
+        return main.disabledMobs.contains(mob.getType().name().toLowerCase());
     }
 
-    void addOrDrop(ItemStack item, Player player) {
+    public void addOrDrop(ItemStack item, Player player, @Nullable Location dropLocation) {
         main.debug("addOrDrop: " + item.toString() + " -> " + player.getName());
 
         ItemStack[] items = new ItemStack[1];
         items[0] = item;
-        addOrDrop(items, player);
-		/*if(plugin.autoCondense) {
-			plugin.debug("Auto condensing "+item.getType().name());
-			plugin.ingotCondenser.condense(player.getInventory(), item.getType());
-		}*/
-
+        addOrDrop(items, player, dropLocation);
     }
 
-    static boolean hasPermissionForThisTool(Material mat, Player p) {
+    public static boolean hasPermissionForThisTool(Material mat, Player p) {
         String matt = mat.name().toLowerCase();
         if (matt.contains("_pickaxe")) {
             return p.hasPermission("drop2inventory.tool.pickaxe");
@@ -85,8 +78,9 @@ public class Utils {
         } else return p.hasPermission("drop2inventory.tool.hand");
     }
 
-    void addOrDrop(ItemStack[] items, Player player) {
-        if (main.getConfig().getBoolean("avoid-hotbar")) {
+    public void addOrDrop(ItemStack[] items, Player player, @Nullable Location dropLocation) {
+        main.debug("addOrDrop[] "+ Arrays.toString(items) +" -> "+player);
+        if (main.getConfig().getBoolean(Config.AVOID_HOTBAR)) {
             main.debug("  avoid-hotbar enabled");
             main.hotbarStuffer.stuffHotbar(player.getInventory());
         } else {
@@ -97,21 +91,27 @@ public class Utils {
             if (item == null) continue;
             if (item.getType() == Material.AIR) continue;
             HashMap<Integer, ItemStack> leftovers = player.getInventory().addItem(item);
+            boolean inventoryFull = false;
             for (ItemStack leftover : leftovers.values()) {
-                Item drop = player.getWorld().dropItemNaturally(player.getLocation(), leftover);
+                Item drop = player.getWorld().dropItemNaturally(dropLocation == null ? player.getLocation() : dropLocation, leftover);
                 main.itemSpawnListener.drops.add(drop.getUniqueId());
+                inventoryFull = true;
             }
-            if (main.autoCondense) {
+            if(inventoryFull && main.getConfig().getBoolean(Config.WARN_WHEN_INVENTORY_IS_FULL)) {
+                main.messages.sendActionBarMessage(player, main.messages.MSG_INVENTORY_FULL);
+            }
+            if (main.getConfig().getBoolean(Config.AUTO_CONDENSE)
+                    && player.hasPermission(Permissions.AUTO_CONDENSE)) {
                 main.debug("Auto condensing " + item.getType().name());
                 main.ingotCondenser.condense(player.getInventory(), item.getType());
             }
         }
-        if (main.getConfig().getBoolean("avoid-hotbar")) {
+        if (main.getConfig().getBoolean(Config.AVOID_HOTBAR)) {
             main.hotbarStuffer.unstuffHotbar(player.getInventory());
         }
     }
 
-    ItemStack getItemInMainHand(Player p) {
+    /*ItemStack getItemInMainHand(Player p) {
         if (main.mcVersion < 9) {
             return p.getInventory().getItemInHand();
         }
@@ -123,7 +123,7 @@ public class Utils {
             return inv.getItemInHand();
         }
         return inv.getItemInMainHand();
-    }
+    }*/
 
     // Returns 16 for 1.16, etc.
     static int getMcVersion(String bukkitVersionString) {
