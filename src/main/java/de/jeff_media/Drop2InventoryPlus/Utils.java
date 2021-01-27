@@ -86,10 +86,29 @@ public class Utils {
         } else {
             main.debug("  avoid-hotbar disabled");
         }
+        itemloop:
         for (ItemStack item : items) {
             main.debug(" addOrDrop#2");
             if (item == null) continue;
             if (item.getType() == Material.AIR) continue;
+            // Try offHand first (md_5 doesnt want that -> https://hub.spigotmc.org/jira/browse/SPIGOT-2436)
+            ItemStack offHandItem = player.getInventory().getItemInOffHand();
+            if(offHandItem != null && offHandItem.getType()==item.getType()) {
+                if(offHandItem.isSimilar(item)) {
+                    int spaceLeftInOffHand = offHandItem.getMaxStackSize()-offHandItem.getAmount();
+                    if (offHandItem.getAmount() < offHandItem.getMaxStackSize()) {
+                        // Enough space left in offhand
+                        if(item.getAmount() <= spaceLeftInOffHand) {
+                            offHandItem.setAmount(offHandItem.getAmount()+item.getAmount());
+                            continue itemloop;
+                        }
+                        int unstorable = item.getAmount() - spaceLeftInOffHand;
+                        offHandItem.setAmount(offHandItem.getMaxStackSize());
+                        item.setAmount(unstorable);
+                    }
+                }
+            }
+            // End offHand first
             HashMap<Integer, ItemStack> leftovers = player.getInventory().addItem(item);
             boolean inventoryFull = false;
             for (ItemStack leftover : leftovers.values()) {

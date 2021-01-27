@@ -20,5 +20,8 @@ Hopper detection
 dispenser/dropper detection
 custom event priority
 
+## Added in 1.1.0
+Prefer offhand slot if it already contains the item and there is space left
+
 ## To check
 dispenser detection
