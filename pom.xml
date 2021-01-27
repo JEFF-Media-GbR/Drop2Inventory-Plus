@@ -6,11 +6,11 @@
 
     <groupId>de.jeff_media</groupId>
     <name>Drop2InventoryPlus</name>
-    <version>1.0.0</version>
+    <version>1.1.0</version>
     <artifactId>${name}</artifactId>
 
     <properties>
-        <spigot.prefix>Drop2Inv</spigot.prefix>
+        <spigot.prefix>Drop2InventoryPlus</spigot.prefix>
         <spigot.description>All block and mob drops go directly into the player's inventory! Reduces lag and frustration!</spigot.description>
 
         <spigot.main>${groupId}.${name}.Main</spigot.main>
