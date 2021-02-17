@@ -252,36 +252,42 @@ message-disabled: "&7Automatic drop collection has been &cdisabled&7."
 message-enabled: "&7Automatic drop collection has been &aenabled&7."
 message-when-breaking-block: "&7Hint: Type &6/drop2inventory&7 or &6/drop2inv&7 to enable automatic drop collection."
 message-when-breaking-block2: "&7Hint: Type &6/drop2inventory&7 or &6/drop2inv&7 to disable automatic drop collection."
+message-inventory-full: "&cYour inventory is full."
 
 ##### Chinese Simplified
 #message-disabled: "&7自动掉落物收集已 &c关闭&7."
 #message-enabled: "&7自动掉落物收集已 &a开启&7."
 #message-when-breaking-block: "&7提示: 输入 &6/drop2inventory&7 或 &6/drop2inv&7 以启用自动掉落物收集."
 #message-when-breaking-block2: "&7提示: 输入 &6/drop2inventory&7 或 &6/drop2inv&7 以关闭自动掉落物收集."
+#message-inventory-full: "&cYour inventory is full."
 
 ##### German
 #message-disabled: "&7Automatisches Einsammeln &cdeaktiviert&7."
 #message-enabled: "&7Automatisches Einsammeln &aaktiviert&7."
 #message-when-breaking-block: "&7Hinweis: Benutze &6/drop2inventory&7 oder &6/drop2inv&7 um das automatische Einsammeln zu aktivieren."
 #message-when-breaking-block2: "&7Hinweis: Benutze &6/drop2inventory&7 oder &6/drop2inv&7 um das automatische Einsammeln zu deaktivieren."
+#message-inventory-full: "&cDein Inventar ist voll."
 
 ##### Russian
 #message-disabled: "&7Автоматический сбор дропа &cотключен&7."
 #message-enabled: "&7Автоматический сбор дропа &aвключен&7."
 #message-when-breaking-block: "&7Подсказка: Введите &6/drop2inventory&7 или &6/drop2inv&7 чтобы включить автоматический сбор дропа."
 #message-when-breaking-block2: "&7Подсказка: Введите &6/drop2inventory&7 или &6/drop2inv&7 чтобы отключить автоматический сбор дропа."
+#message-inventory-full: "&cYour inventory is full."
 
 ##### Spanish
 #message-disabled: "&7La coleccion automatica de dropeos ha sido &cdeshabilitada&7."
 #message-enabled: "&7La coleccion automatica de dropeos ha sido &ahabilitada&7."
 #message-when-breaking-block: "&7Drop2Inventory: Utiliza &6/drop2inventory&7 o &6/drop2inv&7 para habilitar la coleccion automatica de dropeos."
 #message-when-breaking-block2: "&7Drop2Inventory: Utiliza &6/drop2inventory&7 o &6/drop2inv&7 para deshabilitar la coleccion automatica de dropeos."
+#message-inventory-full: "&cYour inventory is full."
 
 ##### Turkish
 #message-disabled: "&7Otomatik toplama &cdeaktifleştirildi&7."
 #message-enabled: "&7Otomatik toplama &aktifleştirildi&7."
 #message-when-breaking-block: "&7İpucu: Otomatik toplamayı aktifleştirmek için &6/drop2inventory&7 ya da &6/drop2inv&7 yazınız."
 #message-when-breaking-block2: "&7İpucu: Otomatik toplamayı deaktifleştirmek için &6/drop2inventory&7 ya da &6/drop2inv&7 yazınız."
+#message-inventory-full: "&cEnvanterin dolu."
 
 #########################
 #####     Done!     #####
