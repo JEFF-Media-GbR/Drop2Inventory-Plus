@@ -55,7 +55,7 @@ public class Main extends JavaPlugin {
 			updateChecker.stop();
 		}
 		updateChecker = new PluginUpdateChecker(this,"https://api.jeff-media.de/drop2inventoryplus/drop2inventoryplus-latest-version.txt",
-				null,null,"https://paypal.me/mfnalex");
+				"https://www.spigotmc.org/resources/drop2inventoryplus.87784/","https://www.spigotmc.org/resources/drop2inventoryplus.87784/updates","https://paypal.me/mfnalex");
 		if (getConfig().getString(Config.CHECK_FOR_UPDATES, "true").equalsIgnoreCase("true")) {
 			updateChecker.check(getConfig().getInt(Config.UPDATE_CHECK_INTERVAL)*60*60);
 		} else if (getConfig().getString(Config.CHECK_FOR_UPDATES, "true").equalsIgnoreCase("on-startup")) {

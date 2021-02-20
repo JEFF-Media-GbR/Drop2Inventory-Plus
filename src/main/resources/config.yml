@@ -268,6 +268,13 @@ message-inventory-full: "&cYour inventory is full."
 #message-when-breaking-block2: "&7Hinweis: Benutze &6/drop2inventory&7 oder &6/drop2inv&7 um das automatische Einsammeln zu deaktivieren."
 #message-inventory-full: "&cDein Inventar ist voll."
 
+##### Korean
+#message-disabled: "&7아이템 자동 줍기 기능이 &c비활성화 &7되었습니다."
+#message-enabled: " &7아이템 자동 줍기 기능이 &a활성화 &7되었습니다."
+#message-when-breaking-block: "&e/drop2inventory &7 또는 &6/drop2inv&7 명령어를 사용하여 아이템 자동 수집를 활성화 하세요."
+#message-when-breaking-block2: "&e/drop2inventory &7 또는 &6/drop2inv&7 명령어를 사용하여 아이템 자동 수집를 비활성화 하세요."
+#message-inventory-full: "&c현재 인벤토리가 가득 찼습니다."
+
 ##### Russian
 #message-disabled: "&7Автоматический сбор дропа &cотключен&7."
 #message-enabled: "&7Автоматический сбор дропа &aвключен&7."
