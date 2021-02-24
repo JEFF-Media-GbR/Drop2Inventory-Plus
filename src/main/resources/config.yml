@@ -309,4 +309,4 @@ message-inventory-full: "&cYour inventory is full."
 debug: false
 
 # please do not change the following line manually!
-config-version: 117
+config-version: 118

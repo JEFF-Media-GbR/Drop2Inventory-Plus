@@ -52,6 +52,22 @@ public class GenericListener implements org.bukkit.event.Listener {
     @EventHandler(priority = EventPriority.HIGHEST)
     public void onEntityDeath(EntityDeathEvent event) {
         main.debug("###EntityDeathEvent");
+        main.debug(event.getEntity().getLastDamageCause().getCause().name());
+        if(main.getConfig().getBoolean(Config.IGNORE_DROPS_FROM_MOBS_KILLED_BY_LAVA)) {
+            if(event.getEntity().getLastDamageCause().getCause()== EntityDamageEvent.DamageCause.LAVA) {
+                main.debug("ignore drops from mobs killed by lava: true");
+                main.legacyDropDetectionManager.registerIgnoredLocation(event.getEntity().getLocation());
+                return;
+            }
+        }
+
+        if(main.getConfig().getBoolean(Config.IGNORE_DROPS_FROM_MOBS_KILLED_BY_LAVA)) {
+            if(event.getEntity().getLastDamageCause().getCause()== EntityDamageEvent.DamageCause.HOT_FLOOR) {
+                main.debug("ignore drops from mobs killed by magma: true");
+                main.legacyDropDetectionManager.registerIgnoredLocation(event.getEntity().getLocation());
+                return;
+            }
+        }
 
         LivingEntity victim = event.getEntity();
         if (victim.getKiller() == null) {
@@ -91,22 +107,6 @@ public class GenericListener implements org.bukkit.event.Listener {
         if (!main.utils.isMobEnabled(victim)) {
             main.debug("not enabled for victim type "+victim.getType().name());
             return;
-        }
-
-        if(main.getConfig().getBoolean(Config.IGNORE_DROPS_FROM_MOBS_KILLED_BY_LAVA)) {
-            if(event.getEntity().getLastDamageCause().getCause()== EntityDamageEvent.DamageCause.LAVA) {
-                main.debug("ignore drops from mobs killed by lava: true");
-                main.legacyDropDetectionManager.registerIgnoredLocation(event.getEntity().getLocation());
-                return;
-            }
-        }
-
-        if(main.getConfig().getBoolean(Config.IGNORE_DROPS_FROM_MOBS_KILLED_BY_LAVA)) {
-            if(event.getEntity().getLastDamageCause().getCause()== EntityDamageEvent.DamageCause.HOT_FLOOR) {
-                main.debug("ignore drops from mobs killed by magma: true");
-                main.legacyDropDetectionManager.registerIgnoredLocation(event.getEntity().getLocation());
-                return;
-            }
         }
 
 

@@ -24,7 +24,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 public class Main extends JavaPlugin {
 
-	final int currentConfigVersion = 117;
+	final int currentConfigVersion = 118;
 	PluginUpdateChecker updateChecker;
 	public Messages messages;
 	public Utils utils;
