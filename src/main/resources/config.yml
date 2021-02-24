@@ -156,6 +156,11 @@ ignore-items-on-hoppers-horizontal-range: 3
 # be collected by the closest player within "detect-legacy-drops-range" radius.
 ignore-items-from-dispensers: true
 
+# When set to true, Drop2Inventory will not automatically collect drops from
+# mobs killed by lava or magma
+ignore-drops-from-mobs-killed-by-lava: false
+ignore-drops-from-mobs-killed-by-magma: false
+
 #########################
 #### disabled worlds ####
 #########################

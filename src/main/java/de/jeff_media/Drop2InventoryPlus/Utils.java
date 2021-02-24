@@ -113,7 +113,7 @@ public class Utils {
             boolean inventoryFull = false;
             for (ItemStack leftover : leftovers.values()) {
                 Item drop = player.getWorld().dropItemNaturally(dropLocation == null ? player.getLocation() : dropLocation, leftover);
-                main.itemSpawnListener.drops.add(drop.getUniqueId());
+                main.legacyDropDetectionListener.drops.add(drop.getUniqueId());
                 inventoryFull = true;
             }
             if(inventoryFull && main.getConfig().getBoolean(Config.WARN_WHEN_INVENTORY_IS_FULL)) {

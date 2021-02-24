@@ -10,7 +10,8 @@ import com.google.common.base.Enums;
 import de.jeff_media.Drop2InventoryPlus.commands.CommandMain;
 import de.jeff_media.Drop2InventoryPlus.listeners.BlockDropItemListener;
 import de.jeff_media.Drop2InventoryPlus.listeners.GenericListener;
-import de.jeff_media.Drop2InventoryPlus.listeners.ItemSpawnListener;
+import de.jeff_media.Drop2InventoryPlus.listeners.LegacyDropDetectionListener;
+import de.jeff_media.Drop2InventoryPlus.tasks.LegacyDropDetectionManager;
 import de.jeff_media.PluginUpdateChecker.PluginUpdateChecker;
 import org.bstats.bukkit.Metrics;
 import org.bukkit.*;
@@ -29,7 +30,7 @@ public class Main extends JavaPlugin {
 	public Utils utils;
 	public MendingUtils mendingUtils;
 	IngotCondenser ingotCondenser;
-	ItemSpawnListener itemSpawnListener;
+	LegacyDropDetectionListener legacyDropDetectionListener;
 	HotbarStuffer hotbarStuffer;
 	public HashMap<String, PlayerSetting> perPlayerSettings;
 	ArrayList<Material> disabledBlocks;
@@ -40,8 +41,14 @@ public class Main extends JavaPlugin {
 	public final int mcVersion = Utils.getMcVersion(Bukkit.getBukkitVersion());
 	boolean usingMatchingConfig = true;
 	public boolean debug = false;
+	public LegacyDropDetectionManager legacyDropDetectionManager;
 	public static final String uid = "%%__USER__%%";
 	public EventPriority blockDropItemPrio;
+	private static Main instance;
+
+	public static Main getInstance() {
+		return instance;
+	}
 
 	public void reload() {
 		createConfig();
@@ -49,6 +56,7 @@ public class Main extends JavaPlugin {
 		perPlayerSettings = new HashMap<>();
 		messages = new Messages(this);
 		ingotCondenser = new IngotCondenser(this);
+		legacyDropDetectionManager = new LegacyDropDetectionManager();
 
 		// Update Checker start
 		if(updateChecker != null) {
@@ -67,6 +75,8 @@ public class Main extends JavaPlugin {
 
 	public void onEnable() {
 
+		instance = this;
+
 		if(Bukkit.getPluginManager().getPlugin("Drop2Inventory")!=null) {
 			//Plugin oldPlugin = Bukkit.getPluginManager().getPlugin("Drop2Inventory");
 			getLogger().severe("You still have the free version of Drop2Inventory installed.");
@@ -83,12 +93,12 @@ public class Main extends JavaPlugin {
 
 		reload();
 
-		itemSpawnListener = new ItemSpawnListener(this);
+		legacyDropDetectionListener = new LegacyDropDetectionListener(this);
 		CommandMain commandMain = new CommandMain(this);
 		hotbarStuffer = new HotbarStuffer(this);
 
 		this.getServer().getPluginManager().registerEvents(new GenericListener(this), this);
-		this.getServer().getPluginManager().registerEvents(itemSpawnListener,this);
+		this.getServer().getPluginManager().registerEvents(legacyDropDetectionListener,this);
 		this.getServer().getPluginManager().registerEvents(new BlockDropItemListener(this),this);
 
 		utils = new Utils(this);
@@ -165,29 +175,7 @@ public class Main extends JavaPlugin {
 		if (!playerDataFolder.getAbsoluteFile().exists()) {
 			playerDataFolder.mkdir();
 		}
-		
-		// Default settings
-		getConfig().addDefault(Config.ENABLED_BY_DEFAULT, false);
-		getConfig().addDefault(Config.ALWAYS_ENABLED,false);
-		getConfig().addDefault(Config.CHECK_FOR_UPDATES, "true");
-		getConfig().addDefault(Config.UPDATE_CHECK_INTERVAL,4);
-		getConfig().addDefault(Config.SHOW_MESSAGE_WHEN_BREAKING_BLOCK, true);
-		getConfig().addDefault(Config.SHOW_MESSAGE_WHEN_BREAKING_BLOCK_AND_COLLECTION_IS_ENABLED, false);
-		getConfig().addDefault(Config.SHOW_MESSAGE_AGAIN_AFTER_LOGOUT, true);
-		getConfig().addDefault(Config.COLLECT_BLOCK_DROPS, true);
-		getConfig().addDefault(Config.COLLECT_MOB_DROPS, true);
-		getConfig().addDefault(Config.COLLECT_BLOCK_EXP, true);
-		getConfig().addDefault(Config.COLLECT_MOB_EXP, true);
-		getConfig().addDefault(Config.AUTO_CONDENSE,false);
-		getConfig().addDefault(Config.DETECT_LEGACY_DROPS,true);
-		getConfig().addDefault(Config.DETECT_LEGACY_DROPS_RANGE,6.0D);
-		getConfig().addDefault(Config.IGNORE_ITEMS_ON_HOPPERS,true);
-		getConfig().addDefault(Config.IGNORE_ITEMS_ON_HOPPERS_VERTICAL_RANGE,20);
-		getConfig().addDefault(Config.IGNORE_ITEMS_ON_HOPPERS_HORIZONTAL_RANGE, 3);
-		getConfig().addDefault(Config.AVOID_HOTBAR,false);
-		getConfig().addDefault(Config.WARN_WHEN_INVENTORY_IS_FULL,true);
-		getConfig().addDefault(Config.EVENT_PRIO_BLOCKDROPITEMEVENT,"HIGH");
-		getConfig().addDefault(Config.IGNORE_ITEMS_FROM_DISPENSERS, true);
+
 	}
 
 	private void migrateFromFreeVersion() {

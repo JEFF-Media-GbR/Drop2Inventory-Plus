@@ -24,12 +24,12 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.UUID;
 
-public class ItemSpawnListener implements @NotNull Listener {
+public class LegacyDropDetectionListener implements @NotNull Listener {
 
     private final Main main;
     public final ArrayList<UUID> drops;
 
-    public ItemSpawnListener(Main main) {
+    public LegacyDropDetectionListener(Main main) {
         this.main=main;
         drops = new ArrayList<>();
     }
@@ -64,6 +64,11 @@ public class ItemSpawnListener implements @NotNull Listener {
         ItemStack is = itemSpawnEvent.getEntity().getItemStack();
         if(is.getType() == Material.AIR) return;
         if(is.getAmount() == 0) return;
+
+        if(main.legacyDropDetectionManager.isNearIgnoredLocation(itemSpawnEvent.getLocation())) {
+            main.debug("R: is near ignored location");
+            return;
+        }
 
         Player player;
         player = getNearestPlayer(itemSpawnEvent.getLocation());
