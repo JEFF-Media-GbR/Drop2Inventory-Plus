@@ -1,3 +1,9 @@
+## 1.3.0
+- Added option to play sound effect when picking up drops
+
+## 1.2.1
+- Fixed colors not showing when using `/drop2inv <player>`
+
 ## 1.2.0
 - Added new config options:
   - ignore-drops-from-mobs-killed-by-lava: false

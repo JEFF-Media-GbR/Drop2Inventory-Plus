@@ -128,6 +128,7 @@ public class Utils {
         if (main.getConfig().getBoolean(Config.AVOID_HOTBAR)) {
             main.hotbarStuffer.unstuffHotbar(player.getInventory());
         }
+        main.soundUtils.playPickupSound(player);
     }
 
     /*ItemStack getItemInMainHand(Player p) {

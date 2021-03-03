@@ -41,9 +41,9 @@ public class CommandMain implements CommandExecutor {
 			}
 			main.getPlayerSetting(player).enabled=!main.getPlayerSetting(player).enabled;
 			if(main.getPlayerSetting(player).enabled) {
-				sender.sendMessage("&7Automatic drop collection has been &aenabled&7 for player "+player.getDisplayName());
+				sender.sendMessage("§7Automatic drop collection has been §aenabled§7 for player "+player.getDisplayName());
 			} else {
-				sender.sendMessage("&7Automatic drop collection has been &cdisabled&7 for player "+player.getDisplayName());
+				sender.sendMessage("§7Automatic drop collection has been §cdisabled§7 for player "+player.getDisplayName());
 			}
 			return true;
 		}

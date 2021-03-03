@@ -108,6 +108,13 @@ permissions-per-tool: false
 # "unarmed" skill
 avoid-hotbar: false
 
+# Whether to play a sound when picking up items
+sound-enabled: true
+sound-effect: ENTITY_ITEM_PICKUP
+sound-volume: 1.0
+sound-pitch: 1.0
+sound-global: true
+
 #################################
 #####     Event priority    #####
 #################################
@@ -309,4 +316,4 @@ message-inventory-full: "&cYour inventory is full."
 debug: false
 
 # please do not change the following line manually!
-config-version: 118
+config-version: 119

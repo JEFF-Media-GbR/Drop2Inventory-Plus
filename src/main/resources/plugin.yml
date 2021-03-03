@@ -16,6 +16,7 @@ softdepend:
   - CoreProtect
   - PlaceholderAPI
   - Drop2Inventory
+  - mcMMO
 
 permissions:
   drop2inventory.use:

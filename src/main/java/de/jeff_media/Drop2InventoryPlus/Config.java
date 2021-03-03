@@ -1,5 +1,7 @@
 package de.jeff_media.Drop2InventoryPlus;
 
+import org.bukkit.configuration.file.FileConfiguration;
+
 public class Config {
     public static final String ALWAYS_ENABLED = "always-enabled";
     public static final String ENABLED_BY_DEFAULT = "enabled-by-default";
@@ -32,31 +34,42 @@ public class Config {
     public static final String WARN_WHEN_INVENTORY_IS_FULL = "warn-when-inventory-is-full";
     public static final String EVENT_PRIO_BLOCKDROPITEMEVENT = "block-drop-item-event-priority";
     public static final String IGNORE_ITEMS_FROM_DISPENSERS = "ignore-items-from-dispensers";
-    
+    public static final String SOUND_GLOBAL = "sound-global";
+    public static final String SOUND_ENABLED = "sound-enabled";
+    public static final String SOUND_EFFECT = "sound-effect";
+    public static final String SOUND_VOLUME = "sound-volume";
+    public static final String SOUND_PITCH = "sound-pitch";
+
     public Config() {
         Main main = Main.getInstance();
-        main.getConfig().addDefault(Config.ENABLED_BY_DEFAULT, false);
-        main.getConfig().addDefault(Config.ALWAYS_ENABLED,false);
-        main.getConfig().addDefault(Config.CHECK_FOR_UPDATES, "true");
-        main.getConfig().addDefault(Config.UPDATE_CHECK_INTERVAL,4);
-        main.getConfig().addDefault(Config.SHOW_MESSAGE_WHEN_BREAKING_BLOCK, true);
-        main.getConfig().addDefault(Config.SHOW_MESSAGE_WHEN_BREAKING_BLOCK_AND_COLLECTION_IS_ENABLED, false);
-        main.getConfig().addDefault(Config.SHOW_MESSAGE_AGAIN_AFTER_LOGOUT, true);
-        main.getConfig().addDefault(Config.COLLECT_BLOCK_DROPS, true);
-        main.getConfig().addDefault(Config.COLLECT_MOB_DROPS, true);
-        main.getConfig().addDefault(Config.COLLECT_BLOCK_EXP, true);
-        main.getConfig().addDefault(Config.COLLECT_MOB_EXP, true);
-        main.getConfig().addDefault(Config.AUTO_CONDENSE,false);
-        main.getConfig().addDefault(Config.DETECT_LEGACY_DROPS,true);
-        main.getConfig().addDefault(Config.DETECT_LEGACY_DROPS_RANGE,6.0D);
-        main.getConfig().addDefault(Config.IGNORE_ITEMS_ON_HOPPERS,true);
-        main.getConfig().addDefault(Config.IGNORE_ITEMS_ON_HOPPERS_VERTICAL_RANGE,20);
-        main.getConfig().addDefault(Config.IGNORE_ITEMS_ON_HOPPERS_HORIZONTAL_RANGE, 3);
-        main.getConfig().addDefault(Config.AVOID_HOTBAR,false);
-        main.getConfig().addDefault(Config.WARN_WHEN_INVENTORY_IS_FULL,true);
-        main.getConfig().addDefault(Config.EVENT_PRIO_BLOCKDROPITEMEVENT,"HIGH");
-        main.getConfig().addDefault(Config.IGNORE_ITEMS_FROM_DISPENSERS, true);
-        main.getConfig().addDefault(Config.IGNORE_DROPS_FROM_MOBS_KILLED_BY_LAVA, false);
-        main.getConfig().addDefault(Config.IGNORE_DROPS_FROM_MOBS_KILLED_BY_MAGMA, false);
+        FileConfiguration conf = main.getConfig();
+        conf.addDefault(ENABLED_BY_DEFAULT, false);
+        conf.addDefault(ALWAYS_ENABLED,false);
+        conf.addDefault(CHECK_FOR_UPDATES, "true");
+        conf.addDefault(UPDATE_CHECK_INTERVAL,4);
+        conf.addDefault(SHOW_MESSAGE_WHEN_BREAKING_BLOCK, true);
+        conf.addDefault(SHOW_MESSAGE_WHEN_BREAKING_BLOCK_AND_COLLECTION_IS_ENABLED, false);
+        conf.addDefault(SHOW_MESSAGE_AGAIN_AFTER_LOGOUT, true);
+        conf.addDefault(COLLECT_BLOCK_DROPS, true);
+        conf.addDefault(COLLECT_MOB_DROPS, true);
+        conf.addDefault(COLLECT_BLOCK_EXP, true);
+        conf.addDefault(COLLECT_MOB_EXP, true);
+        conf.addDefault(AUTO_CONDENSE,false);
+        conf.addDefault(DETECT_LEGACY_DROPS,true);
+        conf.addDefault(DETECT_LEGACY_DROPS_RANGE,6.0D);
+        conf.addDefault(IGNORE_ITEMS_ON_HOPPERS,true);
+        conf.addDefault(IGNORE_ITEMS_ON_HOPPERS_VERTICAL_RANGE,20);
+        conf.addDefault(IGNORE_ITEMS_ON_HOPPERS_HORIZONTAL_RANGE, 3);
+        conf.addDefault(AVOID_HOTBAR,false);
+        conf.addDefault(WARN_WHEN_INVENTORY_IS_FULL,true);
+        conf.addDefault(EVENT_PRIO_BLOCKDROPITEMEVENT,"HIGH");
+        conf.addDefault(IGNORE_ITEMS_FROM_DISPENSERS, true);
+        conf.addDefault(IGNORE_DROPS_FROM_MOBS_KILLED_BY_LAVA, false);
+        conf.addDefault(IGNORE_DROPS_FROM_MOBS_KILLED_BY_MAGMA, false);
+        conf.addDefault(SOUND_GLOBAL,true);
+        conf.addDefault(SOUND_ENABLED,true);
+        conf.addDefault(SOUND_EFFECT,"ENTITY_ITEM_PICKUP");
+        conf.addDefault(SOUND_VOLUME, 1.0);
+        conf.addDefault(SOUND_PITCH, 1.0);
     }
 }

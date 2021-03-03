@@ -12,6 +12,7 @@ import de.jeff_media.Drop2InventoryPlus.listeners.BlockDropItemListener;
 import de.jeff_media.Drop2InventoryPlus.listeners.GenericListener;
 import de.jeff_media.Drop2InventoryPlus.listeners.LegacyDropDetectionListener;
 import de.jeff_media.Drop2InventoryPlus.tasks.LegacyDropDetectionManager;
+import de.jeff_media.Drop2InventoryPlus.utils.SoundUtils;
 import de.jeff_media.PluginUpdateChecker.PluginUpdateChecker;
 import org.bstats.bukkit.Metrics;
 import org.bukkit.*;
@@ -24,7 +25,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 public class Main extends JavaPlugin {
 
-	final int currentConfigVersion = 118;
+	final int currentConfigVersion = 119;
 	PluginUpdateChecker updateChecker;
 	public Messages messages;
 	public Utils utils;
@@ -45,6 +46,7 @@ public class Main extends JavaPlugin {
 	public static final String uid = "%%__USER__%%";
 	public EventPriority blockDropItemPrio;
 	private static Main instance;
+	public SoundUtils soundUtils;
 
 	public static Main getInstance() {
 		return instance;
@@ -53,6 +55,7 @@ public class Main extends JavaPlugin {
 	public void reload() {
 		createConfig();
 		reloadConfig();
+		soundUtils = new SoundUtils();
 		perPlayerSettings = new HashMap<>();
 		messages = new Messages(this);
 		ingotCondenser = new IngotCondenser(this);
