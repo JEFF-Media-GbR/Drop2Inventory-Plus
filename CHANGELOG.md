@@ -1,3 +1,6 @@
+## 1.3.1
+- Raised priority for EntityDeathEvent for better compatibility with other plugins
+
 ## 1.3.0
 - Added option to play sound effect when picking up drops
 

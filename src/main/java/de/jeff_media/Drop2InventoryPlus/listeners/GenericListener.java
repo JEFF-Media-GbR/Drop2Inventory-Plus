@@ -49,7 +49,7 @@ public class GenericListener implements org.bukkit.event.Listener {
         main.unregisterPlayer(event.getPlayer());
     }
 
-    @EventHandler(priority = EventPriority.HIGHEST)
+    @EventHandler(priority = EventPriority.MONITOR)
     public void onEntityDeath(EntityDeathEvent event) {
         main.debug("###EntityDeathEvent");
         main.debug(event.getEntity().getLastDamageCause().getCause().name());
