@@ -25,7 +25,9 @@ public class LegacyDropDetectionManager {
 
     public boolean isNearIgnoredLocation(Location location) {
         for(Location location1 : locations) {
-            if(location.distance(location1)<1) return true;
+            if(location.getWorld().getUID().equals(location1.getWorld().getUID())) {
+                if (location.distance(location1) < 1) return true;
+            }
         }
         return false;
     }
