@@ -81,6 +81,14 @@ public class LegacyDropDetectionListener implements @NotNull Listener {
         }
         main.debug("Nearest player: "+player.getName());
 
+        main.debug("Calling EntityPickupItemEvent");
+        EntityPickupItemEvent entityPickupItemEvent = new EntityPickupItemEvent(player, itemSpawnEvent.getEntity(), 0);
+        Bukkit.getPluginManager().callEvent(entityPickupItemEvent);
+        if(entityPickupItemEvent.isCancelled()) {
+            main.debug("R: EntityPickupItemEvent cancelled");
+            return;
+        }
+
         if(isInvFull(player)) {
             main.debug("Skipping collection because inv is full");
             main.messages.sendActionBarMessage(player, main.messages.MSG_INVENTORY_FULL);
