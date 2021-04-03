@@ -1,3 +1,7 @@
+## 1.4.0
+- Drop2Inventory can now call fake EntityPickupItemEvents to check if other plugins want to cancel a drop picked up by the legacy drop detection
+- Fixed exception when other plugins somehow cause a EntityDamageEvent without giving a DamageCause
+
 ## 1.3.1
 - Raised priority for EntityDeathEvent for better compatibility with other plugins
 

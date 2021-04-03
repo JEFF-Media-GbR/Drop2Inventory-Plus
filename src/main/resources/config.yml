@@ -168,6 +168,12 @@ ignore-items-from-dispensers: true
 ignore-drops-from-mobs-killed-by-lava: false
 ignore-drops-from-mobs-killed-by-magma: false
 
+# Other plugins can cancel the EntityPickupItemEvent, e.g. to make badly coded
+# holograms (the other plugins should rather/additionally raise the Item#setPickupDelay)
+# When the following setting is set to true, Drop2Inventory will call a fake
+# EntityPickupItemEvent and do nothing if that gets cancelled.
+call-entity-pickup-item-event: true
+
 #########################
 #### disabled worlds ####
 #########################
