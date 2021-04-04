@@ -122,7 +122,7 @@ public class BlockDropItemListener implements @NotNull Listener {
             if (!setting.hasSeenMessage) {
                 setting.hasSeenMessage = true;
                 if (main.getConfig().getBoolean(Config.SHOW_MESSAGE_WHEN_BREAKING_BLOCK)) {
-                    player.sendMessage(main.messages.MSG_HINT_ENABLE);
+                    Messages.sendMessage(player,main.messages.MSG_HINT_ENABLE);
                 }
             }
             main.debug("R: Player has Drop2Inv disabled");
@@ -131,7 +131,7 @@ public class BlockDropItemListener implements @NotNull Listener {
         if (!setting.hasSeenMessage) {
             setting.hasSeenMessage = true;
             if (main.getConfig().getBoolean(Config.SHOW_MESSAGE_WHEN_BREAKING_BLOCK_AND_COLLECTION_IS_ENABLED)) {
-                player.sendMessage(main.messages.MSG_HINT_DISABLE);
+                Messages.sendMessage(player,main.messages.MSG_HINT_DISABLE);
             }
         }
 

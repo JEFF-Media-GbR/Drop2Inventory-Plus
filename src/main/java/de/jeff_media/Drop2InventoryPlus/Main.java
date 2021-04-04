@@ -25,7 +25,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 public class Main extends JavaPlugin {
 
-	final int currentConfigVersion = 119;
+	final int currentConfigVersion = 121;
 	PluginUpdateChecker updateChecker;
 	public Messages messages;
 	public Utils utils;
@@ -281,7 +281,7 @@ public class Main extends JavaPlugin {
 	public void debug(String t, CommandSender sender) {
 		if(debug) {
 			if (sender instanceof Player) {
-				sender.sendMessage(ChatColor.GOLD+"[Drop2Inventory] [DEBUG] " + t);
+				Messages.sendMessage(sender,ChatColor.GOLD+"[Drop2Inventory] [DEBUG] " + t);
 			}
 			debug(ChatColor.stripColor(t));
 		}

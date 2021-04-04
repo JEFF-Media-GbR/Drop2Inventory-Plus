@@ -3,6 +3,7 @@ package de.jeff_media.Drop2InventoryPlus;
 import net.md_5.bungee.api.ChatMessageType;
 import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.ChatColor;
+import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 public class Messages {
@@ -42,6 +43,16 @@ public class Messages {
 	}
 
     public void sendActionBarMessage(Player player, String message) {
+		if(message==null || message.equals("")) {
+			return;
+		}
 		player.spigot().sendMessage(ChatMessageType.ACTION_BAR, TextComponent.fromLegacyText(message));
     }
+
+    public static void sendMessage(CommandSender sender, String message) {
+		if(message==null || message.equals("")) {
+			return;
+		}
+		sender.sendMessage(message);
+	}
 }

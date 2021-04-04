@@ -2,6 +2,7 @@ package de.jeff_media.Drop2InventoryPlus.listeners;
 
 import de.jeff_media.Drop2InventoryPlus.Config;
 import de.jeff_media.Drop2InventoryPlus.Main;
+import de.jeff_media.Drop2InventoryPlus.Messages;
 import de.jeff_media.Drop2InventoryPlus.PlayerSetting;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
@@ -122,7 +123,7 @@ public class LegacyDropDetectionListener implements @NotNull Listener {
             if (!setting.hasSeenMessage) {
                 setting.hasSeenMessage = true;
                 if (main.getConfig().getBoolean(Config.SHOW_MESSAGE_WHEN_BREAKING_BLOCK)) {
-                    player.sendMessage(main.messages.MSG_HINT_ENABLE);
+                    Messages.sendMessage(player,main.messages.MSG_HINT_ENABLE);
                 }
             }
             return;
@@ -130,7 +131,7 @@ public class LegacyDropDetectionListener implements @NotNull Listener {
         if (!setting.hasSeenMessage) {
             setting.hasSeenMessage = true;
             if (main.getConfig().getBoolean(Config.SHOW_MESSAGE_WHEN_BREAKING_BLOCK_AND_COLLECTION_IS_ENABLED)) {
-                player.sendMessage(main.messages.MSG_HINT_DISABLE);
+                Messages.sendMessage(player,main.messages.MSG_HINT_DISABLE);
             }
         }
 

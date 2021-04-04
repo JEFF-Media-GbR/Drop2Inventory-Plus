@@ -325,7 +325,7 @@ public class GenericListener implements org.bukkit.event.Listener {
             if (!setting.hasSeenMessage) {
                 setting.hasSeenMessage = true;
                 if (main.getConfig().getBoolean(Config.SHOW_MESSAGE_WHEN_BREAKING_BLOCK)) {
-                    player.sendMessage(main.messages.MSG_HINT_ENABLE);
+                    Messages.sendMessage(player,main.messages.MSG_HINT_ENABLE);
                 }
             }
             return false;
@@ -333,7 +333,7 @@ public class GenericListener implements org.bukkit.event.Listener {
             if (!setting.hasSeenMessage) {
                 setting.hasSeenMessage = true;
                 if (main.getConfig().getBoolean(Config.SHOW_MESSAGE_WHEN_BREAKING_BLOCK_AND_COLLECTION_IS_ENABLED)) {
-                    player.sendMessage(main.messages.MSG_HINT_DISABLE);
+                    Messages.sendMessage(player,main.messages.MSG_HINT_DISABLE);
                 }
             }
         }

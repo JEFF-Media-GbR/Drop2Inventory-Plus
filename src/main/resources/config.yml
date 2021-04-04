@@ -265,6 +265,8 @@ check-interval: 4
 # &l Bold         &o Italic
 # &n Underline    &r Reset
 
+# You can set messages to an empty String ("") to disable them.
+
 ##### English
 message-disabled: "&7Automatic drop collection has been &cdisabled&7."
 message-enabled: "&7Automatic drop collection has been &aenabled&7."
@@ -322,4 +324,4 @@ message-inventory-full: "&cYour inventory is full."
 debug: false
 
 # please do not change the following line manually!
-config-version: 119
+config-version: 121

@@ -1,6 +1,7 @@
 package de.jeff_media.Drop2InventoryPlus.commands;
 
 import de.jeff_media.Drop2InventoryPlus.Main;
+import de.jeff_media.Drop2InventoryPlus.Messages;
 import de.jeff_media.Drop2InventoryPlus.Permissions;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
@@ -16,7 +17,7 @@ public class CommandDebug {
     static boolean run(Main main, CommandSender sender, Command command, String[] args)  {
 
         if(!sender.hasPermission(Permissions.ALLOW_TOGGLE_DEBUG)) {
-            sender.sendMessage(command.getPermissionMessage());
+            Messages.sendMessage(sender,command.getPermissionMessage());
             return true;
         }
 
