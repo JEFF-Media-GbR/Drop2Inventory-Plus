@@ -1,5 +1,6 @@
-package de.jeff_media.Drop2InventoryPlus;
+package de.jeff_media.Drop2InventoryPlus.config;
 
+import de.jeff_media.Drop2InventoryPlus.Main;
 import org.bukkit.configuration.file.FileConfiguration;
 
 public class Config {
@@ -14,8 +15,8 @@ public class Config {
     public static final String SHOW_MESSAGE_WHEN_BREAKING_BLOCK_AND_COLLECTION_IS_ENABLED = "show-message-when-breaking-block-and-collection-is-enabled";
     public static final String SHOW_MESSAGE_AGAIN_AFTER_LOGOUT = "show-message-again-after-logout";
     public static final String PERMISSIONS_PER_TOOL = "permissions-per-tool";
-    public static final String DETECT_LEGACY_DROPS = "detect-legacy-drops";
-    public static final String DETECT_LEGACY_DROPS_RANGE = "detect-legacy-drops-range";
+    public static final String DETECT_LEGACY_DROPS = "detect-unused-drops";
+    public static final String DETECT_LEGACY_DROPS_RANGE = "detect-unused-drops-range";
     public static final String IGNORE_ITEMS_ON_HOPPERS = "ignore-items-on-hoppers";
     public static final String IGNORE_ITEMS_ON_HOPPERS_VERTICAL_RANGE = "ignore-items-on-hoppers-vertical-range";
     public static final String IGNORE_ITEMS_ON_HOPPERS_HORIZONTAL_RANGE = "ignore-items-on-hoppers-horizontal-range";

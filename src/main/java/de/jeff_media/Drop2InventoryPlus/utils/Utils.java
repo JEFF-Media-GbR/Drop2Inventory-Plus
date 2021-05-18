@@ -1,5 +1,8 @@
-package de.jeff_media.Drop2InventoryPlus;
+package de.jeff_media.Drop2InventoryPlus.utils;
 
+import de.jeff_media.Drop2InventoryPlus.Main;
+import de.jeff_media.Drop2InventoryPlus.config.Config;
+import de.jeff_media.Drop2InventoryPlus.config.Permissions;
 import org.apache.commons.lang.math.NumberUtils;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -9,12 +12,11 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.Nullable;
 
+import java.io.File;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
-import java.io.File;
 
 public class Utils {
 
@@ -51,35 +53,17 @@ public class Utils {
         return main.disabledMobs.contains(mob.getType().name().toLowerCase());
     }
 
-    public void addOrDrop(ItemStack item, Player player, @Nullable Location dropLocation) {
-        main.debug("addOrDrop: " + item.toString() + " -> " + player.getName());
+    public static void addOrDrop(ItemStack item, Player player, @Nullable Location dropLocation) {
+        //main.debug("addOrDrop: " + item.toString() + " -> " + player.getName());
 
         ItemStack[] items = new ItemStack[1];
         items[0] = item;
         addOrDrop(items, player, dropLocation);
     }
 
-    public static boolean hasPermissionForThisTool(Material mat, Player p) {
-        String matt = mat.name().toLowerCase();
-        if (matt.contains("_pickaxe")) {
-            return p.hasPermission(Permissions.ALLOW_TOOL_PICKAXE);
-        }
-        if (matt.contains("_axe")) {
-            return p.hasPermission(Permissions.ALLOW_TOOL_AXE);
-        }
-        if (matt.contains("_hoe")) {
-            return p.hasPermission(Permissions.ALLOW_TOOL_HOE);
-        }
-        if (matt.contains("_sword")) {
-            return p.hasPermission(Permissions.ALLOW_TOOL_SWORD);
-        }
-        if (matt.contains("_shovel")) {
-            return p.hasPermission(Permissions.ALLOW_TOOL_SHOVEL);
-        } else return p.hasPermission(Permissions.ALLOW_TOOL_HAND);
-    }
-
-    public void addOrDrop(ItemStack[] items, Player player, @Nullable Location dropLocation) {
-        main.debug("addOrDrop[] "+ Arrays.toString(items) +" -> "+player);
+    public static void addOrDrop(ItemStack[] items, Player player, @Nullable Location dropLocation) {
+        Main main = Main.getInstance();
+        main.debug("addOrDrop[] " + Arrays.toString(items) + " -> " + player);
         if (main.getConfig().getBoolean(Config.AVOID_HOTBAR)) {
             main.debug("  avoid-hotbar enabled");
             main.hotbarStuffer.stuffHotbar(player.getInventory());
@@ -113,7 +97,6 @@ public class Utils {
             boolean inventoryFull = false;
             for (ItemStack leftover : leftovers.values()) {
                 Item drop = player.getWorld().dropItemNaturally(dropLocation == null ? player.getLocation() : dropLocation, leftover);
-                main.legacyDropDetectionListener.drops.add(drop.getUniqueId());
                 inventoryFull = true;
             }
             if(inventoryFull && main.getConfig().getBoolean(Config.WARN_WHEN_INVENTORY_IS_FULL)) {
@@ -131,6 +114,18 @@ public class Utils {
         main.soundUtils.playPickupSound(player);
     }
 
+    // Returns 16 for 1.16, etc.
+    public static int getMcVersion(String bukkitVersionString) {
+        Pattern p = Pattern.compile("^1\\.(\\d*)\\.");
+        Matcher m = p.matcher((bukkitVersionString));
+        int version = -1;
+        while (m.find()) {
+            if (NumberUtils.isNumber(m.group(1)))
+                version = Integer.parseInt(m.group(1));
+        }
+        return version;
+    }
+
     /*ItemStack getItemInMainHand(Player p) {
         if (main.mcVersion < 9) {
             return p.getInventory().getItemInHand();
@@ -145,21 +140,30 @@ public class Utils {
         return inv.getItemInMainHand();
     }*/
 
-    // Returns 16 for 1.16, etc.
-    static int getMcVersion(String bukkitVersionString) {
-        Pattern p = Pattern.compile("^1\\.(\\d*)\\.");
-        Matcher m = p.matcher((bukkitVersionString));
-        int version = -1;
-        while (m.find()) {
-            if (NumberUtils.isNumber(m.group(1)))
-                version = Integer.parseInt(m.group(1));
+    public static boolean hasPermissionForThisTool(@Nullable Material mat, Player p) {
+        String matt = mat.name().toLowerCase();
+        if (matt.contains("_pickaxe")) {
+            return p.hasPermission(Permissions.ALLOW_TOOL_PICKAXE);
         }
-        return version;
+        if (matt.contains("_axe")) {
+            return p.hasPermission(Permissions.ALLOW_TOOL_AXE);
+        }
+        if (matt.contains("_hoe")) {
+            return p.hasPermission(Permissions.ALLOW_TOOL_HOE);
+        }
+        if (matt.contains("_sword")) {
+            return p.hasPermission(Permissions.ALLOW_TOOL_SWORD);
+        }
+        if (matt.contains("_shovel")) {
+            return p.hasPermission(Permissions.ALLOW_TOOL_SHOVEL);
+        } else return p.hasPermission(Permissions.ALLOW_TOOL_HAND);
     }
 
-    static void renameFileInPluginDir(Main plugin, String oldName, String newName) {
+    public static void renameFileInPluginDir(Main plugin, String oldName, String newName) {
         File oldFile = new File(plugin.getDataFolder().getAbsolutePath() + File.separator + oldName);
         File newFile = new File(plugin.getDataFolder().getAbsolutePath() + File.separator + newName);
         oldFile.getAbsoluteFile().renameTo(newFile.getAbsoluteFile());
     }
+
+
 }

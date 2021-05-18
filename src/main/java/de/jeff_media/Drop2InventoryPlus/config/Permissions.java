@@ -1,4 +1,4 @@
-package de.jeff_media.Drop2InventoryPlus;
+package de.jeff_media.Drop2InventoryPlus.config;
 
 public class Permissions {
 

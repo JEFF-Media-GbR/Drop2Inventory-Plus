@@ -1,27 +1,25 @@
 package de.jeff_media.Drop2InventoryPlus.utils;
 
 import com.google.common.base.Enums;
-
-import de.jeff_media.Drop2InventoryPlus.Config;
 import de.jeff_media.Drop2InventoryPlus.Main;
+import de.jeff_media.Drop2InventoryPlus.config.Config;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 
 public class SoundUtils {
 
-    private final Main main;
-    private Sound sound;
-    private boolean soundEnabled;
-    private boolean soundGlobal;
-    private float soundVolume;
-    private float soundPitch;
+    private final Main main = Main.getInstance();
+    private final Sound sound;
+    private final boolean soundEnabled;
+    private final boolean soundGlobal;
+    private final float soundPitch;
+    private final float soundVolume;
 
     public SoundUtils() {
-        this.main=Main.getInstance();
         String soundName = main.getConfig().getString(Config.SOUND_EFFECT);
-        sound = Enums.getIfPresent(Sound.class,soundName).orNull();
-        if(sound==null) {
-            main.getLogger().warning("Unknown sound effect: "+soundName);
+        sound = Enums.getIfPresent(Sound.class, soundName).orNull();
+        if (sound == null) {
+            main.getLogger().warning("Unknown sound effect: " + soundName);
         }
         soundEnabled = main.getConfig().getBoolean(Config.SOUND_ENABLED);
         soundGlobal = main.getConfig().getBoolean(Config.SOUND_GLOBAL);

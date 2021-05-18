@@ -1,5 +1,6 @@
-package de.jeff_media.Drop2InventoryPlus;
+package de.jeff_media.Drop2InventoryPlus.utils;
 
+import de.jeff_media.Drop2InventoryPlus.Main;
 import org.bukkit.Material;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
@@ -10,13 +11,17 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.HashMap;
 
+/**
+ * Condenses ingots.
+ * TODO: Toggleable per player using the Player's PersistentDataContainer
+ */
 public class IngotCondenser {
 
     final Main main;
     final HashMap<Material,CondensationMap> condensationMap = new HashMap<>();
 
-    IngotCondenser(Main main) {
-        this.main=main;
+    public IngotCondenser(Main main) {
+        this.main = main;
         try {
             initFromFile();
         } catch (IOException e) {
@@ -24,8 +29,8 @@ public class IngotCondenser {
         }
 
 
-        for(CondensationMap map : condensationMap.values()) {
-            main.debug(String.format("%d x %s = %s",map.number,map.item.name(),map.block.name()));
+        for (CondensationMap map : condensationMap.values()) {
+            main.debug(String.format("%d x %s = %s", map.number, map.item.name(), map.block.name()));
         }
 
     }
@@ -51,28 +56,28 @@ public class IngotCondenser {
         }
     }
 
-    void condense(Inventory inv, Material mat) {
+    public void condense(Inventory inv, Material mat) {
 
-            CondensationMap map = condensationMap.get(mat);
+        CondensationMap map = condensationMap.get(mat);
 
-            if(map==null) return;
+        if (map == null) return;
 
-            main.debug("Trying to condense "+mat.name());
+        main.debug("Trying to condense " + mat.name());
 
-            int amount = 0;
-            for(ItemStack is : inv.all(map.item).values()) {
-                amount += is.getAmount();
-            }
-            main.debug("  Found "+amount+" times");
-            if(amount < map.number) {
-                main.debug("  Returning! Thats not enough");
-                return;
-            }
-            inv.remove(map.item);
-            int blocks = amount / map.number;
-            int items = amount % map.number;
-            inv.addItem(new ItemStack(map.block,blocks));
-            inv.addItem(new ItemStack(map.item,items));
+        int amount = 0;
+        for (ItemStack is : inv.all(map.item).values()) {
+            amount += is.getAmount();
+        }
+        main.debug("  Found "+amount+" times");
+        if(amount < map.number) {
+            main.debug("  Returning! Thats not enough");
+            return;
+        }
+        inv.remove(map.item);
+        int blocks = amount / map.number;
+        int items = amount % map.number;
+        inv.addItem(new ItemStack(map.block,blocks));
+        inv.addItem(new ItemStack(map.item,items));
     }
 
     void condense(Inventory inv) {
@@ -85,6 +90,7 @@ public class IngotCondenser {
         final Material item;
         final int number;
         final Material block;
+
         CondensationMap(Material mat, int number, Material block) {
             this.item = mat;
             this.number = number;

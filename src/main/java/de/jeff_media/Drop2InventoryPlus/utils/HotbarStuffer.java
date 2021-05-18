@@ -1,5 +1,6 @@
-package de.jeff_media.Drop2InventoryPlus;
+package de.jeff_media.Drop2InventoryPlus.utils;
 
+import de.jeff_media.Drop2InventoryPlus.Main;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
@@ -7,6 +8,9 @@ import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.Arrays;
 
+/**
+ * TODO: This could be done way better. It's old but it works.
+ */
 public class HotbarStuffer {
 
     final ItemStack filler;

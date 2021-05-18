@@ -1,9 +1,9 @@
 package de.jeff_media.Drop2InventoryPlus.commands;
 
-import de.jeff_media.Drop2InventoryPlus.Config;
 import de.jeff_media.Drop2InventoryPlus.Main;
-import de.jeff_media.Drop2InventoryPlus.Messages;
-import de.jeff_media.Drop2InventoryPlus.Permissions;
+import de.jeff_media.Drop2InventoryPlus.config.Config;
+import de.jeff_media.Drop2InventoryPlus.config.Messages;
+import de.jeff_media.Drop2InventoryPlus.config.Permissions;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;

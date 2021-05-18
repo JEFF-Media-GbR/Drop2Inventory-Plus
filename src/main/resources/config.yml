@@ -144,7 +144,7 @@ block-drop-item-event-priority: HIGH
 detect-legacy-drops: true
 detect-legacy-drops-range: 6
 
-# When using "detect-legacy-drops", ignore items spawning on hoppers
+# When using "detect-unused-drops", ignore items spawning on hoppers
 # The vertical range checks up to X blocks below the item for hoppers
 # The horizontal range additionaly checks to the sides.
 # Example: You set vertical range to 10 and horizontal to 0. That means
@@ -160,7 +160,7 @@ ignore-items-on-hoppers-horizontal-range: 3
 # When set to true, items from dispensers and droppers will not automatically
 # be collected by nearby players.
 # When set to false, items from dispensers and droppers will automatically
-# be collected by the closest player within "detect-legacy-drops-range" radius.
+# be collected by the closest player within "detect-unused-drops-range" radius.
 ignore-items-from-dispensers: true
 
 # When set to true, Drop2Inventory will not automatically collect drops from

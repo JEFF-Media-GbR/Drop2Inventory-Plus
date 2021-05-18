@@ -1,29 +1,34 @@
-package de.jeff_media.Drop2InventoryPlus;
+package de.jeff_media.Drop2InventoryPlus.config;
 
-import java.io.*;
+import de.jeff_media.Drop2InventoryPlus.Main;
+import de.jeff_media.Drop2InventoryPlus.utils.Utils;
+import org.bukkit.Material;
+import org.bukkit.configuration.InvalidConfigurationException;
+import org.bukkit.configuration.file.FileConfiguration;
+import org.bukkit.configuration.file.YamlConfiguration;
+
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.Map;
 import java.util.Scanner;
 
-import org.bukkit.Material;
-import org.bukkit.configuration.InvalidConfigurationException;
-import org.bukkit.configuration.file.FileConfiguration;
-import org.bukkit.configuration.file.YamlConfiguration;
-
 public class ConfigUpdater {
 
     final Main main;
 
-    ConfigUpdater(Main main) {
+    public ConfigUpdater(Main main) {
         this.main = main;
     }
 
-    void updateConfig() {
+    public void updateConfig() {
 
         try {
-            Files.deleteIfExists(new File(main.getDataFolder().getAbsolutePath()+File.separator+"config.old.yml").toPath());
+            Files.deleteIfExists(new File(main.getDataFolder().getAbsolutePath() + File.separator + "config.old.yml").toPath());
         } catch (IOException e) {
             main.getLogger().severe("Could not delete config.old.yml");
         }
