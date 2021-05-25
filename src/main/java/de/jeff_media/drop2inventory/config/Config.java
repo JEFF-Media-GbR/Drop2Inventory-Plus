@@ -41,6 +41,7 @@ public class Config {
     public static final String SOUND_VOLUME = "sound-volume";
     public static final String SOUND_PITCH = "sound-pitch";
     public static final String CALL_ENTITY_PICKUP_ITEM_EVENT = "call-entity-pickup-item-event";
+    public static final String DEFAULT_BOUNDING_BOX_RADIUS = "default-detection-radius";
 
     public Config() {
         Main main = Main.getInstance();
@@ -58,6 +59,7 @@ public class Config {
         conf.addDefault(COLLECT_MOB_EXP, true);
         conf.addDefault(AUTO_CONDENSE,false);
         conf.addDefault(DETECT_LEGACY_DROPS,true);
+        conf.addDefault(DEFAULT_BOUNDING_BOX_RADIUS, 30);
         conf.addDefault(DETECT_LEGACY_DROPS_RANGE,6.0D);
         conf.addDefault(IGNORE_ITEMS_ON_HOPPERS,true);
         conf.addDefault(IGNORE_ITEMS_ON_HOPPERS_VERTICAL_RANGE,20);

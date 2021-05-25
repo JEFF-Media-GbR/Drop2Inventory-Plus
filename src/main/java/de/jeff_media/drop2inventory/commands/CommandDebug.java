@@ -24,25 +24,12 @@ public class CommandDebug {
         main.debug = !main.debug;
 
         if(!main.debug) {
-            main.debug(ChatColor.GREEN+"Drop2Inventory DEBUG Mode disabled!",sender);
+            sender.sendMessage(ChatColor.GREEN+"Drop2Inventory DEBUG Mode disabled!");
             return true;
         }
 
-        main.debug(ChatColor.GOLD+"Drop2Inventory DEBUG Mode enabled!",sender);
-        main.debug(ChatColor.GRAY+"(You can expect massive console spam until disabled again)",sender);
-
-        try {
-            InputStream in = main.getResource("version.txt");
-            BufferedReader reader = new BufferedReader(new InputStreamReader(in));
-            while (reader.ready()) {
-                String line = reader.readLine();
-                main.debug(line,sender);
-            }
-        } catch (IOException ioException) {
-            main.debug(ChatColor.RED+"E: Could not detect version information",sender);
-            ioException.printStackTrace();
-        }
-
+        sender.sendMessage(ChatColor.GOLD+"Drop2Inventory v" + main.getDescription().getVersion() + " DEBUG Mode enabled!");
+        sender.sendMessage(ChatColor.GRAY+"(You can expect massive console spam until disabled again)");
 
         return true;
     }

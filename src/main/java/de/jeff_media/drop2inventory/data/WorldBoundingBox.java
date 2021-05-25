@@ -2,6 +2,7 @@ package de.jeff_media.drop2inventory.data;
 
 import org.bukkit.Location;
 import org.bukkit.World;
+import org.bukkit.entity.Player;
 import org.bukkit.util.BoundingBox;
 
 import java.util.Comparator;
@@ -15,6 +16,14 @@ public class WorldBoundingBox {
     private final BoundingBox boundingBox;
     private final World world;
     private int lifeTime;
+
+    public BoundingBox getBoundingBox() {
+        return boundingBox;
+    }
+
+    public World getWorld() {
+        return world;
+    }
 
     public WorldBoundingBox(Location location, int lifeTime, int radius, int radiusYMin, int radiusYMax) {
         this.lifeTime = lifeTime;

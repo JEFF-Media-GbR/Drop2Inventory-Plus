@@ -25,7 +25,7 @@ public class DropOwnerManager {
             for (WorldBoundingBox boundingBox : dropLocationMap.keySet().toArray(new WorldBoundingBox[0])) { //ConcurrentModificationException
                 if (boundingBox.isExpired()) {
                     dropLocationMap.remove(boundingBox);
-                    //System.out.println("BoundingBox expired");
+                    if(main.debug) main.debug("BoundingBox expired");
                 } else {
                     //System.out.println("Collecting for " + boundingBox.getTicksLeft() + " more ticks");
                 }
@@ -46,7 +46,8 @@ public class DropOwnerManager {
     }
 
     public static void register(Player player, Location location, @Nullable Block block) {
-        WorldBoundingBox boundingBox = WorldBoundingBoxGenerator.getAppropriateBoundingBox(location, block);
+        if(main.debug) main.debug("Registering DropOwner " + player.getName() + " for location " + location);
+        WorldBoundingBox boundingBox = WorldBoundingBoxGenerator.getAppropriateBoundingBox(location, block, player);
         dropLocationMap.put(boundingBox, player);
         //System.out.println("BoundingBox registered");
     }

@@ -69,6 +69,12 @@ collect-mob-drops: true
 # when set to true, mob/entity experience orbs will be automatically collected if the plugin is enabled
 collect-mob-exp: true
 
+# the default radius in which Drop2Inventory looks for drops.
+# You only need to raise this value if you have problems when drops from other plugins aren't detected.
+# Note: It does NOT hurt performance to set this to a high value! (But NEVER change it to a value
+# that would lead to new chunks being loaded. I suggest a maximum value of about 50 blocks).
+default-detection-radius: 10
+
 # WILL BE OBSOLUTE IN 2.0.0+ because it will be toggleable per player with a permission
 # when set to true, items will automatically converted to blocks when mining them
 # if the player has the permission "drop2inventory.autocondense"

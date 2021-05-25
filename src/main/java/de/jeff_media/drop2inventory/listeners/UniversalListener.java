@@ -55,13 +55,19 @@ public class UniversalListener implements Listener {
      */
     @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
     public void collectDrops(ItemSpawnEvent event) {
-        //System.out.println("ItemSpawnEvent: " + event.getEntity().getItemStack());
+        if(main.debug) main.debug("ItemSpawnEvent: " + event.getEntity().getItemStack() + " @ " + event.getEntity().getLocation());
         Item item = event.getEntity();
         ItemStack itemStack = item.getItemStack();
         Location location = event.getLocation();
         Player player = DropOwnerManager.getDropOwner(location);
-        if (player == null) return;
-        if (!EventManager.mayPickUp(player, item)) return;
+        if (player == null) {
+            if(main.debug) main.debug("  Don't pick up: no player found");
+            return;
+        }
+        if (!EventManager.mayPickUp(player, item)) {
+            if(main.debug) main.debug("  Don't pick up: EntityPickUpItemEvent cancelled");
+            return;
+        }
         event.setCancelled(true);
         Utils.addOrDrop(itemStack, player, location);
     }
@@ -101,12 +107,18 @@ public class UniversalListener implements Listener {
      *
      * @param event
      */
-    @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
+    @EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = false)
+    // TODO: ignoreCancelled true or false? It's currently false to detect custom blockbreaks
+    // TODO: Currently using LOWEST to detect custom drops that are done within an event
     public void registerDropOwner(BlockBreakEvent event) {
         Player player = event.getPlayer();
         Block block = event.getBlock();
         Location location = block.getLocation();
-        if (!PermissionChecker.isAllowed(player, new DropSubject(event.getBlock()))) return;
+        if(main.debug) main.debug("BlockBreak, trying to register DropOwner " + player.getName() + " for Block " + block);
+        if (!PermissionChecker.isAllowed(player, new DropSubject(event.getBlock()))) {
+            if(main.debug) main.debug("  Cancelling: player is not allowed to be registered as DropOwner");
+            return;
+        }
         DropOwnerManager.register(player, location, block);
     }
 

@@ -1,12 +1,17 @@
 package de.jeff_media.drop2inventory.handlers;
 
+import de.jeff_media.drop2inventory.Main;
+import de.jeff_media.drop2inventory.config.Config;
+import de.jeff_media.drop2inventory.config.Permissions;
 import de.jeff_media.drop2inventory.data.BoundingBoxPrediction;
 import de.jeff_media.drop2inventory.data.WorldBoundingBox;
+import de.jeff_media.drop2inventory.utils.ParticleUtils;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.Tag;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
+import org.bukkit.entity.Player;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.*;
@@ -23,19 +28,22 @@ public class WorldBoundingBoxGenerator {
     private static final Tag[] unstableTags = {Tag.BANNERS, Tag.BUTTONS, Tag.CARPETS, Tag.CAMPFIRES, Tag.CORAL_PLANTS, Tag.CROPS, Tag.DOORS, Tag.FLOWERS, Tag.PRESSURE_PLATES, Tag.RAILS, Tag.SAPLINGS, Tag.SIGNS, Tag.SMALL_FLOWERS, Tag.STANDING_SIGNS, Tag.TALL_FLOWERS, Tag.TRAPDOORS};
     private final Block block;
     private final Location location;
+    private final Player player;
+    private final Main main = Main.getInstance();
 
-    public WorldBoundingBoxGenerator(Location location, Block block) {
+    public WorldBoundingBoxGenerator(Location location, Block block, Player player) {
         this.location = location;
         this.block = block;
+        this.player = player;
     }
 
     private static void addUnstable(Tag tag) {
         unstable.addAll(tag.getValues());
     }
 
-    public static WorldBoundingBox getAppropriateBoundingBox(Location location, @Nullable Block block) {
+    public static WorldBoundingBox getAppropriateBoundingBox(Location location, @Nullable Block block, Player player) {
 
-        return new WorldBoundingBoxGenerator(location, block).get();
+        return new WorldBoundingBoxGenerator(location, block, player).get();
 
     }
 
@@ -54,10 +62,10 @@ public class WorldBoundingBoxGenerator {
 
     private WorldBoundingBox get() {
 
-        int lifeTime = 2;
-        int radius = 1;
-        int radiusYMin = 0;
-        int radiusYMax = 1;
+        int lifeTime = 3; // TODO: Adjust this, It was originally set to 2
+        int radius = main.getConfig().getInt(Config.DEFAULT_BOUNDING_BOX_RADIUS); // TODO: This was normally set to 1
+        int radiusYMin = main.getConfig().getInt(Config.DEFAULT_BOUNDING_BOX_RADIUS); // TODO: This was normally set to 0
+        int radiusYMax = main.getConfig().getInt(Config.DEFAULT_BOUNDING_BOX_RADIUS); // TODO: This was normally set to 1 or 2
 
         if (block != null) {
             Material mat = block.getType();
@@ -71,12 +79,14 @@ public class WorldBoundingBoxGenerator {
         }
 
         if (lifeTime > 20) lifeTime = 20;
-        /*Main.getInstance().getLogger().warning("Bounding Box");
-        Main.getInstance().getLogger().warning("- LifeTime: " + lifeTime);
-        Main.getInstance().getLogger().warning("- radius: " + radius);
-        Main.getInstance().getLogger().warning("- Y Min: " + radiusYMin);
-        Main.getInstance().getLogger().warning("- Y Max: " + radiusYMax);*/
-        return new WorldBoundingBox(location, lifeTime, radius, radiusYMin, radiusYMax);
+        WorldBoundingBox result = new WorldBoundingBox(location, lifeTime, radius, radiusYMin, radiusYMax);
+        if(player.hasPermission(Permissions.ALLOW_TOGGLE_DEBUG) && Main.getInstance().debug) {
+            ParticleUtils.draw(player, result);
+        }
+        if(main.debug) {
+            main.debug("Created WorldBoundingBox: " + result);
+        }
+        return result;
     }
 
     private BoundingBoxPrediction getUnstableBlocksAbove(Block block) {
