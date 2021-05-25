@@ -13,7 +13,7 @@
         <spigot.prefix>Drop2InventoryPlus</spigot.prefix>
         <spigot.description>All block and mob drops go directly into the player's inventory! Reduces lag and frustration!</spigot.description>
 
-        <spigot.main>${groupId}.${name}.Main</spigot.main>
+        <spigot.main>${groupId}.drop2inventory.Main</spigot.main>
         <spigot.name>${name}</spigot.name>
 
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
