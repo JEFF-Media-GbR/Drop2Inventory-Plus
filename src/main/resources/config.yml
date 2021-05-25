@@ -307,6 +307,13 @@ message-inventory-full: "&cYour inventory is full."
 #message-when-breaking-block2: "&e/drop2inventory &7 또는 &6/drop2inv&7 명령어를 사용하여 아이템 자동 수집를 비활성화 하세요."
 #message-inventory-full: "&c현재 인벤토리가 가득 찼습니다."
 
+##### Pirate Speak (used https://lingojam.com/PirateSpeak but removed wrongly-added 'this' and 'be' words)
+#message-disabled: "&7Automatic drop collection 'ave been &cdisabled&7."
+#message-enabled: "&7Automatic drop collection 'ave been &aenabled&7."
+#message-when-breaking-block: "&7'int: Type &6/drop2inventory&7 or &6/drop2inv&7 to enable automatic drop collection."
+#message-when-breaking-block2: "&7'int: Type &6/drop2inventory&7 or &6/drop2inv&7 to disable automatic drop collection."
+#message-inventory-full: "&cYer inventory be full."
+
 ##### Russian
 #message-disabled: "&7Автоматический сбор дропа &cотключен&7."
 #message-enabled: "&7Автоматический сбор дропа &aвключен&7."
