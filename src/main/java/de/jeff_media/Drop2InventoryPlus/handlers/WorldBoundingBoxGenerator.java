@@ -41,7 +41,7 @@ public class WorldBoundingBoxGenerator {
     }
 
     public static void init() {
-        Main.getInstance().getLogger().info("Generating Set of unstable Materials...");
+        //Main.getInstance().getLogger().info("Generating Set of unstable Materials...");
         for (Tag tag : unstableTags) {
             addUnstable(tag);
         }
@@ -49,7 +49,7 @@ public class WorldBoundingBoxGenerator {
 
         // DEBUG
         for (Material mat : new ArrayList<>(unstable).stream().sorted(Comparator.comparing(Enum::name)).collect(Collectors.toList())) {
-            System.out.println(mat.name());
+            //System.out.println(mat.name());
         }
     }
 
@@ -72,11 +72,11 @@ public class WorldBoundingBoxGenerator {
         }
 
         if (lifeTime > 20) lifeTime = 20;
-        Main.getInstance().getLogger().warning("Bounding Box");
+        /*Main.getInstance().getLogger().warning("Bounding Box");
         Main.getInstance().getLogger().warning("- LifeTime: " + lifeTime);
         Main.getInstance().getLogger().warning("- radius: " + radius);
         Main.getInstance().getLogger().warning("- Y Min: " + radiusYMin);
-        Main.getInstance().getLogger().warning("- Y Max: " + radiusYMax);
+        Main.getInstance().getLogger().warning("- Y Max: " + radiusYMax);*/
         return new WorldBoundingBox(location, lifeTime, radius, radiusYMin, radiusYMax);
     }
 
@@ -87,12 +87,12 @@ public class WorldBoundingBoxGenerator {
         int gravityBlocksAbove = 0;
         while (extraLifetimeNeeded < 256) {
             if (isUnstable(current.getType())) {
-                System.out.println(extraLifetimeNeeded + ": " + current + " is unstable");
+                //System.out.println(extraLifetimeNeeded + ": " + current + " is unstable");
                 extraLifetimeNeeded += 1;
                 height += 1;
                 gravityBlocksAbove = 0;
             } else if (current.getType().hasGravity()) {
-                System.out.println(extraLifetimeNeeded + ": " + current + " is gravity");
+                //System.out.println(extraLifetimeNeeded + ": " + current + " is gravity");
                 extraLifetimeNeeded += 2;
                 height += 1;
                 gravityBlocksAbove += 1;
@@ -107,16 +107,16 @@ public class WorldBoundingBoxGenerator {
     }
 
     private boolean isUnstable(Material mat) {
-        System.out.println("isUnstable? " + mat.name());
+        //System.out.println("isUnstable? " + mat.name());
         if (mat.isAir()) {
-            System.out.println("  no, its air");
+            //System.out.println("  no, its air");
             return false;
         }
         if (unstable.contains(mat)) {
-            System.out.println("  yes");
+            //System.out.println("  yes");
             return true;
         }
-        System.out.println("  no");
+        //System.out.println("  no");
         return false;
     }
 

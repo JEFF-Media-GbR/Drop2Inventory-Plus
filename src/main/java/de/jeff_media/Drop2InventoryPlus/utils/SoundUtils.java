@@ -8,7 +8,6 @@ import org.bukkit.entity.Player;
 
 public class SoundUtils {
 
-    private final Main main = Main.getInstance();
     private final Sound sound;
     private final boolean soundEnabled;
     private final boolean soundGlobal;
@@ -16,7 +15,8 @@ public class SoundUtils {
     private final float soundVolume;
 
     public SoundUtils() {
-        String soundName = main.getConfig().getString(Config.SOUND_EFFECT);
+        final Main main = Main.getInstance();
+        final String soundName = main.getConfig().getString(Config.SOUND_EFFECT);
         sound = Enums.getIfPresent(Sound.class, soundName).orNull();
         if (sound == null) {
             main.getLogger().warning("Unknown sound effect: " + soundName);

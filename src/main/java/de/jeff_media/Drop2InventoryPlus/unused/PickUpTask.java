@@ -11,6 +11,7 @@ import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.Set;
 
+@SuppressWarnings("ALL")
 @Unused
 public class PickUpTask extends BukkitRunnable {
 

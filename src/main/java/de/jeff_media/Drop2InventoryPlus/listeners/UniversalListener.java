@@ -1,5 +1,7 @@
 package de.jeff_media.Drop2InventoryPlus.listeners;
 
+import de.jeff_media.Drop2InventoryPlus.Main;
+import de.jeff_media.Drop2InventoryPlus.config.Config;
 import de.jeff_media.Drop2InventoryPlus.data.DropSubject;
 import de.jeff_media.Drop2InventoryPlus.handlers.DropOwnerManager;
 import de.jeff_media.Drop2InventoryPlus.handlers.EventManager;
@@ -18,7 +20,10 @@ import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.entity.EntityDeathEvent;
 import org.bukkit.event.entity.EntitySpawnEvent;
 import org.bukkit.event.entity.ItemSpawnEvent;
+import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.persistence.PersistentDataContainer;
+import org.bukkit.persistence.PersistentDataType;
 
 /**
  * Registers events that will probably lead to drops, i.e. EntityDeathEvent and BlockBreakEvent, so that those drops
@@ -26,7 +31,22 @@ import org.bukkit.inventory.ItemStack;
  */
 public class UniversalListener implements Listener {
 
-    //private final Main main = Main.getInstance();
+    private final Main main = Main.getInstance();
+
+    /**
+     * Resets the "has seen message" tag on join
+     */
+    @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
+    public void onPlayerJoin(PlayerJoinEvent event) {
+        if(!main.getConfig().getBoolean(Config.SHOW_MESSAGE_AGAIN_AFTER_LOGOUT)) return;
+
+        Player player = event.getPlayer();
+
+        PersistentDataContainer pdc = player.getPersistentDataContainer();
+        if(pdc.has(Main.HAS_SEEN_MESSAGE_TAG, PersistentDataType.BYTE)) {
+            pdc.remove(Main.HAS_SEEN_MESSAGE_TAG);
+        }
+    }
 
     /**
      * Cancels the actual Item Spawn and gives it to the player that owns this drop
@@ -35,7 +55,7 @@ public class UniversalListener implements Listener {
      */
     @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
     public void collectDrops(ItemSpawnEvent event) {
-        System.out.println("ItemSpawnEvent: " + event.getEntity().getItemStack());
+        //System.out.println("ItemSpawnEvent: " + event.getEntity().getItemStack());
         Item item = event.getEntity();
         ItemStack itemStack = item.getItemStack();
         Location location = event.getLocation();
@@ -49,7 +69,7 @@ public class UniversalListener implements Listener {
     @EventHandler
     public void debug(EntitySpawnEvent event) {
         if (event.getEntityType() == EntityType.FALLING_BLOCK) {
-            System.out.println("FallingBlockSpawn");
+            //System.out.println("FallingBlockSpawn");
         }
     }
 

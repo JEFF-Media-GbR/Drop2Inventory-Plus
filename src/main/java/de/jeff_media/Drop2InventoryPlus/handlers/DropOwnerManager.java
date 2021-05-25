@@ -25,9 +25,9 @@ public class DropOwnerManager {
             for (WorldBoundingBox boundingBox : dropLocationMap.keySet().toArray(new WorldBoundingBox[0])) { //ConcurrentModificationException
                 if (boundingBox.isExpired()) {
                     dropLocationMap.remove(boundingBox);
-                    System.out.println("BoundingBox expired");
+                    //System.out.println("BoundingBox expired");
                 } else {
-                    System.out.println("Collecting for " + boundingBox.getTicksLeft() + " more ticks");
+                    //System.out.println("Collecting for " + boundingBox.getTicksLeft() + " more ticks");
                 }
             }
         }, 1, 1);
@@ -42,14 +42,13 @@ public class DropOwnerManager {
         }
         if (possibleBoundingBoxes.size() == 0) return null;
         possibleBoundingBoxes.sort(new WorldBoundingBox.BoundingBoxComparator(location));
-        Player player = dropLocationMap.get(possibleBoundingBoxes.get(0));
-        return player;
+        return dropLocationMap.get(possibleBoundingBoxes.get(0));
     }
 
     public static void register(Player player, Location location, @Nullable Block block) {
         WorldBoundingBox boundingBox = WorldBoundingBoxGenerator.getAppropriateBoundingBox(location, block);
         dropLocationMap.put(boundingBox, player);
-        System.out.println("BoundingBox registered");
+        //System.out.println("BoundingBox registered");
     }
 
 

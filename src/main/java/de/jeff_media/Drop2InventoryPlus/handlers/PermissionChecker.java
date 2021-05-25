@@ -27,19 +27,18 @@ public class PermissionChecker {
     private static final Main main = Main.getInstance();
 
     private static boolean hasDrop2InvEnabled(Player player) {
-        PlayerSetting setting = main.perPlayerSettings.get(player.getUniqueId().toString());
 
         if (!main.enabled(player)) {
-            if (!setting.hasSeenMessage) {
-                setting.hasSeenMessage = true;
+            if (!main.hasSeenMessage(player)) {
+                main.setHasSeenMessage(player);
                 if (main.getConfig().getBoolean(Config.SHOW_MESSAGE_WHEN_BREAKING_BLOCK)) {
                     Messages.sendMessage(player, main.messages.MSG_HINT_ENABLE);
                 }
             }
             return false;
         }
-        if (!setting.hasSeenMessage) {
-            setting.hasSeenMessage = true;
+        if (!main.hasSeenMessage(player)) {
+            main.setHasSeenMessage(player);
             if (main.getConfig().getBoolean(Config.SHOW_MESSAGE_WHEN_BREAKING_BLOCK_AND_COLLECTION_IS_ENABLED)) {
                 Messages.sendMessage(player, main.messages.MSG_HINT_DISABLE);
             }
@@ -50,8 +49,6 @@ public class PermissionChecker {
     public static boolean isAllowed(Player player, DropSubject dropSubject) {
         World world = dropSubject.getWorld();
         DropReason dropReason = dropSubject.getDropReason();
-
-        main.registerPlayer(player);
 
         // Permission
         if (!player.hasPermission(Permissions.ALLOW_USE)) {

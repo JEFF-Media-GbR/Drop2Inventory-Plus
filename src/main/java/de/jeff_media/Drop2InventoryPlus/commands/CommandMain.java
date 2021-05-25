@@ -10,6 +10,7 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+import org.jetbrains.annotations.NotNull;
 
 public class CommandMain implements CommandExecutor {
 	
@@ -20,7 +21,7 @@ public class CommandMain implements CommandExecutor {
 	}
 
 	@Override
-	public boolean onCommand(CommandSender sender, Command command, String alias, String[] args) {
+	public boolean onCommand(@NotNull CommandSender sender, Command command, @NotNull String alias, String[] args) {
 		
 		if(!command.getName().equalsIgnoreCase("drop2inventory")) {
 			return false;
@@ -40,8 +41,8 @@ public class CommandMain implements CommandExecutor {
 				Messages.sendMessage(sender,ChatColor.RED+"Player "+ChatColor.DARK_RED+args[0]+ChatColor.RED+" not found.");
 				return true;
 			}
-			main.getPlayerSetting(player).enabled=!main.getPlayerSetting(player).enabled;
-			if(main.getPlayerSetting(player).enabled) {
+			main.togglePlayerSetting(player);
+			if(main.enabled(player)) {
 				Messages.sendMessage(sender,"§7Automatic drop collection has been §aenabled§7 for player "+player.getDisplayName());
 			} else {
 				Messages.sendMessage(sender,"§7Automatic drop collection has been §cdisabled§7 for player "+player.getDisplayName());
@@ -67,7 +68,7 @@ public class CommandMain implements CommandExecutor {
 		}
 		
 		main.togglePlayerSetting(p);
-		if(main.getPlayerSetting(p).enabled) {
+		if(main.enabled(p)) {
 			Messages.sendMessage(sender,main.messages.MSG_ENABLED);
 		} else {
 			Messages.sendMessage(sender,main.messages.MSG_DISABLED);

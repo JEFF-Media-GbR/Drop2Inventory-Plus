@@ -11,7 +11,7 @@ import java.util.UUID;
 
 public class Placeholders extends PlaceholderExpansion {
 
-    Main main;
+    private final Main main;
 
     public Placeholders(Main main) {
         this.main=main;
@@ -51,18 +51,18 @@ public class Placeholders extends PlaceholderExpansion {
      * @return Possibly-null String of the requested identifier.
      */
     @Override
-    public String onRequest(OfflinePlayer offlinePlayer, String identifier){
+    public String onRequest(OfflinePlayer offlinePlayer, @NotNull String identifier){
 
         UUID uuid = offlinePlayer.getUniqueId();
         Player player = Bukkit.getPlayer(offlinePlayer.getUniqueId());
         if(player == null) return null;
 
 
-
+        //noinspection SwitchStatementWithTooFewBranches
         switch (identifier) {
 
             case "enabled":
-                return main.getPlayerSetting(player).enabled ? "true" : "false";
+                return main.hasSeenMessage(player) ? "true" : "false";
         }
 
         return null;

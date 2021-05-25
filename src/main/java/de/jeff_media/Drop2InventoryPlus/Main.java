@@ -18,12 +18,16 @@ import org.bstats.bukkit.Metrics;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
+import org.bukkit.NamespacedKey;
 import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventPriority;
+import org.bukkit.persistence.PersistentDataContainer;
+import org.bukkit.persistence.PersistentDataType;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import javax.naming.Name;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -48,11 +52,13 @@ public class Main extends JavaPlugin {
     //public MendingUtils mendingUtils;
     public Messages messages;
     public boolean mobsIsWhitelist = false;
-    public HashMap<String, PlayerSetting> perPlayerSettings;
     public SoundUtils soundUtils;
     public Utils utils;
     PluginUpdateChecker updateChecker;
     boolean usingMatchingConfig = true;
+
+    public static NamespacedKey HAS_DROP_COLLECTION_ENABLED_TAG;
+    public static NamespacedKey HAS_SEEN_MESSAGE_TAG;
 
     public static Main getInstance() {
         return instance;
@@ -131,22 +137,17 @@ public class Main extends JavaPlugin {
 
         if (getConfig().getBoolean(Config.ALWAYS_ENABLED)) return true;
 
-        // The following is for all the lazy server admins who use /reload instead of properly restarting their
-        // server ;) I am sometimes getting stacktraces although it is clearly stated that /reload is NOT
-        // supported. So, here is a quick fix
-        if (perPlayerSettings == null) {
-            perPlayerSettings = new HashMap<>();
-        }
-        registerPlayer(p);
-        // End of quick fix
-
-        return perPlayerSettings.get(p.getUniqueId().toString()).enabled;
+        PersistentDataContainer pdc = p.getPersistentDataContainer();
+        byte value = pdc.getOrDefault(HAS_DROP_COLLECTION_ENABLED_TAG, PersistentDataType.BYTE, (byte) 0);
+        return value == (byte) 1 ? true : false;
     }
 
-    public PlayerSetting getPlayerSetting(Player p) {
-        registerPlayer(p);
-        return perPlayerSettings.get(p.getUniqueId().toString());
+    public boolean hasSeenMessage(Player p) {
+        PersistentDataContainer pdc = p.getPersistentDataContainer();
+        byte value = pdc.getOrDefault(HAS_SEEN_MESSAGE_TAG, PersistentDataType.BYTE, (byte) 0);
+        return value == (byte) 1 ? true : false;
     }
+
 
     public boolean isWorldDisabled(String worldName) {
         return disabledWorlds.contains(worldName.toLowerCase());
@@ -163,16 +164,11 @@ public class Main extends JavaPlugin {
         }
     }
 
-    @Override
-    public void onDisable() {
-        for (Player p : getServer().getOnlinePlayers()) {
-            unregisterPlayer(p);
-        }
-    }
-
     public void onEnable() {
 
         instance = this;
+        HAS_DROP_COLLECTION_ENABLED_TAG = new NamespacedKey(this, "dropcollectionenabled");
+        HAS_SEEN_MESSAGE_TAG = new NamespacedKey(this, "hasseenmessage");
 
         WorldBoundingBoxGenerator.init();
 
@@ -214,47 +210,22 @@ public class Main extends JavaPlugin {
 
     }
 
-    public void registerPlayer(Player p) {
-        if (!perPlayerSettings.containsKey(p.getUniqueId().toString())) {
-
-            File playerFile = new File(getDataFolder() + File.separator + "playerdata",
-                    p.getUniqueId() + ".yml");
-            YamlConfiguration playerConfig = YamlConfiguration.loadConfiguration(playerFile);
-
-            boolean activeForThisPlayer;
-
-            if (!playerFile.exists()) {
-                activeForThisPlayer = getConfig().getBoolean(Config.ENABLED_BY_DEFAULT);
-            } else {
-                activeForThisPlayer = playerConfig.getBoolean("enabled");
-            }
-
-            PlayerSetting newSettings = new PlayerSetting(activeForThisPlayer);
-            if (!getConfig().getBoolean(Config.SHOW_MESSAGE_AGAIN_AFTER_LOGOUT)) {
-                newSettings.hasSeenMessage = playerConfig.getBoolean("hasSeenMessage");
-            }
-
-
-            perPlayerSettings.put(p.getUniqueId().toString(), newSettings);
-        }
-    }
-
     public void reload() {
         createConfig();
         reloadConfig();
         soundUtils = new SoundUtils();
-        perPlayerSettings = new HashMap<>();
         messages = new Messages(this);
         ingotCondenser = new IngotCondenser(this);
 
         // Update Checker start
+        // TODO: Switch to my new Update Checker -> https://github.com/JEFF-Media-GbR/Spigot-UpdateChecker
         if (updateChecker != null) {
             updateChecker.stop();
         }
         updateChecker = new PluginUpdateChecker(this, "https://api.jeff-media.de/drop2inventoryplus/drop2inventoryplus-latest-version.txt",
                 "https://www.spigotmc.org/resources/drop2inventoryplus.87784/", "https://www.spigotmc.org/resources/drop2inventoryplus.87784/updates", "https://paypal.me/mfnalex");
         if (getConfig().getString(Config.CHECK_FOR_UPDATES, "true").equalsIgnoreCase("true")) {
-            updateChecker.check(getConfig().getInt(Config.UPDATE_CHECK_INTERVAL) * 60 * 60);
+            updateChecker.check((long) getConfig().getInt(Config.UPDATE_CHECK_INTERVAL) * 60 * 60);
         } else if (getConfig().getString(Config.CHECK_FOR_UPDATES, "true").equalsIgnoreCase("on-startup")) {
             updateChecker.check();
         }
@@ -271,27 +242,19 @@ public class Main extends JavaPlugin {
     }
 
     public void togglePlayerSetting(Player p) {
-        registerPlayer(p);
-        boolean enabled = perPlayerSettings.get(p.getUniqueId().toString()).enabled;
-        perPlayerSettings.get(p.getUniqueId().toString()).enabled = !enabled;
-    }
-
-    public void unregisterPlayer(Player p) {
-        UUID uniqueId = p.getUniqueId();
-        if (perPlayerSettings.containsKey(uniqueId.toString())) {
-            PlayerSetting setting = perPlayerSettings.get(p.getUniqueId().toString());
-            File playerFile = new File(getDataFolder() + File.separator + "playerdata",
-                    p.getUniqueId() + ".yml");
-            YamlConfiguration playerConfig = YamlConfiguration.loadConfiguration(playerFile);
-            playerConfig.set("enabled", setting.enabled);
-            playerConfig.set("hasSeenMessage", setting.hasSeenMessage);
-            try {
-                playerConfig.save(playerFile);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-
-            perPlayerSettings.remove(uniqueId.toString());
+        boolean enabled = !enabled(p);
+        PersistentDataContainer pdc = p.getPersistentDataContainer();
+        if(enabled) {
+            pdc.set(HAS_DROP_COLLECTION_ENABLED_TAG, PersistentDataType.BYTE, (byte) 1);
+        } else {
+            pdc.remove(HAS_DROP_COLLECTION_ENABLED_TAG);
         }
     }
+
+    public void setHasSeenMessage(Player p) {
+        PersistentDataContainer pdc = p.getPersistentDataContainer();
+        pdc.set(HAS_SEEN_MESSAGE_TAG, PersistentDataType.BYTE, (byte) 1);
+    }
+
+
 }

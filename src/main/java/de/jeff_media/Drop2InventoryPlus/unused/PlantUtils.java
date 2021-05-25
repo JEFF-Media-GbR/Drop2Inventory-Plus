@@ -73,15 +73,13 @@ public class PlantUtils {
 
     public static void getChorusTree(Block block, ArrayList<Block> list) {
 
-        Block currentBlock = block;
-
-        if(isPartOfChorusTree(currentBlock) /*&& list.size()<maxTreeSize */) {
-            if(!list.contains(currentBlock)) {
-                list.add(currentBlock);
+        if(isPartOfChorusTree(block) /*&& list.size()<maxTreeSize */) {
+            if(!list.contains(block)) {
+                list.add(block);
 
                 for(BlockFace face:chorusBlockFaces) {
-                    if(isPartOfChorusTree(currentBlock.getRelative(face))) {
-                        getChorusTree(currentBlock.getRelative(face),list);
+                    if(isPartOfChorusTree(block.getRelative(face))) {
+                        getChorusTree(block.getRelative(face),list);
                     }
                 }
 

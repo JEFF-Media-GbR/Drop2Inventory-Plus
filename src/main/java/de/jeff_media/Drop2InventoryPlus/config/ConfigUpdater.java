@@ -17,6 +17,7 @@ import java.util.ArrayList;
 import java.util.Map;
 import java.util.Scanner;
 
+// TODO: Switch to my new Config Updater
 public class ConfigUpdater {
 
     final Main main;
@@ -42,14 +43,6 @@ public class ConfigUpdater {
 
         if(oldConfig.getBoolean(Config.DEBUG)) {
             main.debug=true;
-            /*if(plugin.debug) {
-                plugin.getLogger().warning("WARNING: oldConfig.debug != plugin.debug");
-                plugin.debug=true;
-            }*/
-            /*plugin.getLogger().warning("Test 1: " + plugin.blocksIsWhitelist);
-            plugin.getLogger().warning("Test 2: " + oldConfig.isSet(Config.ENABLED_BLOCKS));*/
-
-
 
 
         }
@@ -115,8 +108,6 @@ public class ConfigUpdater {
 
                         String quotes = "";
 
-                        //if (node.equalsIgnoreCase("sorting-method")) // needs single quotes
-                        //	quotes = "'";
                         if (node.startsWith("message-")) // needs double quotes
                             quotes = "\"";
 

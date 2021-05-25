@@ -26,5 +26,5 @@ commands:
   drop2inventory:
     description: Toggle automatic drop collection for the current or another player
     usage: /<command> [player]
-    aliases: drop2inv
+    aliases: [drop2inv, d2i]
     permission: drop2inventory.use

@@ -69,6 +69,7 @@ collect-mob-drops: true
 # when set to true, mob/entity experience orbs will be automatically collected if the plugin is enabled
 collect-mob-exp: true
 
+# WILL BE OBSOLUTE IN 2.0.0+ because it will be toggleable per player with a permission
 # when set to true, items will automatically converted to blocks when mining them
 # if the player has the permission "drop2inventory.autocondense"
 # e.g. 9 diamonds -> 1 diamond_block etc
@@ -119,6 +120,7 @@ sound-global: true
 #####     Event priority    #####
 #################################
 
+# WILL BE OBSOLUTE IN 2.0.0+
 # Normally, Drop2Inventory should run on the highest possible priority.
 # However, there are some plugins known to clear the BlockDropItemEvent's
 # drops list, for example EcoEnchants. This is bad as Drop2Inventory can
@@ -132,6 +134,7 @@ block-drop-item-event-priority: HIGH
 ##### Legacy drop detection #####
 #################################
 
+# WILL BE OBSOLUTE IN 2.0.0+
 # when enabled, Drop2Inventory tries to detect items that other plugins drop
 # using the World#dropItem methods.
 # This allows Drop2Inventory to detect block drops that other plugins create
@@ -144,7 +147,8 @@ block-drop-item-event-priority: HIGH
 detect-legacy-drops: true
 detect-legacy-drops-range: 6
 
-# When using "detect-unused-drops", ignore items spawning on hoppers
+# WILL BE OBSOLUTE IN 2.0.0+
+# When using "detect-legacy-drops", ignore items spawning on hoppers
 # The vertical range checks up to X blocks below the item for hoppers
 # The horizontal range additionaly checks to the sides.
 # Example: You set vertical range to 10 and horizontal to 0. That means
@@ -157,10 +161,11 @@ ignore-items-on-hoppers: true
 ignore-items-on-hoppers-vertical-range: 20
 ignore-items-on-hoppers-horizontal-range: 3
 
+# WILL BE OBSOLUTE IN 2.0.0+
 # When set to true, items from dispensers and droppers will not automatically
 # be collected by nearby players.
 # When set to false, items from dispensers and droppers will automatically
-# be collected by the closest player within "detect-unused-drops-range" radius.
+# be collected by the closest player within "detect-legacy-drops-range" radius.
 ignore-items-from-dispensers: true
 
 # When set to true, Drop2Inventory will not automatically collect drops from
@@ -168,6 +173,7 @@ ignore-items-from-dispensers: true
 ignore-drops-from-mobs-killed-by-lava: false
 ignore-drops-from-mobs-killed-by-magma: false
 
+# WILL BE OBSOLUTE IN 2.0.0+
 # Other plugins can cancel the EntityPickupItemEvent, e.g. to make badly coded
 # holograms (the other plugins should rather/additionally raise the Item#setPickupDelay)
 # When the following setting is set to true, Drop2Inventory will call a fake
