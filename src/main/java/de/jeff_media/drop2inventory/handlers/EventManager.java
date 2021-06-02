@@ -18,12 +18,6 @@ public class EventManager {
         orb.setVelocity(player.getVelocity());
     }
 
-    /*public static int getExperienceToGive(Player player, int experience) {
-        Drop2InventoryExpChangeEvent event = new Drop2InventoryExpChangeEvent(player, experience);
-        Bukkit.getPluginManager().callEvent(event);
-        return event.getAmount();
-    }*/
-
     public static boolean mayPickUp(Player player, Item item) {
         Drop2InventoryPickupItemEvent event = new Drop2InventoryPickupItemEvent(player, item, 0);
         Bukkit.getPluginManager().callEvent(event);

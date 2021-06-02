@@ -6,6 +6,7 @@ import de.jeff_media.drop2inventory.data.DropSubject;
 import de.jeff_media.drop2inventory.handlers.DropOwnerManager;
 import de.jeff_media.drop2inventory.handlers.EventManager;
 import de.jeff_media.drop2inventory.handlers.PermissionChecker;
+import de.jeff_media.drop2inventory.utils.PDCUtils;
 import de.jeff_media.drop2inventory.utils.Utils;
 import org.bukkit.Location;
 import org.bukkit.block.Block;
@@ -55,9 +56,12 @@ public class UniversalListener implements Listener {
      */
     @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
     public void collectDrops(ItemSpawnEvent event) {
-        if(main.debug) main.debug("ItemSpawnEvent: " + event.getEntity().getItemStack() + " @ " + event.getEntity().getLocation());
         Item item = event.getEntity();
         ItemStack itemStack = item.getItemStack();
+        if(PDCUtils.has(itemStack, Main.IGNORED_DROP_TAG, PersistentDataType.BYTE)) {
+            PDCUtils.remove(itemStack, Main.IGNORED_DROP_TAG);
+            return;
+        }
         Location location = event.getLocation();
         Player player = DropOwnerManager.getDropOwner(location);
         if (player == null) {

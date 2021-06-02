@@ -6,10 +6,10 @@ import de.jeff_media.drop2inventory.config.Permissions;
 import org.apache.commons.lang.math.NumberUtils;
 import org.bukkit.Location;
 import org.bukkit.Material;
-import org.bukkit.entity.Item;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.persistence.PersistentDataType;
 import org.jetbrains.annotations.Nullable;
 
 import java.io.File;
@@ -96,7 +96,9 @@ public class Utils {
             HashMap<Integer, ItemStack> leftovers = player.getInventory().addItem(item);
             boolean inventoryFull = false;
             for (ItemStack leftover : leftovers.values()) {
-                Item drop = player.getWorld().dropItemNaturally(dropLocation == null ? player.getLocation() : dropLocation, leftover);
+                PDCUtils.add(leftover, Main.IGNORED_DROP_TAG, PersistentDataType.BYTE, (byte) 1);
+                player.getWorld().dropItemNaturally(dropLocation == null ? player.getLocation() : dropLocation, leftover);
+                main.debug("Inventory full, dropping to world");
                 inventoryFull = true;
             }
             if(inventoryFull && main.getConfig().getBoolean(Config.WARN_WHEN_INVENTORY_IS_FULL)) {
@@ -125,20 +127,6 @@ public class Utils {
         }
         return version;
     }
-
-    /*ItemStack getItemInMainHand(Player p) {
-        if (main.mcVersion < 9) {
-            return p.getInventory().getItemInHand();
-        }
-        return p.getInventory().getItemInMainHand();
-    }
-
-    ItemStack getItemInMainHand(PlayerInventory inv) {
-        if (main.mcVersion < 9) {
-            return inv.getItemInHand();
-        }
-        return inv.getItemInMainHand();
-    }*/
 
     public static boolean hasPermissionForThisTool(@Nullable Material mat, Player p) {
         String matt = mat.name().toLowerCase();

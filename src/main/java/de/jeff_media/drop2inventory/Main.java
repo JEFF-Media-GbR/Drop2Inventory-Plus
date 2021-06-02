@@ -53,6 +53,7 @@ public class Main extends JavaPlugin {
 
     public static NamespacedKey HAS_DROP_COLLECTION_ENABLED_TAG;
     public static NamespacedKey HAS_SEEN_MESSAGE_TAG;
+    public static NamespacedKey IGNORED_DROP_TAG;
 
     public static Main getInstance() {
         return instance;
@@ -163,6 +164,7 @@ public class Main extends JavaPlugin {
         instance = this;
         HAS_DROP_COLLECTION_ENABLED_TAG = new NamespacedKey(this, "dropcollectionenabled");
         HAS_SEEN_MESSAGE_TAG = new NamespacedKey(this, "hasseenmessage");
+        IGNORED_DROP_TAG = new NamespacedKey(this, "ignoreddrop");
 
         WorldBoundingBoxGenerator.init();
 
@@ -185,9 +187,6 @@ public class Main extends JavaPlugin {
         CommandMain commandMain = new CommandMain(this);
         hotbarStuffer = new HotbarStuffer(this);
 
-        //this.getServer().getPluginManager().registerEvents(new GenericListener(this), this);
-        //this.getServer().getPluginManager().registerEvents(legacyDropDetectionListener,this);
-        //this.getServer().getPluginManager().registerEvents(new BlockDropItemListener(this),this);
         getServer().getPluginManager().registerEvents(new UniversalListener(), this);
 
         utils = new Utils(this);

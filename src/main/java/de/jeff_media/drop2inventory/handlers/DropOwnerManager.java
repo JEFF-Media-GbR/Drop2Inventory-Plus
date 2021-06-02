@@ -8,9 +8,7 @@ import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
+import java.util.*;
 
 /**
  * Manages who the owner is of drops that have not yet been spawned.
@@ -21,6 +19,10 @@ public class DropOwnerManager {
     private final static Main main = Main.getInstance();
 
     static {
+
+        /*
+          Clear bounding boxes
+         */
         Bukkit.getScheduler().scheduleSyncRepeatingTask(main, ()->{
             for (WorldBoundingBox boundingBox : dropLocationMap.keySet().toArray(new WorldBoundingBox[0])) { //ConcurrentModificationException
                 if (boundingBox.isExpired()) {
