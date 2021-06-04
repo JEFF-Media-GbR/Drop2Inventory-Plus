@@ -53,8 +53,6 @@ public class RegistrationListener implements Listener {
      */
     @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
     public void registerDropOwner(EntityDamageByEntityEvent event) {
-        System.out.println(event.getEntityType());
-        System.out.println(event.getEntity());
         if (!(event instanceof Hanging) && event.getEntityType() != EntityType.ITEM_FRAME) return;
         if (event.getDamager().getType() != EntityType.PLAYER) return;
         Player player = (Player) event.getDamager();

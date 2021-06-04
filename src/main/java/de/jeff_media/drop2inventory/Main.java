@@ -39,7 +39,6 @@ public class Main extends JavaPlugin {
     public static final String uid = "%%__USER__%%";
     private static Main instance;
     public final int mcVersion = Utils.getMcVersion(Bukkit.getBukkitVersion());
-    final int currentConfigVersion = 121;
     public EventPriority blockDropItemPrio;
     public boolean blocksIsWhitelist = false;
     @Getter private boolean debug = false;
@@ -103,7 +102,9 @@ public class Main extends JavaPlugin {
             debug("Adding world to worlds blacklist: " + s.toLowerCase());
         }
 
-        if (getConfig().getInt(Config.CONFIG_VERSION, 0) < getNewConfigVersion()) {
+        if (getConfig().getLong(Config.CONFIG_VERSION, 0) < getNewConfigVersion()) {
+            debug("Your config version: " + getConfig().getLong(Config.CONFIG_VERSION));
+            debug("Newest config version: " + getNewConfigVersion());
             showOldConfigWarning();
 
             ConfigUpdater configUpdater = new ConfigUpdater(this);

@@ -1,3 +1,7 @@
+## 2.0.1
+- Fixed Config Updater updating the config every time
+- Removed forgotten debug messages
+
 ## 2.0.0
 - FULL support for mcMMO and similar plugins
 - Supports ALL drops from ALL plugins!

@@ -17,7 +17,7 @@ public class CommandReload {
         }
 
         main.reload();
-        Messages.sendMessage(sender,ChatColor.GREEN+"drop2inventory has been reloaded.");
+        Messages.sendMessage(sender,ChatColor.GREEN+"Drop2InventoryPlus has been reloaded.");
         return true;
     }
 
