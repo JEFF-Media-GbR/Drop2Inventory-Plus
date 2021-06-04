@@ -42,7 +42,7 @@ public class ConfigUpdater {
         FileConfiguration oldConfig = YamlConfiguration.loadConfiguration(oldConfigFile);
 
         if(oldConfig.getBoolean(Config.DEBUG)) {
-            main.debug=true;
+            main.setDebug(true);
 
 
         }
@@ -86,7 +86,7 @@ public class ConfigUpdater {
             }
             else if (line.startsWith("disabled-mobs:")) {
                 newline = null;
-                newLines.add(main.mobsIsWhitelist ? Config.ENABLED_MOBS : "disabled-mobs:");
+                newLines.add(main.isMobsIsWhitelist() ? Config.ENABLED_MOBS : "disabled-mobs:");
                 if (main.disabledMobs != null) {
                     for (String mob : main.disabledMobs) {
                         newLines.add("- " + mob);

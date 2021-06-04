@@ -69,9 +69,9 @@ public class CommandMain implements CommandExecutor {
 		
 		main.togglePlayerSetting(p);
 		if(main.enabled(p)) {
-			Messages.sendMessage(sender,main.messages.MSG_ENABLED);
+			Messages.sendMessage(sender,main.getMessages().MSG_ENABLED);
 		} else {
-			Messages.sendMessage(sender,main.messages.MSG_DISABLED);
+			Messages.sendMessage(sender,main.getMessages().MSG_DISABLED);
 		}
 		return true;
 		

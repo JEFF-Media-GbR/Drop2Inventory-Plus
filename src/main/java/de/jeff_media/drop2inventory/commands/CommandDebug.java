@@ -16,9 +16,9 @@ public class CommandDebug {
             return true;
         }
 
-        main.debug = !main.debug;
+        main.setDebug(!main.isDebug());
 
-        if(!main.debug) {
+        if(!main.isDebug()) {
             sender.sendMessage(ChatColor.GREEN+"Drop2Inventory DEBUG Mode disabled!");
             return true;
         }

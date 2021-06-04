@@ -15,7 +15,8 @@ import java.util.*;
  */
 public class DropOwnerManager {
 
-    private final static HashMap<WorldBoundingBox, Player> dropLocationMap = new HashMap<>();
+    private final static HashMap<WorldBoundingBox, UUID> dropLocationMap = new HashMap<>();
+    //private final static HashMap<WorldBoundingBox, UUID> hangingDropLocationMap = new HashMap<>();
     private final static Main main = Main.getInstance();
 
     static {
@@ -24,35 +25,59 @@ public class DropOwnerManager {
           Clear bounding boxes
          */
         Bukkit.getScheduler().scheduleSyncRepeatingTask(main, ()->{
-            for (WorldBoundingBox boundingBox : dropLocationMap.keySet().toArray(new WorldBoundingBox[0])) { //ConcurrentModificationException
-                if (boundingBox.isExpired()) {
-                    dropLocationMap.remove(boundingBox);
-                    if(main.debug) main.debug("BoundingBox expired");
-                } else {
-                    //System.out.println("Collecting for " + boundingBox.getTicksLeft() + " more ticks");
+            //for(HashMap<WorldBoundingBox, UUID> map : new HashMap[] {dropLocationMap, hangingDropLocationMap}) {
+                Iterator<WorldBoundingBox> iterator = dropLocationMap.keySet().iterator();
+                while (iterator.hasNext()) {
+                    WorldBoundingBox boundingBox = iterator.next();
+                    if (boundingBox.isExpired()) {
+                        //dropLocationMap.remove(boundingBox);
+                        iterator.remove();
+                        if (main.isDebug()) main.debug("BoundingBox expired");
+                    }
                 }
-            }
+            //}
         }, 1, 1);
     }
 
     public static @Nullable Player getDropOwner(Location location) {
-        List<WorldBoundingBox> possibleBoundingBoxes = new ArrayList<>();
-        for (WorldBoundingBox boundingBox : dropLocationMap.keySet()) {
-            if (boundingBox.contains(location)) {
-                possibleBoundingBoxes.add(boundingBox);
-            }
-        }
-        if (possibleBoundingBoxes.size() == 0) return null;
-        possibleBoundingBoxes.sort(new WorldBoundingBox.BoundingBoxComparator(location));
-        return dropLocationMap.get(possibleBoundingBoxes.get(0));
+        return getDropOwner(location, dropLocationMap);
     }
 
     public static void register(Player player, Location location, @Nullable Block block) {
-        if(main.debug) main.debug("Registering DropOwner " + player.getName() + " for location " + location);
+        if(main.isDebug()) main.debug("Registering DropOwner " + player.getName() + " for location " + location);
         WorldBoundingBox boundingBox = WorldBoundingBoxGenerator.getAppropriateBoundingBox(location, block, player);
-        dropLocationMap.put(boundingBox, player);
+        dropLocationMap.put(boundingBox, player.getUniqueId());
         //System.out.println("BoundingBox registered");
     }
+
+    /*public static void registerHanging(Player player, Location location, @NotNull Block block) {
+        if(main.debug) main.debug("Registering DropOwner " + player.getName() + " for location " + location);
+        WorldBoundingBox boundingBox = new WorldBoundingBox(block.getLocation(), 200, 0, 0, 0);
+        dropLocationMap.put(boundingBox, player.getUniqueId());
+    }*/
+
+    private static @Nullable Player getDropOwner(Location location, HashMap<WorldBoundingBox, UUID> map) {
+        //List<WorldBoundingBox> possibleBoundingBoxes = new ArrayList<>();
+        WorldBoundingBox match = null;
+        double bestDistance = Double.MAX_VALUE;
+        for (WorldBoundingBox boundingBox : map.keySet()) {
+            if (boundingBox.contains(location)) {
+                double distance = boundingBox.getBoundingBox().getCenter().distanceSquared(location.toVector());
+                if(distance < bestDistance) {
+                    //possibleBoundingBoxes.add(boundingBox);
+                    match = boundingBox;
+                    bestDistance = distance;
+                }
+            }
+        }
+        //if (possibleBoundingBoxes.size() == 0) return null;
+        //possibleBoundingBoxes.sort(new WorldBoundingBox.BoundingBoxComparator(location));
+        return match == null ? null : Bukkit.getPlayer(dropLocationMap.get(match));
+    }
+
+    /*public static @Nullable Player getHangingDropOwner(Location location) {
+        return getDropOwner(location, hangingDropLocationMap);
+    }*/
 
 
 }

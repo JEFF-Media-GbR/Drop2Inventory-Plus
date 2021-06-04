@@ -47,7 +47,7 @@ public class Utils {
     }
 
     public boolean isMobEnabled(LivingEntity mob) {
-        if (!main.mobsIsWhitelist) {
+        if (!main.isMobsIsWhitelist()) {
             return !main.disabledMobs.contains(mob.getType().name().toLowerCase());
         }
         return main.disabledMobs.contains(mob.getType().name().toLowerCase());
@@ -102,7 +102,7 @@ public class Utils {
                 inventoryFull = true;
             }
             if(inventoryFull && main.getConfig().getBoolean(Config.WARN_WHEN_INVENTORY_IS_FULL)) {
-                main.messages.sendActionBarMessage(player, main.messages.MSG_INVENTORY_FULL);
+                main.getMessages().sendActionBarMessage(player, main.getMessages().MSG_INVENTORY_FULL);
             }
             if (main.getConfig().getBoolean(Config.AUTO_CONDENSE)
                     && player.hasPermission(Permissions.ALLOW_AUTO_CONDENSE)) {
@@ -113,7 +113,7 @@ public class Utils {
         if (main.getConfig().getBoolean(Config.AVOID_HOTBAR)) {
             main.hotbarStuffer.unstuffHotbar(player.getInventory());
         }
-        main.soundUtils.playPickupSound(player);
+        main.getSoundUtils().playPickupSound(player);
     }
 
     // Returns 16 for 1.16, etc.
