@@ -11,10 +11,13 @@ import org.bukkit.Material;
 import org.bukkit.Tag;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
+import org.bukkit.entity.Entity;
+import org.bukkit.entity.Hanging;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.*;
+import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 /**
@@ -30,6 +33,7 @@ public class WorldBoundingBoxGenerator {
     private final Location location;
     private final Player player;
     private final Main main = Main.getInstance();
+    private static final Predicate<Entity> HANGING_PREDICATE = entity->entity instanceof Hanging;
 
     public WorldBoundingBoxGenerator(Location location, Block block, Player player) {
         this.location = location;
@@ -79,14 +83,34 @@ public class WorldBoundingBoxGenerator {
         }
 
         if (lifeTime > 20) lifeTime = 20;
+
+        // Check for hanging entities
+        if(block != null && hasHangingsAttached(block)) {
+            /*Bukkit.getScheduler().scheduleSyncDelayedTask(main, () -> {
+                NMSManager.applyBlockPhysics(block);
+            }, 1l);*/
+            lifeTime += 200;
+        }
+
         WorldBoundingBox result = new WorldBoundingBox(location, lifeTime, radius, radiusYMin, radiusYMax);
-        if(player.hasPermission(Permissions.ALLOW_TOGGLE_DEBUG) && Main.getInstance().debug) {
+        if(player.hasPermission(Permissions.ALLOW_TOGGLE_DEBUG) && Main.getInstance().isDebug()) {
             ParticleUtils.draw(player, result);
         }
-        if(main.debug) {
+        if(main.isDebug()) {
             main.debug("Created WorldBoundingBox: " + result);
         }
         return result;
+    }
+
+    private boolean hasHangingsAttached(Block block) {
+        Collection<Entity> nearbyHangings = block.getWorld().getNearbyEntities(block.getLocation().add(0.5,0.5,0.5),1,1,1, HANGING_PREDICATE);
+        for(Entity entity : nearbyHangings) {
+            BlockFace attachedFace = ((Hanging) entity).getAttachedFace();
+            if(entity.getLocation().getBlock().getRelative(attachedFace).equals(block)) {
+                return true;
+            }
+        }
+        return false;
     }
 
     private BoundingBoxPrediction getUnstableBlocksAbove(Block block) {

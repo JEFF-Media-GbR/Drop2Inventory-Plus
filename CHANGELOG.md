@@ -1,3 +1,15 @@
+## 2.0.1
+- Fixed Config Updater updating the config every time
+- Removed forgotten debug messages
+
+## 2.0.0
+- FULL support for mcMMO and similar plugins
+- Supports ALL drops from ALL plugins!
+  - Drop2Inventory Plus was completely rewritten and now uses totoally different mechanics to collect drops. It should be compatible with basically EVERY plugin
+  - If somehow some drops still aren't detected, let me know on my discord at https://discord.jeff-media.de and I'll fix it ASAP!
+- Improved UpdateChecker and ConfigUpdater
+- Added "Pirate Speak" language
+
 ## 1.5.0
 - You can set messages to an empty String ("") to avoid them from being shown to the player
 

@@ -2,7 +2,6 @@ package de.jeff_media.drop2inventory.data;
 
 import org.bukkit.Location;
 import org.bukkit.World;
-import org.bukkit.entity.Player;
 import org.bukkit.util.BoundingBox;
 
 import java.util.Comparator;

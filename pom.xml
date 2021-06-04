@@ -6,7 +6,7 @@
 
     <groupId>de.jeff_media</groupId>
     <name>Drop2InventoryPlus</name>
-    <version>2.0.0-SNAPSHOT</version>
+    <version>2.0.1</version>
     <artifactId>${name}</artifactId>
 
     <properties>
@@ -15,6 +15,9 @@
 
         <spigot.main>${groupId}.drop2inventory.Main</spigot.main>
         <spigot.name>${name}</spigot.name>
+
+        <maven.build.timestamp.format>yyyyMMddHHmm</maven.build.timestamp.format>
+        <config.version>${maven.build.timestamp}</config.version>
 
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <java.version>1.8</java.version>
@@ -59,6 +62,10 @@
                             <pattern>de.jeff_media.PluginUpdateChecker</pattern>
                             <shadedPattern>de.jeff_media.drop2inventory</shadedPattern>
                         </relocation>
+                        <relocation>
+                            <pattern>de.jeff_media.jefflib</pattern>
+                            <shadedPattern>de.jeff_media.drop2inventory.jefflib</shadedPattern>
+                        </relocation>
                     </relocations>
                 </configuration>
                 <executions>
@@ -84,71 +91,85 @@
 
 
     <repositories>
-        <!-- This adds the Spigot Maven repository to the build -->
+
         <repository>
             <id>spigot-repo</id>
             <url>https://hub.spigotmc.org/nexus/content/repositories/snapshots/</url>
         </repository>
-        <!--<repository>
-            <id>BannerBoardAPI</id>
-            <url>http://sandergielisse.nl/maven/</url>
-        </repository>-->
+
         <repository>
             <id>CodeMC</id>
             <url>https://repo.codemc.org/repository/maven-public</url>
         </repository>
+
         <repository>
             <id>jeff-media-gbr</id>
             <url>https://repo.jeff-media.de/maven2</url>
         </repository>
+
         <repository>
             <id>placeholderapi</id>
             <url>https://repo.extendedclip.com/content/repositories/placeholderapi/</url>
         </repository>
+
     </repositories>
 
     <dependencies>
-        <!--This adds the Spigot API artifact to the build -->
         <dependency>
             <groupId>org.spigotmc</groupId>
-            <artifactId>spigot-api</artifactId>
-            <version>1.16.4-R0.1-SNAPSHOT</version>
+            <artifactId>spigot</artifactId>
+            <version>1.16.5-R0.1-SNAPSHOT</version>
             <scope>provided</scope>
         </dependency>
-        <!--<dependency>
-            <groupId>nl.sandergielisse</groupId>
-            <artifactId>bannerboard</artifactId>
-            <version>1.2.0</version>
-        </dependency>-->
+
+        <dependency>
+            <groupId>de.jeff_media</groupId>
+            <artifactId>JeffLib</artifactId>
+            <version>1.0-SNAPSHOT</version>
+            <scope>compile</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <version>1.18.20</version>
+            <scope>provided</scope>
+        </dependency>
+
         <dependency>
             <groupId>org.bstats</groupId>
             <artifactId>bstats-bukkit</artifactId>
             <version>1.8</version>
             <scope>compile</scope>
         </dependency>
+
         <dependency>
             <groupId>de.jeff_media</groupId>
-            <artifactId>PluginUpdateChecker</artifactId>
-            <version>1.3.2</version> <!-- Check latest version first -->
+            <artifactId>SpigotUpdateChecker</artifactId>
+            <version>1.2.4</version>
             <scope>compile</scope>
         </dependency>
+
         <dependency>
             <groupId>org.jetbrains</groupId>
             <artifactId>annotations</artifactId>
             <version>19.0.0</version>
         </dependency>
+
         <dependency>
             <groupId>me.clip</groupId>
             <artifactId>placeholderapi</artifactId>
             <version>2.10.9</version>
             <scope>provided</scope>
         </dependency>
+
         <dependency>
             <groupId>de.jeff_media</groupId>
             <artifactId>Drop2InventoryAPI</artifactId>
             <version>1.0.0-SNAPSHOT</version>
             <scope>compile</scope>
         </dependency>
+
     </dependencies>
 
     <distributionManagement>

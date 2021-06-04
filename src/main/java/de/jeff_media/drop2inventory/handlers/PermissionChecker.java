@@ -31,7 +31,7 @@ public class PermissionChecker {
             if (!main.hasSeenMessage(player)) {
                 main.setHasSeenMessage(player);
                 if (main.getConfig().getBoolean(Config.SHOW_MESSAGE_WHEN_BREAKING_BLOCK)) {
-                    Messages.sendMessage(player, main.messages.MSG_HINT_ENABLE);
+                    Messages.sendMessage(player, main.getMessages().MSG_HINT_ENABLE);
                 }
             }
             return false;
@@ -39,7 +39,7 @@ public class PermissionChecker {
         if (!main.hasSeenMessage(player)) {
             main.setHasSeenMessage(player);
             if (main.getConfig().getBoolean(Config.SHOW_MESSAGE_WHEN_BREAKING_BLOCK_AND_COLLECTION_IS_ENABLED)) {
-                Messages.sendMessage(player, main.messages.MSG_HINT_DISABLE);
+                Messages.sendMessage(player, main.getMessages().MSG_HINT_DISABLE);
             }
         }
         return true;
@@ -99,7 +99,7 @@ public class PermissionChecker {
         }
 
         // Block Blacklist
-        if (!main.utils.isBlockEnabled(block.getType())) {
+        if (!main.getUtils().isBlockEnabled(block.getType())) {
             main.debug("Block is not whitelisted / is blacklisted: " + block.getType());
             return false;
         }
@@ -118,16 +118,17 @@ public class PermissionChecker {
 
     private static boolean isAllowedForEntity(Player player, Entity entity) {
 
-        if (!(entity instanceof LivingEntity))
-            return false; // TODO: Can this ever happen? I think not. Only "living" Entities can "die"
-        LivingEntity victim = (LivingEntity) entity;
+        /*if (!(entity instanceof LivingEntity))
+            return false; // TODO: Can this ever happen? I think not. Only "living" Entities can "die"*/
+        //LivingEntity victim = (LivingEntity) entity;
 
-        if (victim.getLastDamageCause() == null || victim.getLastDamageCause().getCause() == null) {
+
+        if (entity.getLastDamageCause() == null || entity.getLastDamageCause().getCause() == null) {
             main.debug("Could not get last Damage Cause");
         } else {
-            main.debug(victim.getLastDamageCause().getCause().name());
+            main.debug(entity.getLastDamageCause().getCause().name());
             if (main.getConfig().getBoolean(Config.IGNORE_DROPS_FROM_MOBS_KILLED_BY_LAVA)) {
-                if (victim.getLastDamageCause().getCause() == EntityDamageEvent.DamageCause.LAVA) {
+                if (entity.getLastDamageCause().getCause() == EntityDamageEvent.DamageCause.LAVA) {
                     main.debug("ignore drops from mobs killed by lava: true");
                     // TODO
                     //main.legacyDropDetectionManager.registerIgnoredLocation(event.getEntity().getLocation());
@@ -136,7 +137,7 @@ public class PermissionChecker {
             }
 
             if (main.getConfig().getBoolean(Config.IGNORE_DROPS_FROM_MOBS_KILLED_BY_LAVA)) {
-                if (victim.getLastDamageCause().getCause() == EntityDamageEvent.DamageCause.HOT_FLOOR) {
+                if (entity.getLastDamageCause().getCause() == EntityDamageEvent.DamageCause.HOT_FLOOR) {
                     main.debug("ignore drops from mobs killed by magma: true");
                     // TODO
                     //main.legacyDropDetectionManager.registerIgnoredLocation(event.getEntity().getLocation());
@@ -146,15 +147,20 @@ public class PermissionChecker {
         }
 
 
-        if (victim.getKiller() == null) {
-            main.debug("R: Killer is null");
-            return false;
+        if(entity instanceof LivingEntity) {
+            LivingEntity victim = (LivingEntity) entity;
+
+            if (victim.getKiller() == null) {
+                main.debug("R: Killer is null");
+                return false;
+            }
+
+            if (!main.getUtils().isMobEnabled(victim)) {
+                main.debug("Mob is disabled: " + entity.getType().name());
+                return false;
+            }
         }
 
-        if (!main.utils.isMobEnabled(victim)) {
-            main.debug("Mob is disabled: " + victim.getType().name());
-            return false;
-        }
         if (!main.getConfig().getBoolean(Config.COLLECT_MOB_DROPS)) {
             main.debug("Collect mob drops is disabled");
             return false;

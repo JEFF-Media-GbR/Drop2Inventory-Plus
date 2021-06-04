@@ -5,14 +5,19 @@ import de.jeff_media.drop2inventory.commands.CommandMain;
 import de.jeff_media.drop2inventory.config.Config;
 import de.jeff_media.drop2inventory.config.ConfigUpdater;
 import de.jeff_media.drop2inventory.config.Messages;
+import de.jeff_media.drop2inventory.handlers.HopperDetector;
 import de.jeff_media.drop2inventory.handlers.WorldBoundingBoxGenerator;
 import de.jeff_media.drop2inventory.hooks.Placeholders;
-import de.jeff_media.drop2inventory.listeners.UniversalListener;
+import de.jeff_media.drop2inventory.listeners.CollectListener;
+import de.jeff_media.drop2inventory.listeners.MiscListener;
+import de.jeff_media.drop2inventory.listeners.RegistrationListener;
 import de.jeff_media.drop2inventory.utils.HotbarStuffer;
 import de.jeff_media.drop2inventory.utils.IngotCondenser;
 import de.jeff_media.drop2inventory.utils.SoundUtils;
 import de.jeff_media.drop2inventory.utils.Utils;
-import de.jeff_media.PluginUpdateChecker.PluginUpdateChecker;
+import de.jeff_media.updatechecker.UpdateChecker;
+import de.jeff_media.updatechecker.UserAgentBuilder;
+import lombok.Getter;
 import org.bstats.bukkit.Metrics;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -25,7 +30,7 @@ import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import java.io.File;
+import java.io.*;
 import java.util.ArrayList;
 
 
@@ -34,25 +39,25 @@ public class Main extends JavaPlugin {
     public static final String uid = "%%__USER__%%";
     private static Main instance;
     public final int mcVersion = Utils.getMcVersion(Bukkit.getBukkitVersion());
-    final int currentConfigVersion = 121;
     public EventPriority blockDropItemPrio;
     public boolean blocksIsWhitelist = false;
-    public boolean debug = false;
+    @Getter private boolean debug = false;
     public ArrayList<Material> disabledBlocks;
     public ArrayList<String> disabledMobs;
     public ArrayList<String> disabledWorlds;
     public HotbarStuffer hotbarStuffer;
     public IngotCondenser ingotCondenser;
-    //public MendingUtils mendingUtils;
-    public Messages messages;
-    public boolean mobsIsWhitelist = false;
-    public SoundUtils soundUtils;
-    public Utils utils;
-    PluginUpdateChecker updateChecker;
+    @Getter private Messages messages;
+    @Getter private boolean mobsIsWhitelist = false;
+    @Getter private SoundUtils soundUtils;
+    @Getter private Utils utils;
+    private UpdateChecker updateChecker;
     boolean usingMatchingConfig = true;
+    @Getter private HopperDetector hopperDetector;
 
     public static NamespacedKey HAS_DROP_COLLECTION_ENABLED_TAG;
     public static NamespacedKey HAS_SEEN_MESSAGE_TAG;
+    public static NamespacedKey IGNORED_DROP_TAG;
 
     public static Main getInstance() {
         return instance;
@@ -65,7 +70,7 @@ public class Main extends JavaPlugin {
         saveDefaultConfig();
 
         if (getConfig().getBoolean(Config.DEBUG, false)) {
-            debug = true;
+            setDebug(true);
         }
 
         if (getConfig().isSet(Config.ENABLED_BLOCKS)) {
@@ -97,29 +102,25 @@ public class Main extends JavaPlugin {
             debug("Adding world to worlds blacklist: " + s.toLowerCase());
         }
 
-        if (getConfig().getInt(Config.CONFIG_VERSION, 0) != currentConfigVersion) {
+        if (getConfig().getLong(Config.CONFIG_VERSION, 0) < getNewConfigVersion()) {
+            debug("Your config version: " + getConfig().getLong(Config.CONFIG_VERSION));
+            debug("Newest config version: " + getNewConfigVersion());
             showOldConfigWarning();
 
             ConfigUpdater configUpdater = new ConfigUpdater(this);
             configUpdater.updateConfig();
-            configUpdater = null;
             usingMatchingConfig = true;
             reloadConfig();
-        }
-
-        File playerDataFolder = new File(getDataFolder().getPath() + File.separator + "playerdata");
-        if (!playerDataFolder.getAbsoluteFile().exists()) {
-            playerDataFolder.mkdir();
         }
 
     }
 
     public void debug(String t) {
-        if (debug) getLogger().warning("[DEBUG] " + t);
+        if (isDebug()) getLogger().warning("[DEBUG] " + t);
     }
 
     public void debug(String t, CommandSender sender) {
-        if (debug) {
+        if (isDebug()) {
             if (sender instanceof Player) {
                 Messages.sendMessage(sender, ChatColor.GOLD + "[Drop2Inventory] [DEBUG] " + t);
             }
@@ -139,9 +140,8 @@ public class Main extends JavaPlugin {
     public boolean hasSeenMessage(Player p) {
         PersistentDataContainer pdc = p.getPersistentDataContainer();
         byte value = pdc.getOrDefault(HAS_SEEN_MESSAGE_TAG, PersistentDataType.BYTE, (byte) 0);
-        return value == (byte) 1 ? true : false;
+        return value == (byte) 1;
     }
-
 
     public boolean isWorldDisabled(String worldName) {
         return disabledWorlds.contains(worldName.toLowerCase());
@@ -158,11 +158,23 @@ public class Main extends JavaPlugin {
         }
     }
 
+    private static long getNewConfigVersion() {
+        final InputStream in = Main.getInstance().getClass().getResourceAsStream("/config-version.txt");
+        final BufferedReader reader = new BufferedReader(new InputStreamReader(in));
+        try {
+            return Long.parseLong(reader.readLine());
+        } catch (final IOException ioException) {
+            ioException.printStackTrace();
+            return 0;
+        }
+    }
+
     public void onEnable() {
 
         instance = this;
         HAS_DROP_COLLECTION_ENABLED_TAG = new NamespacedKey(this, "dropcollectionenabled");
         HAS_SEEN_MESSAGE_TAG = new NamespacedKey(this, "hasseenmessage");
+        IGNORED_DROP_TAG = new NamespacedKey(this, "ignoreddrop");
 
         WorldBoundingBoxGenerator.init();
 
@@ -185,10 +197,9 @@ public class Main extends JavaPlugin {
         CommandMain commandMain = new CommandMain(this);
         hotbarStuffer = new HotbarStuffer(this);
 
-        //this.getServer().getPluginManager().registerEvents(new GenericListener(this), this);
-        //this.getServer().getPluginManager().registerEvents(legacyDropDetectionListener,this);
-        //this.getServer().getPluginManager().registerEvents(new BlockDropItemListener(this),this);
-        getServer().getPluginManager().registerEvents(new UniversalListener(), this);
+        getServer().getPluginManager().registerEvents(new CollectListener(), this);
+        getServer().getPluginManager().registerEvents(new RegistrationListener(), this);
+        getServer().getPluginManager().registerEvents(new MiscListener(), this);
 
         utils = new Utils(this);
         //mendingUtils = new MendingUtils(this);
@@ -210,26 +221,34 @@ public class Main extends JavaPlugin {
         soundUtils = new SoundUtils();
         messages = new Messages(this);
         ingotCondenser = new IngotCondenser(this);
+        hopperDetector = new HopperDetector();
 
         // Update Checker start
         // TODO: Switch to my new Update Checker -> https://github.com/JEFF-Media-GbR/Spigot-UpdateChecker
         if (updateChecker != null) {
             updateChecker.stop();
         }
-        updateChecker = new PluginUpdateChecker(this, "https://api.jeff-media.de/drop2inventoryplus/drop2inventoryplus-latest-version.txt",
-                "https://www.spigotmc.org/resources/drop2inventoryplus.87784/", "https://www.spigotmc.org/resources/drop2inventoryplus.87784/updates", "https://paypal.me/mfnalex");
+        updateChecker = UpdateChecker.init(this, "https://api.jeff-media.de/drop2inventoryplus/drop2inventoryplus-latest-version.txt")
+                .setDownloadLink(87784)
+                .setChangelogLink(87784)
+                .setDonationLink("https://paypal.me/mfnalex")
+                .setUserAgent(UserAgentBuilder.getDefaultUserAgent().addSpigotUserId());
         if (getConfig().getString(Config.CHECK_FOR_UPDATES, "true").equalsIgnoreCase("true")) {
-            updateChecker.check((long) getConfig().getInt(Config.UPDATE_CHECK_INTERVAL) * 60 * 60);
+            updateChecker.checkEveryXHours(getConfig().getDouble(Config.UPDATE_CHECK_INTERVAL)).checkNow();
         } else if (getConfig().getString(Config.CHECK_FOR_UPDATES, "true").equalsIgnoreCase("on-startup")) {
-            updateChecker.check();
+            updateChecker.checkNow();
         }
         // Update Checker end
         blockDropItemPrio = Enums.getIfPresent(EventPriority.class, getConfig().getString(Config.EVENT_PRIO_BLOCKDROPITEMEVENT).toUpperCase()).or(EventPriority.HIGH);
     }
 
+    public void setDebug(boolean debug) {
+        this.debug = debug;
+    }
+
     private void showOldConfigWarning() {
         getLogger().warning("=================================================");
-        getLogger().warning("You were using an old config file. drop2inventory");
+        getLogger().warning("You were using an old config file. Drop2Inventory");
         getLogger().warning("has updated the file to the newest version.");
         getLogger().warning("Your changes have been kept.");
         getLogger().warning("=================================================");
