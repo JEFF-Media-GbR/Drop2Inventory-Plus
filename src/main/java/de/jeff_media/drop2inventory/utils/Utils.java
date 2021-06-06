@@ -6,6 +6,7 @@ import de.jeff_media.drop2inventory.config.Permissions;
 import org.apache.commons.lang.math.NumberUtils;
 import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.World;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -151,6 +152,22 @@ public class Utils {
         File oldFile = new File(plugin.getDataFolder().getAbsolutePath() + File.separator + oldName);
         File newFile = new File(plugin.getDataFolder().getAbsolutePath() + File.separator + newName);
         oldFile.getAbsoluteFile().renameTo(newFile.getAbsoluteFile());
+    }
+
+    public static @Nullable Player getNearestPlayer(Location location) {
+        World world = location.getWorld();
+        double bestDistance = Double.MAX_VALUE;
+        Player nearestPlayer = null;
+
+        for(Player player : world.getPlayers()) {
+            double distance = player.getLocation().distanceSquared(location);
+            if(distance < bestDistance) {
+                bestDistance = distance;
+                nearestPlayer = player;
+            }
+        }
+
+        return nearestPlayer;
     }
 
 

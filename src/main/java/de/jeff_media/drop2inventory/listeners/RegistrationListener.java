@@ -3,9 +3,11 @@ package de.jeff_media.drop2inventory.listeners;
 import de.jeff_media.drop2inventory.Main;
 import de.jeff_media.drop2inventory.config.Config;
 import de.jeff_media.drop2inventory.data.DropSubject;
+import de.jeff_media.drop2inventory.data.WorldBoundingBox;
 import de.jeff_media.drop2inventory.handlers.DropOwnerManager;
 import de.jeff_media.drop2inventory.handlers.PermissionChecker;
 import de.jeff_media.drop2inventory.utils.PDCUtils;
+import de.jeff_media.drop2inventory.utils.Utils;
 import org.bukkit.Location;
 import org.bukkit.block.Block;
 import org.bukkit.entity.*;
@@ -14,13 +16,17 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockDispenseEvent;
+import org.bukkit.event.block.BlockExplodeEvent;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDeathEvent;
+import org.bukkit.event.entity.EntityExplodeEvent;
 import org.bukkit.event.hanging.HangingBreakByEntityEvent;
 import org.bukkit.event.vehicle.VehicleDestroyEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataType;
+
+import java.util.Collection;
 
 public class RegistrationListener implements Listener {
 
@@ -97,9 +103,47 @@ public class RegistrationListener implements Listener {
 
     @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
     public void onDispense(BlockDispenseEvent event) {
-        if(!main.getConfig().getBoolean(Config.IGNORE_ITEMS_FROM_DISPENSERS)) return;
+        if (!main.getConfig().getBoolean(Config.IGNORE_ITEMS_FROM_DISPENSERS)) return;
         ItemStack item = event.getItem();
         PDCUtils.add(item, Main.IGNORED_DROP_TAG, PersistentDataType.BYTE, (byte) 1);
     }
 
+    @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
+    public void onExplode(EntityExplodeEvent event) {
+        onExplode(event.getLocation().getBlock(), event.blockList());
+    }
+
+    private void onExplode(Block block, Collection<Block> destroyedBlocks) {
+        if(!main.getConfig().getBoolean(Config.DETECT_EXPLOSION_DROPS)) return;
+        Player player = Utils.getNearestPlayer(block.getLocation());
+        if (player == null) return;
+        if (!PermissionChecker.isAllowed(player, new DropSubject(block))) return;
+
+        int minX, minY, minZ, maxX, maxY, maxZ;
+        minX = block.getX() - 2;
+        maxX = block.getX() + 2;
+        minY = block.getY() - 2;
+        maxY = block.getY() + 2;
+        minZ = block.getZ() - 2;
+        maxZ = block.getZ() + 2;
+        for (Block destroyedBlock : destroyedBlocks) {
+            int x = destroyedBlock.getX();
+            int y = destroyedBlock.getY();
+            int z = destroyedBlock.getZ();
+            minX = Math.min(x, minX);
+            maxX = Math.max(x, maxX);
+            minY = Math.min(y, minY);
+            maxY = Math.max(y, maxY);
+            minZ = Math.min(z, minZ);
+            maxZ = Math.max(z, maxZ);
+        }
+
+        WorldBoundingBox boundingBox = new WorldBoundingBox(block.getWorld(), 1, minX, maxX, minY, maxY, minZ, maxZ);
+        DropOwnerManager.register(player, boundingBox);
+    }
+
+    @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
+    public void onExplode(BlockExplodeEvent event) {
+        onExplode(event.getBlock(), event.blockList());
+    }
 }

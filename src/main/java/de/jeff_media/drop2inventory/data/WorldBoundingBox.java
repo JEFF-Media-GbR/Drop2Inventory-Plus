@@ -31,6 +31,12 @@ public class WorldBoundingBox {
         world = location.getWorld();
     }
 
+    public WorldBoundingBox(World world, int lifeTime, int minX, int maxX, int minY, int maxY, int minZ, int maxZ) {
+        this.lifeTime = lifeTime;
+        this.world = world;
+        boundingBox = BoundingBox.of(world.getBlockAt(minX, minY, minZ), world.getBlockAt(maxX,maxY,maxZ));
+    }
+
     public boolean contains(Location location) {
         if (!location.getWorld().equals(world)) return false;
         return boundingBox.contains(location.toVector());

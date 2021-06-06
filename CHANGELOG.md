@@ -1,3 +1,6 @@
+## 2.1.0
+- Added config option "detect-explosion-drops"
+
 ## 2.0.2
 - Fixed plugin not enabling in old Minecraft versions (below 1.16)
 

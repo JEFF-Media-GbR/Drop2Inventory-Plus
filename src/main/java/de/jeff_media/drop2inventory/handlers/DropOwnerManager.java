@@ -6,6 +6,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
+import org.bukkit.util.BoundingBox;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.*;
@@ -48,6 +49,10 @@ public class DropOwnerManager {
         WorldBoundingBox boundingBox = WorldBoundingBoxGenerator.getAppropriateBoundingBox(location, block, player);
         dropLocationMap.put(boundingBox, player.getUniqueId());
         //System.out.println("BoundingBox registered");
+    }
+
+    public static void register(Player player, WorldBoundingBox boundingBox) {
+        dropLocationMap.put(boundingBox, player.getUniqueId());
     }
 
     /*public static void registerHanging(Player player, Location location, @NotNull Block block) {

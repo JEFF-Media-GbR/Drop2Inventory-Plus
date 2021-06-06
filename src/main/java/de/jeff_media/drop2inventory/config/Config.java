@@ -40,8 +40,8 @@ public class Config {
     public static final String SOUND_EFFECT = "sound-effect";
     public static final String SOUND_VOLUME = "sound-volume";
     public static final String SOUND_PITCH = "sound-pitch";
-    public static final String CALL_ENTITY_PICKUP_ITEM_EVENT = "call-entity-pickup-item-event";
     public static final String DEFAULT_BOUNDING_BOX_RADIUS = "default-detection-radius";
+    public static final String DETECT_EXPLOSION_DROPS = "detect-explosion-drops";
 
     public Config() {
         Main main = Main.getInstance();
@@ -75,6 +75,6 @@ public class Config {
         conf.addDefault(SOUND_EFFECT,"ENTITY_ITEM_PICKUP");
         conf.addDefault(SOUND_VOLUME, 1.0);
         conf.addDefault(SOUND_PITCH, 1.0);
-        conf.addDefault(CALL_ENTITY_PICKUP_ITEM_EVENT, true);
+        conf.addDefault(DETECT_EXPLOSION_DROPS, true);
     }
 }

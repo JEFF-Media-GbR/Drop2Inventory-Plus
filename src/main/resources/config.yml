@@ -76,7 +76,7 @@ collect-mob-exp: true
 # that would lead to new chunks being loaded. I suggest a maximum value of about 50 blocks).
 default-detection-radius: 10
 
-# WILL BE OBSOLUTE IN 2.0.0+ because it will be toggleable per player with a permission
+# WILL BE OBSOLUTE in the future because it will be toggleable per player with a permission
 # when set to true, items will automatically converted to blocks when mining them
 # if the player has the permission "drop2inventory.autocondense"
 # e.g. 9 diamonds -> 1 diamond_block etc
@@ -127,7 +127,7 @@ sound-global: true
 #####     Event priority    #####
 #################################
 
-# WILL BE OBSOLUTE IN 2.0.0+
+# WILL BE OBSOLUTE in the future
 # Normally, Drop2Inventory should run on the highest possible priority.
 # However, there are some plugins known to clear the BlockDropItemEvent's
 # drops list, for example EcoEnchants. This is bad as Drop2Inventory can
@@ -140,6 +140,12 @@ block-drop-item-event-priority: HIGH
 #################################
 ##### Legacy drop detection #####
 #################################
+
+# When enabled, drops created through explosions will be collected
+# by the nearest player.
+# Right now it's not possible to detect what player caused an
+# explosion, but it might be added in the future.
+detect-explosion-drops: true
 
 # Ignores items spawned above or near hoppers
 # The vertical range checks up to X blocks below the item for hoppers
@@ -154,7 +160,6 @@ ignore-items-on-hoppers: true
 ignore-items-on-hoppers-vertical-range: 5
 ignore-items-on-hoppers-horizontal-range: 3
 
-# WILL BE OBSOLUTE IN 2.0.0+
 # When set to true, items from dispensers and droppers will not automatically
 # be collected by nearby players.
 # When set to false, items from dispensers and droppers will automatically
@@ -165,13 +170,6 @@ ignore-items-from-dispensers: true
 # mobs killed by lava or magma
 ignore-drops-from-mobs-killed-by-lava: false
 ignore-drops-from-mobs-killed-by-magma: false
-
-# WILL BE OBSOLUTE IN 2.0.0+
-# Other plugins can cancel the EntityPickupItemEvent, e.g. to make badly coded
-# holograms (the other plugins should rather/additionally raise the Item#setPickupDelay)
-# When the following setting is set to true, Drop2Inventory will call a fake
-# EntityPickupItemEvent and do nothing if that gets cancelled.
-call-entity-pickup-item-event: true
 
 #########################
 #### disabled worlds ####
