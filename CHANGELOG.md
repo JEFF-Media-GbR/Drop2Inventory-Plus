@@ -1,3 +1,6 @@
+## 2.1.1
+- Fixed XP being automatically collected even when Drop2Inventory is disabled
+
 ## 2.1.0
 - Added config option "detect-explosion-drops"
 

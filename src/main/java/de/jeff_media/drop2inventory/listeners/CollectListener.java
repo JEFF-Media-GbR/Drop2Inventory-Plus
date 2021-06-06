@@ -22,6 +22,7 @@ import org.bukkit.event.entity.EntityDeathEvent;
 import org.bukkit.event.entity.EntityExplodeEvent;
 import org.bukkit.event.entity.ItemSpawnEvent;
 import org.bukkit.event.hanging.HangingBreakByEntityEvent;
+import org.bukkit.event.player.PlayerItemMendEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.vehicle.VehicleDestroyEvent;
 import org.bukkit.inventory.ItemStack;
@@ -76,6 +77,7 @@ public class CollectListener implements Listener {
     @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
     public void onBlockXP(BlockBreakEvent event) {
         Player player = event.getPlayer();
+        if(!PermissionChecker.hasDrop2InvEnabled(player)) return;
         int experience = event.getExpToDrop();
         EventManager.giveAdjustedXP(player, experience);
         event.setExpToDrop(0);
@@ -86,8 +88,10 @@ public class CollectListener implements Listener {
         LivingEntity dead = event.getEntity();
         Player killer = dead.getKiller();
         if (killer == null) return;
+        if(!PermissionChecker.hasDrop2InvEnabled(killer)) return;
         int experience = event.getDroppedExp();
         EventManager.giveAdjustedXP(killer, experience);
         event.setDroppedExp(0);
     }
+
 }

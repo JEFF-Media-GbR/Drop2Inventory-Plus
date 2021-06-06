@@ -110,6 +110,7 @@ public class RegistrationListener implements Listener {
 
     @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
     public void onExplode(EntityExplodeEvent event) {
+
         onExplode(event.getLocation().getBlock(), event.blockList());
     }
 

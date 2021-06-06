@@ -25,7 +25,7 @@ public class PermissionChecker {
 
     private static final Main main = Main.getInstance();
 
-    private static boolean hasDrop2InvEnabled(Player player) {
+    public static boolean hasDrop2InvEnabled(Player player) {
 
         if (!main.enabled(player)) {
             if (!main.hasSeenMessage(player)) {
