@@ -1,3 +1,6 @@
+## 2.0.2
+- Fixed plugin not enabling in old Minecraft versions (below 1.16)
+
 ## 2.0.1
 - Fixed Config Updater updating the config every time
 - Removed forgotten debug messages

@@ -1,24 +1,30 @@
 package de.jeff_media.drop2inventory.handlers;
 
+import com.google.common.base.Enums;
 import de.jeff_media.drop2inventory.Main;
 import de.jeff_media.drop2inventory.config.Config;
 import de.jeff_media.drop2inventory.config.Permissions;
 import de.jeff_media.drop2inventory.data.BoundingBoxPrediction;
 import de.jeff_media.drop2inventory.data.WorldBoundingBox;
 import de.jeff_media.drop2inventory.utils.ParticleUtils;
+import de.jeff_media.jefflib.FileUtils;
+import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.Tag;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
+import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Hanging;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.Nullable;
 
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.Reader;
 import java.util.*;
 import java.util.function.Predicate;
-import java.util.stream.Collectors;
 
 /**
  * Generates a WorldBoundingBox of exactly the size and lifetime needed to catch all predicted drops.
@@ -27,8 +33,6 @@ import java.util.stream.Collectors;
 public class WorldBoundingBoxGenerator {
 
     private static final Set<Material> unstable = new HashSet<>();
-    private static final List<Material> unstableMaterials = Arrays.asList(Material.SUGAR_CANE, Material.CACTUS);
-    private static final Tag[] unstableTags = {Tag.BANNERS, Tag.BUTTONS, Tag.CARPETS, Tag.CAMPFIRES, Tag.CORAL_PLANTS, Tag.CROPS, Tag.DOORS, Tag.FLOWERS, Tag.PRESSURE_PLATES, Tag.RAILS, Tag.SAPLINGS, Tag.SIGNS, Tag.SMALL_FLOWERS, Tag.STANDING_SIGNS, Tag.TALL_FLOWERS, Tag.TRAPDOORS};
     private final Block block;
     private final Location location;
     private final Player player;
@@ -41,26 +45,20 @@ public class WorldBoundingBoxGenerator {
         this.player = player;
     }
 
-    private static void addUnstable(Tag tag) {
-        unstable.addAll(tag.getValues());
-    }
-
     public static WorldBoundingBox getAppropriateBoundingBox(Location location, @Nullable Block block, Player player) {
-
         return new WorldBoundingBoxGenerator(location, block, player).get();
-
     }
 
     public static void init() {
-        //Main.getInstance().getLogger().info("Generating Set of unstable Materials...");
-        for (Tag tag : unstableTags) {
-            addUnstable(tag);
-        }
-        unstable.addAll(unstableMaterials);
-
-        // DEBUG
-        for (Material mat : new ArrayList<>(unstable).stream().sorted(Comparator.comparing(Enum::name)).collect(Collectors.toList())) {
-            //System.out.println(mat.name());
+        Main main = Main.getInstance();
+        InputStream stream = main.getResource("unstable-materials.yml");
+        Reader reader = new InputStreamReader(stream);
+        YamlConfiguration unstableYaml = YamlConfiguration.loadConfiguration(reader);
+        for(String type : unstableYaml.getStringList("materials")) {
+            Material material = Enums.getIfPresent(Material.class, type).orNull();
+            if(material != null) {
+                unstable.add(material);
+            }
         }
     }
 
