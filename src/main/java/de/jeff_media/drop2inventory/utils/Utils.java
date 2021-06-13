@@ -117,18 +117,6 @@ public class Utils {
         main.getSoundUtils().playPickupSound(player);
     }
 
-    // Returns 16 for 1.16, etc.
-    public static int getMcVersion(String bukkitVersionString) {
-        Pattern p = Pattern.compile("^1\\.(\\d*)\\.");
-        Matcher m = p.matcher((bukkitVersionString));
-        int version = -1;
-        while (m.find()) {
-            if (NumberUtils.isNumber(m.group(1)))
-                version = Integer.parseInt(m.group(1));
-        }
-        return version;
-    }
-
     public static boolean hasPermissionForThisTool(@Nullable Material mat, Player p) {
         String matt = mat.name().toLowerCase();
         if (matt.contains("_pickaxe")) {

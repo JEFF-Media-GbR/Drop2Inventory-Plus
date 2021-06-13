@@ -1,3 +1,6 @@
+## 2.1.2
+- Fixed plugin not enabling on 1.17
+
 ## 2.1.1
 - Fixed XP being automatically collected even when Drop2Inventory is disabled
 

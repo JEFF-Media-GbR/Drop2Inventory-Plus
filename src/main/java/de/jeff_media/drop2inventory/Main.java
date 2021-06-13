@@ -15,6 +15,7 @@ import de.jeff_media.drop2inventory.utils.HotbarStuffer;
 import de.jeff_media.drop2inventory.utils.IngotCondenser;
 import de.jeff_media.drop2inventory.utils.SoundUtils;
 import de.jeff_media.drop2inventory.utils.Utils;
+import de.jeff_media.jefflib.McVersion;
 import de.jeff_media.updatechecker.UpdateChecker;
 import de.jeff_media.updatechecker.UserAgentBuilder;
 import lombok.Getter;
@@ -38,7 +39,6 @@ public class Main extends JavaPlugin {
 
     public static final String uid = "%%__USER__%%";
     private static Main instance;
-    public final int mcVersion = Utils.getMcVersion(Bukkit.getBukkitVersion());
     public EventPriority blockDropItemPrio;
     public boolean blocksIsWhitelist = false;
     @Getter private boolean debug = false;
@@ -186,9 +186,12 @@ public class Main extends JavaPlugin {
             return;
         }
 
-        if (mcVersion < 13) {
-            getLogger().severe("drop2inventory will not run on 1.12.2 and earlier versions!");
-            getLogger().severe("Please update your server to 1.13 or later.");
+        try {
+            Class.forName("org.bukkit.persistence.PersistentDataContainer");
+        } catch (Exception e) {
+            getLogger().severe("drop2inventory will not run on 1.13 and earlier versions!");
+            getLogger().severe("Please update your server to 1.14.1 or later.");
+            Bukkit.getPluginManager().disablePlugin(this);
             return;
         }
 
