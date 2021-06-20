@@ -17,6 +17,7 @@ softdepend:
   - PlaceholderAPI
   - Drop2Inventory
   - mcMMO
+  - EliteMobs
 
 permissions:
   drop2inventory.use:

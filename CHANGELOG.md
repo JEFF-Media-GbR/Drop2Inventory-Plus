@@ -1,3 +1,7 @@
+## 2.2.0
+- Fixed certain EliteMobs drops not being collected
+- Fixed Chorus Plants from not being collected completely sometimes
+
 ## 2.1.2
 - Fixed plugin not enabling on 1.17
 

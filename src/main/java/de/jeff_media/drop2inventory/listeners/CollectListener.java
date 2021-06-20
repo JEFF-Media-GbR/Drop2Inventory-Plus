@@ -52,6 +52,9 @@ public class CollectListener implements Listener {
         }
         Location location = event.getLocation();
         Player player = DropOwnerManager.getDropOwner(location);
+
+        if(!main.getPluginHooks().mayPickUp(item, player)) return;
+
         if (player == null) {
             if (main.isDebug()) main.debug("  Don't pick up: no player found");
             return;

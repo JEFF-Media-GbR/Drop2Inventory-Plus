@@ -8,6 +8,7 @@ import de.jeff_media.drop2inventory.config.Messages;
 import de.jeff_media.drop2inventory.handlers.HopperDetector;
 import de.jeff_media.drop2inventory.handlers.WorldBoundingBoxGenerator;
 import de.jeff_media.drop2inventory.hooks.Placeholders;
+import de.jeff_media.drop2inventory.hooks.PluginHooks;
 import de.jeff_media.drop2inventory.listeners.CollectListener;
 import de.jeff_media.drop2inventory.listeners.MiscListener;
 import de.jeff_media.drop2inventory.listeners.RegistrationListener;
@@ -15,7 +16,6 @@ import de.jeff_media.drop2inventory.utils.HotbarStuffer;
 import de.jeff_media.drop2inventory.utils.IngotCondenser;
 import de.jeff_media.drop2inventory.utils.SoundUtils;
 import de.jeff_media.drop2inventory.utils.Utils;
-import de.jeff_media.jefflib.McVersion;
 import de.jeff_media.updatechecker.UpdateChecker;
 import de.jeff_media.updatechecker.UserAgentBuilder;
 import lombok.Getter;
@@ -54,6 +54,7 @@ public class Main extends JavaPlugin {
     private UpdateChecker updateChecker;
     boolean usingMatchingConfig = true;
     @Getter private HopperDetector hopperDetector;
+    @Getter private PluginHooks pluginHooks = new PluginHooks();
 
     public static NamespacedKey HAS_DROP_COLLECTION_ENABLED_TAG;
     public static NamespacedKey HAS_SEEN_MESSAGE_TAG;
@@ -169,9 +170,12 @@ public class Main extends JavaPlugin {
         }
     }
 
+    public void onLoad() {
+        instance = this;
+    }
+
     public void onEnable() {
 
-        instance = this;
         HAS_DROP_COLLECTION_ENABLED_TAG = new NamespacedKey(this, "dropcollectionenabled");
         HAS_SEEN_MESSAGE_TAG = new NamespacedKey(this, "hasseenmessage");
         IGNORED_DROP_TAG = new NamespacedKey(this, "ignoreddrop");

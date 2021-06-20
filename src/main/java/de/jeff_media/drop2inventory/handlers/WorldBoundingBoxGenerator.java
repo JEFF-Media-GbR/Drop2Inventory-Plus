@@ -7,11 +7,8 @@ import de.jeff_media.drop2inventory.config.Permissions;
 import de.jeff_media.drop2inventory.data.BoundingBoxPrediction;
 import de.jeff_media.drop2inventory.data.WorldBoundingBox;
 import de.jeff_media.drop2inventory.utils.ParticleUtils;
-import de.jeff_media.jefflib.FileUtils;
-import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
-import org.bukkit.Tag;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.configuration.file.YamlConfiguration;
@@ -38,6 +35,19 @@ public class WorldBoundingBoxGenerator {
     private final Player player;
     private final Main main = Main.getInstance();
     private static final Predicate<Entity> HANGING_PREDICATE = entity->entity instanceof Hanging;
+    private static final HashSet<Material> BLOCKS_NEEDING_A_LONG_TIME = new HashSet<>();
+
+    static {
+        for(String matName : new String[] {
+                "CHORUS_PLANT", "KELP_PLANT"
+        }) {
+            Material mat = Enums.getIfPresent(Material.class, matName).orNull();
+            if(mat != null) {
+                BLOCKS_NEEDING_A_LONG_TIME.add(mat);
+            }
+        }
+
+    }
 
     public WorldBoundingBoxGenerator(Location location, Block block, Player player) {
         this.location = location;
@@ -64,7 +74,7 @@ public class WorldBoundingBoxGenerator {
 
     private WorldBoundingBox get() {
 
-        int lifeTime = 3; // TODO: Adjust this, It was originally set to 2
+        int lifeTime = 10; // TODO: Adjust this, It was originally set to 2
         int radius = main.getConfig().getInt(Config.DEFAULT_BOUNDING_BOX_RADIUS); // TODO: This was normally set to 1
         int radiusYMin = main.getConfig().getInt(Config.DEFAULT_BOUNDING_BOX_RADIUS); // TODO: This was normally set to 0
         int radiusYMax = main.getConfig().getInt(Config.DEFAULT_BOUNDING_BOX_RADIUS); // TODO: This was normally set to 1 or 2
@@ -78,9 +88,15 @@ public class WorldBoundingBoxGenerator {
                 lifeTime += boundingBoxPrediction.getLifetimeNeeded();
             }
 
+            // Some blocks take a long time to drop etc. bla bla
+            if(BLOCKS_NEEDING_A_LONG_TIME.contains(mat)) {
+                lifeTime += 500;
+                radiusYMax += 20;
+            }
+
         }
 
-        if (lifeTime > 20) lifeTime = 20;
+        //if (lifeTime > 30) lifeTime = 30;
 
         // Check for hanging entities
         if(block != null && hasHangingsAttached(block)) {
