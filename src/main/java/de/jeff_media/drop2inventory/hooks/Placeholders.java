@@ -62,7 +62,8 @@ public class Placeholders extends PlaceholderExpansion {
         switch (identifier) {
 
             case "enabled":
-                return main.hasSeenMessage(player) ? "true" : "false";
+                return main.enabled(player) ? "true" : "false";
+
         }
 
         return null;

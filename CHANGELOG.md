@@ -1,3 +1,6 @@
+## 2.2.1
+- Fixed "%drop2inventory_enabled%" placeholder not working
+
 ## 2.2.0
 - Fixed certain EliteMobs drops not being collected
 - Fixed Chorus Plants from not being collected completely sometimes
