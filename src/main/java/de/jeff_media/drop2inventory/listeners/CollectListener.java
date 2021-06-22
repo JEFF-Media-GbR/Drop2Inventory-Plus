@@ -6,8 +6,11 @@ import de.jeff_media.drop2inventory.data.DropSubject;
 import de.jeff_media.drop2inventory.handlers.DropOwnerManager;
 import de.jeff_media.drop2inventory.handlers.EventManager;
 import de.jeff_media.drop2inventory.handlers.PermissionChecker;
+import de.jeff_media.drop2inventory.hooks.PluginHooks;
+import de.jeff_media.drop2inventory.hooks.WildChestsHook;
 import de.jeff_media.drop2inventory.utils.PDCUtils;
 import de.jeff_media.drop2inventory.utils.Utils;
+import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.block.Block;
 import org.bukkit.entity.*;
@@ -67,8 +70,24 @@ public class CollectListener implements Listener {
             if (main.isDebug()) main.debug("  Don't pick up: EntityPickUpItemEvent cancelled");
             return;
         }
-        event.setCancelled(true);
-        Utils.addOrDrop(itemStack, player, location);
+
+        WildChestsHook wildChestsHook = main.getPluginHooks().getWildChestsHook();
+        if(wildChestsHook == null || !wildChestsHook.wasStorageChestLocation(location)) {
+
+            // Collect drops normally
+            event.setCancelled(true);
+            Utils.addOrDrop(itemStack, player, location);
+        } else {
+
+            // WildChests storage chest
+
+            Bukkit.getScheduler().scheduleSyncDelayedTask(main, () -> {
+                System.out.println("Delayed stack collection");
+                Utils.addOrDrop(item.getItemStack(), player, location);
+                item.remove();
+            }, 30L);
+
+        }
 
     }
 

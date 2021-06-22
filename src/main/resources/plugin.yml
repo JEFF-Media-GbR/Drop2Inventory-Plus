@@ -18,6 +18,7 @@ softdepend:
   - Drop2Inventory
   - mcMMO
   - EliteMobs
+  - WildChests
 
 permissions:
   drop2inventory.use:

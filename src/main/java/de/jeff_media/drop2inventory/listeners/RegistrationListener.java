@@ -6,6 +6,7 @@ import de.jeff_media.drop2inventory.data.DropSubject;
 import de.jeff_media.drop2inventory.data.WorldBoundingBox;
 import de.jeff_media.drop2inventory.handlers.DropOwnerManager;
 import de.jeff_media.drop2inventory.handlers.PermissionChecker;
+import de.jeff_media.drop2inventory.hooks.WildChestsHook;
 import de.jeff_media.drop2inventory.utils.PDCUtils;
 import de.jeff_media.drop2inventory.utils.Utils;
 import org.bukkit.Location;
@@ -84,6 +85,12 @@ public class RegistrationListener implements Listener {
             return;
         }
         DropOwnerManager.register(player, location, block);
+
+        WildChestsHook wildChestsHook = main.getPluginHooks().getWildChestsHook();
+        if(wildChestsHook != null && wildChestsHook.isStorageChest(location)) {
+            System.out.println("Registered WildChests Storage location");
+            wildChestsHook.registerStorageChestLocation(location);
+        }
     }
 
     /**

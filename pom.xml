@@ -112,6 +112,11 @@
             <url>https://repo.extendedclip.com/content/repositories/placeholderapi/</url>
         </repository>
 
+        <repository>
+            <id>bg-repo</id>
+            <url>https://repo.bg-software.com/repository/api/</url>
+        </repository>
+
     </repositories>
 
     <dependencies>
@@ -168,6 +173,20 @@
             <artifactId>Drop2InventoryAPI</artifactId>
             <version>1.0.0-SNAPSHOT</version>
             <scope>compile</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>com.bgsoftware</groupId>
+            <artifactId>WildChestsAPI</artifactId>
+            <version>latest</version>
+            <scope>provided</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>com.bgsoftware</groupId>
+            <artifactId>WildStackerAPI</artifactId>
+            <version>latest</version>
+            <scope>provided</scope>
         </dependency>
 
     </dependencies>
