@@ -121,6 +121,7 @@ sound-enabled: true
 sound-effect: ENTITY_ITEM_PICKUP
 sound-volume: 1.0
 sound-pitch: 1.0
+sound-pitch-variant: 0.2
 sound-global: true
 
 #################################

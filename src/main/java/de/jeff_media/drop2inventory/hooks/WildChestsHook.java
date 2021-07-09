@@ -1,47 +1,58 @@
 package de.jeff_media.drop2inventory.hooks;
 
+
 import com.bgsoftware.wildchests.api.WildChestsAPI;
 import com.bgsoftware.wildchests.api.objects.chests.StorageChest;
-import com.bgsoftware.wildstacker.api.WildStackerAPI;
 import de.jeff_media.drop2inventory.Main;
-import de.jeff_media.drop2inventory.data.SimpleLocation;
-import org.bukkit.Location;
-import org.bukkit.entity.Item;
+import de.jeff_media.drop2inventory.utils.Utils;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
+import org.bukkit.event.Listener;
+import org.bukkit.event.block.BlockBreakEvent;
+import org.bukkit.inventory.ItemStack;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import java.math.BigInteger;
-import java.util.Collection;
-import java.util.HashSet;
 
-public class WildChestsHook {
+public class WildChestsHook implements Listener {
 
-    private final Collection<SimpleLocation> locations = new HashSet<>();
+    private final Main main = Main.getInstance();
 
-    public boolean isStorageChest(Location location) {
-        return WildChestsAPI.getStorageChest(location) != null;
-    }
+    private void dropWhenAllowed(BlockBreakEvent event) {
 
-    public void registerStorageChestLocation(Location location) {
-        SimpleLocation simpleLocation = new SimpleLocation(location);
-        locations.add(simpleLocation);
+        if(!main.enabled(event.getPlayer())) return;
+
+        StorageChest storageChest = WildChestsAPI.getStorageChest(event.getBlock().getLocation());
+        if(storageChest == null) return;
+
+        BigInteger amount = storageChest.getAmount();
+        if(amount.intValue() == 0) return;
+
+        ItemStack stack = storageChest.getItemStack();
+        stack.setAmount(amount.intValue());
+        storageChest.setAmount(BigInteger.ZERO);
+
         new BukkitRunnable() {
             @Override
             public void run() {
-                locations.remove(simpleLocation);
-                System.out.println("WildChests Storage location expired");
+                storageChest.setAmount(amount);
+                if(WildChestsAPI.getStorageChest(event.getBlock().getLocation()) == null) {
+                    System.out.println("Now trying to collect");
+                    Utils.addOrDrop(stack, event.getPlayer(), event.getBlock().getLocation());
+                    storageChest.setAmount(BigInteger.ZERO);
+                } else {
+                    System.out.println("There is no storage chest");
+                }
             }
-        }.runTaskLater(Main.getInstance(), 10L);
+        }.runTaskLater(main, 1L);
+
+
     }
 
-    public boolean wasStorageChestLocation(Location location) {
-        SimpleLocation simpleLocation = new SimpleLocation(location);
-        boolean result = locations.contains(simpleLocation);
-        System.out.println(location + " was a Storage chest: " + result);
-        System.out.println("All available Storage chests: ");
-        for(SimpleLocation location2 : locations) {
-            System.out.println(location2);
-        }
-        return result;
+    @EventHandler(ignoreCancelled = false, priority = EventPriority.LOWEST)
+    public void onStorageChestBreakLowest(BlockBreakEvent event) {
+        dropWhenAllowed(event);
     }
+
 
 }

@@ -46,7 +46,10 @@ public class WorldBoundingBoxGenerator {
                 BLOCKS_NEEDING_A_LONG_TIME.add(mat);
             }
         }
+    }
 
+    public static WorldBoundingBox getSimpleBoundingBox(Location location) {
+        return new WorldBoundingBox(location, 2, 1, 1, 1);
     }
 
     public WorldBoundingBoxGenerator(Location location, Block block, Player player) {

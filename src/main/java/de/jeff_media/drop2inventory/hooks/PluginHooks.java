@@ -13,13 +13,9 @@ public class PluginHooks {
             new EliteMobsHook()
     };
 
-    private final WildChestsHook wildChestsHook;
-
     public PluginHooks() {
         if(Bukkit.getPluginManager().getPlugin("WildChests") != null) {
-            wildChestsHook = new WildChestsHook();
-        } else {
-            wildChestsHook = null;
+            Bukkit.getPluginManager().registerEvents(new WildChestsHook(), main);
         }
     }
 
@@ -32,10 +28,6 @@ public class PluginHooks {
             }
         }
         return true;
-    }
-
-    public WildChestsHook getWildChestsHook() {
-        return wildChestsHook;
     }
 
 }

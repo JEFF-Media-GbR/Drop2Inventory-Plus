@@ -15,6 +15,7 @@ import org.bukkit.entity.*;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
+import org.bukkit.event.block.Action;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockDispenseEvent;
 import org.bukkit.event.block.BlockExplodeEvent;
@@ -22,6 +23,8 @@ import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDeathEvent;
 import org.bukkit.event.entity.EntityExplodeEvent;
 import org.bukkit.event.hanging.HangingBreakByEntityEvent;
+import org.bukkit.event.player.PlayerInteractAtEntityEvent;
+import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.vehicle.VehicleDestroyEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -34,7 +37,20 @@ public class RegistrationListener implements Listener {
     private final Main main = Main.getInstance();
 
     @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
-    public void registerDropOwner(HangingBreakByEntityEvent event) {
+    public void onHarvestBlock(PlayerInteractEvent event) {
+        Player player = event.getPlayer();
+        if(event.getAction() != Action.RIGHT_CLICK_BLOCK) return;
+        DropOwnerManager.registerSimple(player, event.getClickedBlock().getLocation());
+    }
+
+    @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
+    public void onHarvestEntity(PlayerInteractAtEntityEvent event) {
+        Player player = event.getPlayer();
+        DropOwnerManager.registerSimple(player, event.getRightClicked().getLocation());
+    }
+
+    @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
+    public void removeHanging(HangingBreakByEntityEvent event) {
         Entity remover = event.getRemover();
         if (!(remover instanceof Player)) return;
         Player player = (Player) remover;
@@ -45,7 +61,7 @@ public class RegistrationListener implements Listener {
     }
 
     @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
-    public void registerDropOwner(VehicleDestroyEvent event) {
+    public void destroyVehicle(VehicleDestroyEvent event) {
         Entity attacker = event.getAttacker();
         if (!(attacker instanceof Player)) return;
         Player player = (Player) attacker;
@@ -59,7 +75,7 @@ public class RegistrationListener implements Listener {
     This is mainly used for item frames and their contents
      */
     @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
-    public void registerDropOwner(EntityDamageByEntityEvent event) {
+    public void damageEntity(EntityDamageByEntityEvent event) {
         if (!(event instanceof Hanging) && event.getEntityType() != EntityType.ITEM_FRAME) return;
         if (event.getDamager().getType() != EntityType.PLAYER) return;
         Player player = (Player) event.getDamager();
@@ -77,7 +93,7 @@ public class RegistrationListener implements Listener {
     @EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = false)
     // TODO: ignoreCancelled true or false? It's currently false to detect custom blockbreaks
     // TODO: Currently using LOWEST to detect custom drops that are done within an event
-    public void registerDropOwner(BlockBreakEvent event) {
+    public void blockBreak(BlockBreakEvent event) {
         Player player = event.getPlayer();
         Block block = event.getBlock();
         Location location = block.getLocation();
@@ -86,11 +102,6 @@ public class RegistrationListener implements Listener {
         }
         DropOwnerManager.register(player, location, block);
 
-        WildChestsHook wildChestsHook = main.getPluginHooks().getWildChestsHook();
-        if(wildChestsHook != null && wildChestsHook.isStorageChest(location)) {
-            System.out.println("Registered WildChests Storage location");
-            wildChestsHook.registerStorageChestLocation(location);
-        }
     }
 
     /**
@@ -99,7 +110,7 @@ public class RegistrationListener implements Listener {
      * @param event
      */
     @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
-    public void registerDropOwner(EntityDeathEvent event) {
+    public void killEntity(EntityDeathEvent event) {
         LivingEntity dead = event.getEntity();
         Location location = dead.getLocation();
         Player killer = dead.getKiller();

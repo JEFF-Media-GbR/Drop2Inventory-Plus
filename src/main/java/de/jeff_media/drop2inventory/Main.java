@@ -54,7 +54,7 @@ public class Main extends JavaPlugin {
     private UpdateChecker updateChecker;
     boolean usingMatchingConfig = true;
     @Getter private HopperDetector hopperDetector;
-    @Getter private PluginHooks pluginHooks = new PluginHooks();
+    @Getter private PluginHooks pluginHooks;
 
     public static NamespacedKey HAS_DROP_COLLECTION_ENABLED_TAG;
     public static NamespacedKey HAS_SEEN_MESSAGE_TAG;
@@ -209,6 +209,7 @@ public class Main extends JavaPlugin {
         getServer().getPluginManager().registerEvents(new MiscListener(), this);
 
         utils = new Utils(this);
+        pluginHooks = new PluginHooks();
         //mendingUtils = new MendingUtils(this);
 
         Metrics metrics = new Metrics(this, 9970);

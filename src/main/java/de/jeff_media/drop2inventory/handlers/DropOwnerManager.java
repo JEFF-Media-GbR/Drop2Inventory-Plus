@@ -44,6 +44,10 @@ public class DropOwnerManager {
         return getDropOwner(location, dropLocationMap);
     }
 
+    public static void registerSimple(Player player, Location location) {
+        dropLocationMap.put(WorldBoundingBoxGenerator.getSimpleBoundingBox(location), player.getUniqueId());
+    }
+
     public static void register(Player player, Location location, @Nullable Block block) {
         if(main.isDebug()) main.debug("Registering DropOwner " + player.getName() + " for location " + location);
         WorldBoundingBox boundingBox = WorldBoundingBoxGenerator.getAppropriateBoundingBox(location, block, player);

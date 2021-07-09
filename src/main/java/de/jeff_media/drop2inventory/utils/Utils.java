@@ -71,21 +71,20 @@ public class Utils {
         } else {
             main.debug("  avoid-hotbar disabled");
         }
-        itemloop:
         for (ItemStack item : items) {
             main.debug(" addOrDrop#2");
             if (item == null) continue;
             if (item.getType() == Material.AIR) continue;
             // Try offHand first (md_5 doesnt want that -> https://hub.spigotmc.org/jira/browse/SPIGOT-2436)
             ItemStack offHandItem = player.getInventory().getItemInOffHand();
-            if(offHandItem != null && offHandItem.getType()==item.getType()) {
-                if(offHandItem.isSimilar(item)) {
-                    int spaceLeftInOffHand = offHandItem.getMaxStackSize()-offHandItem.getAmount();
+            if (offHandItem != null && offHandItem.getType() == item.getType()) {
+                if (offHandItem.isSimilar(item)) {
+                    int spaceLeftInOffHand = offHandItem.getMaxStackSize() - offHandItem.getAmount();
                     if (offHandItem.getAmount() < offHandItem.getMaxStackSize()) {
                         // Enough space left in offhand
-                        if(item.getAmount() <= spaceLeftInOffHand) {
-                            offHandItem.setAmount(offHandItem.getAmount()+item.getAmount());
-                            continue itemloop;
+                        if (item.getAmount() <= spaceLeftInOffHand) {
+                            offHandItem.setAmount(offHandItem.getAmount() + item.getAmount());
+                            continue;
                         }
                         int unstorable = item.getAmount() - spaceLeftInOffHand;
                         offHandItem.setAmount(offHandItem.getMaxStackSize());
@@ -102,7 +101,7 @@ public class Utils {
                 main.debug("Inventory full, dropping to world");
                 inventoryFull = true;
             }
-            if(inventoryFull && main.getConfig().getBoolean(Config.WARN_WHEN_INVENTORY_IS_FULL)) {
+            if (inventoryFull && main.getConfig().getBoolean(Config.WARN_WHEN_INVENTORY_IS_FULL)) {
                 main.getMessages().sendActionBarMessage(player, main.getMessages().MSG_INVENTORY_FULL);
             }
             if (main.getConfig().getBoolean(Config.AUTO_CONDENSE)

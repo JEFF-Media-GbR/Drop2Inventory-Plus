@@ -40,6 +40,7 @@ public class Config {
     public static final String SOUND_EFFECT = "sound-effect";
     public static final String SOUND_VOLUME = "sound-volume";
     public static final String SOUND_PITCH = "sound-pitch";
+    public static final String SOUND_PITCH_VARIANT = "sound-pitch-variant";
     public static final String DEFAULT_BOUNDING_BOX_RADIUS = "default-detection-radius";
     public static final String DETECT_EXPLOSION_DROPS = "detect-explosion-drops";
 
