@@ -37,11 +37,11 @@ public class WildChestsHook implements Listener {
             public void run() {
                 storageChest.setAmount(amount);
                 if(WildChestsAPI.getStorageChest(event.getBlock().getLocation()) == null) {
-                    System.out.println("Now trying to collect");
+                    //System.out.println("Now trying to collect");
                     Utils.addOrDrop(stack, event.getPlayer(), event.getBlock().getLocation());
                     storageChest.setAmount(BigInteger.ZERO);
                 } else {
-                    System.out.println("There is no storage chest");
+                    //System.out.println("There is no storage chest");
                 }
             }
         }.runTaskLater(main, 1L);

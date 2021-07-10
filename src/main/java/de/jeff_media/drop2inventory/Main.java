@@ -247,7 +247,7 @@ public class Main extends JavaPlugin {
             updateChecker.checkNow();
         }
         // Update Checker end
-        blockDropItemPrio = Enums.getIfPresent(EventPriority.class, getConfig().getString(Config.EVENT_PRIO_BLOCKDROPITEMEVENT).toUpperCase()).or(EventPriority.HIGH);
+        //blockDropItemPrio = Enums.getIfPresent(EventPriority.class, getConfig().getString(Config.EVENT_PRIO_BLOCKDROPITEMEVENT).toUpperCase()).or(EventPriority.HIGH);
     }
 
     public void setDebug(boolean debug) {

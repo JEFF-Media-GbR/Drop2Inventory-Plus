@@ -1,3 +1,6 @@
+## 2.4.0
+- Made event priority configurable for 3rd party plugins that do strange things
+
 ## 2.3.0
 - Added support for shearing sheeps, harvesting sweet berry bushes, etc.
 - Added "sound-pitch-variant" to config.yml (default 0.2) to make the drop sounds more random like in vanilla

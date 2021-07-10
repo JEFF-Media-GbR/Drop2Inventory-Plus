@@ -128,15 +128,11 @@ sound-global: true
 #####     Event priority    #####
 #################################
 
-# WILL BE OBSOLUTE in the future
 # Normally, Drop2Inventory should run on the highest possible priority.
-# However, there are some plugins known to clear the BlockDropItemEvent's
-# drops list, for example EcoEnchants. This is bad as Drop2Inventory can
-# then detect some drops only using the "Legacy drop detection" (see below).
 # Please do not change this value unless you really know what it does or
 # if I told you to do so.
 # Available values are LOWEST, LOW, NORMAL, HIGH, HIGHEST, MONITOR
-block-drop-item-event-priority: HIGH
+event-priority: HIGHEST
 
 #################################
 ##### Legacy drop detection #####

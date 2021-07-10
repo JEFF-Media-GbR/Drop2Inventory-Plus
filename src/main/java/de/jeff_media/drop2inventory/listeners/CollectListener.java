@@ -1,6 +1,7 @@
 package de.jeff_media.drop2inventory.listeners;
 
 import de.jeff_media.drop2inventory.Main;
+import de.jeff_media.drop2inventory.config.Config;
 import de.jeff_media.drop2inventory.handlers.DropOwnerManager;
 import de.jeff_media.drop2inventory.handlers.EventManager;
 import de.jeff_media.drop2inventory.handlers.PermissionChecker;
@@ -29,12 +30,53 @@ public class CollectListener implements Listener {
 
     private final Main main = Main.getInstance();
 
+    @EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = true)
+    public void collectDropsLowest(ItemSpawnEvent event) {
+        if(main.getConfig().getString(Config.EVENT_PRIORITY).equalsIgnoreCase("lowest")) {
+            collectDrops(event);
+        }
+    }
+
+    @EventHandler(priority = EventPriority.LOW, ignoreCancelled = true)
+    public void collectDropsLow(ItemSpawnEvent event) {
+        if(main.getConfig().getString(Config.EVENT_PRIORITY).equalsIgnoreCase("low")) {
+            collectDrops(event);
+        }
+    }
+
+    @EventHandler(priority = EventPriority.NORMAL, ignoreCancelled = true)
+    public void collectDropsNormal(ItemSpawnEvent event) {
+        if(main.getConfig().getString(Config.EVENT_PRIORITY).equalsIgnoreCase("normal")) {
+            collectDrops(event);
+        }
+    }
+
+    @EventHandler(priority = EventPriority.HIGH, ignoreCancelled = true)
+    public void collectDropsHigh(ItemSpawnEvent event) {
+        if(main.getConfig().getString(Config.EVENT_PRIORITY).equalsIgnoreCase("high")) {
+            collectDrops(event);
+        }
+    }
+
+    @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
+    public void collectDropsHighest(ItemSpawnEvent event) {
+        if(main.getConfig().getString(Config.EVENT_PRIORITY).equalsIgnoreCase("highest")) {
+            collectDrops(event);
+        }
+    }
+
+    @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
+    public void collectDropsMonitor(ItemSpawnEvent event) {
+        if(main.getConfig().getString(Config.EVENT_PRIORITY).equalsIgnoreCase("monitor")) {
+            collectDrops(event);
+        }
+    }
+
     /**
      * Cancels the actual Item Spawn and gives it to the player that owns this drop
      *
      * @param event
      */
-    @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
     public void collectDrops(ItemSpawnEvent event) {
         Item item = event.getEntity();
         ItemStack itemStack = item.getItemStack();

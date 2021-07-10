@@ -33,7 +33,7 @@ public class Config {
     public static final String DEBUG = "debug";
     public static final String CONFIG_VERSION = "config-version";
     public static final String WARN_WHEN_INVENTORY_IS_FULL = "warn-when-inventory-is-full";
-    public static final String EVENT_PRIO_BLOCKDROPITEMEVENT = "block-drop-item-event-priority";
+    public static final String EVENT_PRIORITY = "block-drop-item-event-priority";
     public static final String IGNORE_ITEMS_FROM_DISPENSERS = "ignore-items-from-dispensers";
     public static final String SOUND_GLOBAL = "sound-global";
     public static final String SOUND_ENABLED = "sound-enabled";
@@ -67,7 +67,7 @@ public class Config {
         conf.addDefault(IGNORE_ITEMS_ON_HOPPERS_HORIZONTAL_RANGE, 3);
         conf.addDefault(AVOID_HOTBAR,false);
         conf.addDefault(WARN_WHEN_INVENTORY_IS_FULL,true);
-        conf.addDefault(EVENT_PRIO_BLOCKDROPITEMEVENT,"HIGH");
+        conf.addDefault(EVENT_PRIORITY,"HIGH");
         conf.addDefault(IGNORE_ITEMS_FROM_DISPENSERS, true);
         conf.addDefault(IGNORE_DROPS_FROM_MOBS_KILLED_BY_LAVA, false);
         conf.addDefault(IGNORE_DROPS_FROM_MOBS_KILLED_BY_MAGMA, false);
