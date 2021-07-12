@@ -1,5 +1,6 @@
 ## 2.4.0
 - Made event priority configurable for 3rd party plugins that do strange things
+- Updated Russian translation
 
 ## 2.3.0
 - Added support for shearing sheeps, harvesting sweet berry bushes, etc.
