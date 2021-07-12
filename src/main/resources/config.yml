@@ -124,6 +124,14 @@ sound-pitch: 1.0
 sound-pitch-variant: 0.2
 sound-global: true
 
+# Whether to play a sound when trying to pick up items when the inventory is full
+sound-inv-full-enabled: true
+sound-inv-full-effect: ENTITY_ITEM_PICKUP
+sound-inv-full-volume: 1.0
+sound-inv-full-pitch: 1.0
+sound-inv-full-pitch-variant: 0.2
+sound-inv-full-global: false
+
 #################################
 #####     Event priority    #####
 #################################

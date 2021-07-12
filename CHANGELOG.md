@@ -1,3 +1,6 @@
+## 2.4.1
+- Fixed exception in version 2.4.0
+
 ## 2.4.0
 - Made event priority configurable for 3rd party plugins that do strange things
 - Updated Russian translation

@@ -33,7 +33,7 @@ public class Config {
     public static final String DEBUG = "debug";
     public static final String CONFIG_VERSION = "config-version";
     public static final String WARN_WHEN_INVENTORY_IS_FULL = "warn-when-inventory-is-full";
-    public static final String EVENT_PRIORITY = "block-drop-item-event-priority";
+    public static final String EVENT_PRIORITY = "event-priority";
     public static final String IGNORE_ITEMS_FROM_DISPENSERS = "ignore-items-from-dispensers";
     public static final String SOUND_GLOBAL = "sound-global";
     public static final String SOUND_ENABLED = "sound-enabled";
