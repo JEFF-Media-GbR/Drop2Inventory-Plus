@@ -300,11 +300,11 @@ message-inventory-full: "&cYour inventory is full."
 #message-inventory-full: "&cYer inventory be full."
 
 ##### Russian
-#message-disabled: "&7Автоматический сбор дропа &cотключен&7."
-#message-enabled: "&7Автоматический сбор дропа &aвключен&7."
-#message-when-breaking-block: "&7Подсказка: Введите &6/drop2inventory&7 или &6/drop2inv&7 чтобы включить автоматический сбор дропа."
-#message-when-breaking-block2: "&7Подсказка: Введите &6/drop2inventory&7 или &6/drop2inv&7 чтобы отключить автоматический сбор дропа."
-#message-inventory-full: "&cYour inventory is full."
+#message-disabled: "&7Автоматический сбор дропов &cотключен&7."
+#message-enabled: "&7Автоматический сбор дропов &aвключен&7."
+#message-when-breaking-block: "&7Подсказка: Введите &6/drop2inventory&7 или &6/drop2inv&7 чтобы включить автоматический сбор дропов."
+#message-when-breaking-block2: "&7Подсказка: Введите &6/drop2inventory&7 или &6/drop2inv&7 чтобы отключить автоматический сбор дропов."
+#message-inventory-full: "&cВаш инвентарь полон."
 
 ##### Spanish
 #message-disabled: "&7La coleccion automatica de dropeos ha sido &cdeshabilitada&7."
