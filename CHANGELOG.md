@@ -1,3 +1,7 @@
+## 2.5.0
+- Changed the way blocks drop when your inventory is full
+- Added discord-verification.html and notification (only shown to OPs once)
+
 ## 2.4.1
 - Fixed exception in version 2.4.0
 

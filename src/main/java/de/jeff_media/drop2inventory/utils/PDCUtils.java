@@ -12,6 +12,7 @@ public class PDCUtils {
         if(item == null) return false;
         if(!item.hasItemMeta()) return false;
         return item.getItemMeta().getPersistentDataContainer().has(key, type);
+
     }
 
     public static void remove(ItemStack item, NamespacedKey key) {

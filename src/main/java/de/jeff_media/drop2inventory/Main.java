@@ -1,6 +1,7 @@
 package de.jeff_media.drop2inventory;
 
 import com.google.common.base.Enums;
+import de.jeff_media.daddy.Stepsister;
 import de.jeff_media.drop2inventory.commands.CommandMain;
 import de.jeff_media.drop2inventory.config.Config;
 import de.jeff_media.drop2inventory.config.ConfigUpdater;
@@ -175,6 +176,8 @@ public class Main extends JavaPlugin {
     }
 
     public void onEnable() {
+
+        Stepsister.init(this);
 
         HAS_DROP_COLLECTION_ENABLED_TAG = new NamespacedKey(this, "dropcollectionenabled");
         HAS_SEEN_MESSAGE_TAG = new NamespacedKey(this, "hasseenmessage");

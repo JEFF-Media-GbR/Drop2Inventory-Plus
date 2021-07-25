@@ -97,7 +97,7 @@ public class Utils {
             boolean inventoryFull = false;
             for (ItemStack leftover : leftovers.values()) {
                 PDCUtils.add(leftover, Main.IGNORED_DROP_TAG, PersistentDataType.BYTE, (byte) 1);
-                player.getWorld().dropItemNaturally(dropLocation == null ? player.getLocation() : dropLocation, leftover);
+                player.getWorld().dropItem(dropLocation == null ? player.getLocation() : dropLocation, leftover);
                 main.debug("Inventory full, dropping to world");
                 inventoryFull = true;
             }
