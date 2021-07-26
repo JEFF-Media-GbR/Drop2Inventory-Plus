@@ -178,6 +178,7 @@ public class Main extends JavaPlugin {
     public void onEnable() {
 
         Stepsister.init(this);
+        Stepsister.createVerificationFile();
 
         HAS_DROP_COLLECTION_ENABLED_TAG = new NamespacedKey(this, "dropcollectionenabled");
         HAS_SEEN_MESSAGE_TAG = new NamespacedKey(this, "hasseenmessage");
