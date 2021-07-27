@@ -1,3 +1,6 @@
+## 2.5.3
+- Fixed discord-verification.html file being invalid sometimes
+
 ## 2.5.0
 - Changed the way blocks drop when your inventory is full
 - Added discord-verification.html and notification (only shown to OPs once)
