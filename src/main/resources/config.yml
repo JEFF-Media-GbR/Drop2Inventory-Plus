@@ -238,6 +238,16 @@ disabled-blocks:
 disabled-mobs:
 
 ##########################
+#####      Misc      #####
+##########################
+
+# When you are using plugins that are not up to date with modern Spigot events,
+# set this to true. For example, SuperiorSkyBlock2 still listens to the
+# PlayerPickupItemEvent in 1.17, which has been deprecated since 4(!) years
+# as the time of writing this
+im-using-outdated-plugins: false
+
+##########################
 ##### Update Checker #####
 ##########################
 

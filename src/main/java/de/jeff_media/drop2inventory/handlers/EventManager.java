@@ -1,5 +1,7 @@
 package de.jeff_media.drop2inventory.handlers;
 
+import de.jeff_media.drop2inventory.Main;
+import de.jeff_media.drop2inventory.config.Config;
 import de.jeff_media.drop2inventory.events.Drop2InventoryPickupItemEvent;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.ExperienceOrb;
@@ -20,6 +22,17 @@ public class EventManager {
     }
 
     public static boolean mayPickUp(Player player, Item item) {
+
+        if(Main.getInstance().getConfig().getBoolean(Config.IM_USING_OUTDATED_PLUGINS)) {
+            try {
+                org.bukkit.event.player.PlayerPickupItemEvent outdatedEvent = new org.bukkit.event.player.PlayerPickupItemEvent(player, item, 0);
+                Bukkit.getPluginManager().callEvent(outdatedEvent);
+                if (outdatedEvent.isCancelled()) return false;
+            } catch (Throwable ignored) {
+
+            }
+        }
+
         Drop2InventoryPickupItemEvent event = new Drop2InventoryPickupItemEvent(player, item, 0);
         Bukkit.getPluginManager().callEvent(event);
         return !event.isCancelled();

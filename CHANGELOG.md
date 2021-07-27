@@ -1,3 +1,7 @@
+## 2.6.0
+- Added support for plugins that listen to totally outdated events
+  - E.g. SuperiorSkyblock2, even in 1.17, listens to the PlayerPickupItemEvent, which has been deprecated and replaced more than 4 years ago(!) by the EntityPickupItemEvent
+
 ## 2.5.3
 - Fixed discord-verification.html file being invalid sometimes
 

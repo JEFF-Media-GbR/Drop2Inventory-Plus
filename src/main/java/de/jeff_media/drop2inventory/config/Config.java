@@ -43,10 +43,12 @@ public class Config {
     public static final String SOUND_PITCH_VARIANT = "sound-pitch-variant";
     public static final String DEFAULT_BOUNDING_BOX_RADIUS = "default-detection-radius";
     public static final String DETECT_EXPLOSION_DROPS = "detect-explosion-drops";
+    public static final String IM_USING_OUTDATED_PLUGINS = "im-using-outdated-plugins";
 
     public Config() {
         Main main = Main.getInstance();
         FileConfiguration conf = main.getConfig();
+        conf.addDefault(IM_USING_OUTDATED_PLUGINS, false);
         conf.addDefault(ENABLED_BY_DEFAULT, false);
         conf.addDefault(ALWAYS_ENABLED,false);
         conf.addDefault(CHECK_FOR_UPDATES, "true");
