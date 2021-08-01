@@ -3,6 +3,13 @@
         <jar in="Drop2InventoryPlus.jar" out="Drop2InventoryPlus.jar"/>
     </input>
 
+    <!--<keep-names>
+        <class template="class *" />
+        <method template="@org.bukkit.event.EventHandler *(**)" />
+        <class template="class de.jeff_media.drop2inventory.Drop2InventoryAPI">
+            <method template="public *(**)" />
+        </class>
+    </keep-names>-->
     <keep-names>
         <class access="protected+">
             <field access="protected+"/>
@@ -18,7 +25,7 @@
     <property name="synthetize-methods" value="disable"/>
     <property name="synthetize-fields" value="disable"/>
     <property name="remove-toString" value="enable"/>
-    <property name="string-encryption" value="enable"/>
+    <property name="string-encryption" value="disable"/>
     <property name="string-encryption-type" value="fast"/>
     <property name="string-encryption-ignored-strings" value="../allatori/spigotmc-patterns.txt"/>
     <ignore-classes>

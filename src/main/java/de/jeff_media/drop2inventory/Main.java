@@ -1,6 +1,5 @@
 package de.jeff_media.drop2inventory;
 
-import com.google.common.base.Enums;
 import de.jeff_media.daddy.Stepsister;
 import de.jeff_media.drop2inventory.commands.CommandMain;
 import de.jeff_media.drop2inventory.config.Config;

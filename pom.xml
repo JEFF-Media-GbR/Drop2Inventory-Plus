@@ -255,6 +255,14 @@
             <scope>provided</scope>
         </dependency>
 
+        <dependency>
+            <groupId>allatori</groupId>
+            <artifactId>allatori-annotations</artifactId>
+            <version>allatori</version>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/lib/allatori-annotations.jar</systemPath>
+        </dependency>
+
     </dependencies>
 
     <distributionManagement>
