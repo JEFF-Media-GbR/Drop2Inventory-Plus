@@ -1,5 +1,6 @@
 package de.jeff_media.drop2inventory.utils;
 
+import com.allatori.annotations.DoNotRename;
 import de.jeff_media.drop2inventory.Main;
 import de.jeff_media.drop2inventory.config.Config;
 import de.jeff_media.drop2inventory.config.Permissions;
@@ -19,6 +20,7 @@ import java.util.HashMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+@DoNotRename
 public class Utils {
 
     final Main main;
@@ -54,6 +56,7 @@ public class Utils {
         return main.disabledMobs.contains(mob.getType().name().toLowerCase());
     }
 
+    @DoNotRename
     public static void addOrDrop(ItemStack item, Player player, @Nullable Location dropLocation) {
         //main.debug("addOrDrop: " + item.toString() + " -> " + player.getName());
 
@@ -62,6 +65,7 @@ public class Utils {
         addOrDrop(items, player, dropLocation);
     }
 
+    @DoNotRename
     public static void addOrDrop(ItemStack[] items, Player player, @Nullable Location dropLocation) {
         Main main = Main.getInstance();
         main.debug("addOrDrop[] " + Arrays.toString(items) + " -> " + player);

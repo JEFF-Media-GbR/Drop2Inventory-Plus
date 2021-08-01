@@ -1,5 +1,6 @@
 package de.jeff_media.drop2inventory;
 
+import com.allatori.annotations.DoNotRename;
 import de.jeff_media.daddy.Stepsister;
 import de.jeff_media.drop2inventory.commands.CommandMain;
 import de.jeff_media.drop2inventory.config.Config;
@@ -34,7 +35,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 import java.io.*;
 import java.util.ArrayList;
 
-
+@DoNotRename
 public class Main extends JavaPlugin {
 
     public static final String uid = "%%__USER__%%";
@@ -60,6 +61,7 @@ public class Main extends JavaPlugin {
     public static NamespacedKey HAS_SEEN_MESSAGE_TAG;
     public static NamespacedKey IGNORED_DROP_TAG;
 
+    @DoNotRename
     public static Main getInstance() {
         return instance;
     }
@@ -129,6 +131,7 @@ public class Main extends JavaPlugin {
         }
     }
 
+    @DoNotRename
     public boolean enabled(Player p) {
 
         if (getConfig().getBoolean(Config.ALWAYS_ENABLED)) return true;
@@ -138,6 +141,7 @@ public class Main extends JavaPlugin {
         return value == (byte) 1 ? true : false;
     }
 
+    @DoNotRename
     public boolean hasSeenMessage(Player p) {
         PersistentDataContainer pdc = p.getPersistentDataContainer();
         byte value = pdc.getOrDefault(HAS_SEEN_MESSAGE_TAG, PersistentDataType.BYTE, (byte) 0);

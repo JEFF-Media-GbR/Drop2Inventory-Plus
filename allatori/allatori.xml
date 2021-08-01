@@ -11,13 +11,13 @@
         </class>
     </keep-names>-->
     <keep-names>
-        <class access="protected+">
-            <field access="protected+"/>
-            <method access="protected+"/>
-        </class>
+        <method template="@org.bukkit.event.EventHandler *(**)" />
     </keep-names>
 
     <property name="log-file" value="log.xml"/>
+
+    <property name="packages-naming" value="keep"/>
+
     <property name="extensive-flow-obfuscation" value="maximum"/>
     <property name="generics" value="keep"/>
     <property name="line-numbers" value="keep"/> <!-- For Debugging: keep -->
