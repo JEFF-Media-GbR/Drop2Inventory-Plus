@@ -18,6 +18,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.entity.EntityDeathEvent;
 import org.bukkit.event.entity.ItemSpawnEvent;
+import org.bukkit.event.player.PlayerExpChangeEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
@@ -138,7 +139,14 @@ public class CollectListener implements Listener {
         if (!PermissionChecker.hasDrop2InvEnabled(killer)) return;
         int experience = event.getDroppedExp();
         EventManager.giveAdjustedXP(killer, experience);
+        System.out.println("Killed " + event.getEntity().getType()+", giving " + experience + " XP");
         event.setDroppedExp(0);
+    }
+
+    @EventHandler
+    public void onDebug(PlayerExpChangeEvent event) {
+        int amount = event.getAmount();
+        System.out.println(event.getPlayer()+" collected " + event.getAmount() + " XP");
     }
 
 }

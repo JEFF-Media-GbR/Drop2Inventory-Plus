@@ -1,0 +1,29 @@
+<config>
+    <input>
+        <jar in="Drop2InventoryPlus.jar" out="Drop2InventoryPlus.jar"/>
+    </input>
+
+    <keep-names>
+        <class access="protected+">
+            <field access="protected+"/>
+            <method access="protected+"/>
+        </class>
+    </keep-names>
+
+    <property name="log-file" value="log.xml"/>
+    <property name="extensive-flow-obfuscation" value="maximum"/>
+    <property name="generics" value="keep"/>
+    <property name="line-numbers" value="keep"/> <!-- For Debugging: keep -->
+    <property name="inner-classes" value="remove"/>
+    <property name="synthetize-methods" value="disable"/>
+    <property name="synthetize-fields" value="disable"/>
+    <property name="remove-toString" value="enable"/>
+    <property name="string-encryption" value="enable"/>
+    <property name="string-encryption-type" value="fast"/>
+    <property name="string-encryption-ignored-strings" value="../allatori/spigotmc-patterns.txt"/>
+    <ignore-classes>
+        <class template="class com.*"/>
+        <class template="class org.*"/>
+        <class template="class de.jeff_media.drop2inventory.config.ConfigUpdater" />
+    </ignore-classes>
+</config>
