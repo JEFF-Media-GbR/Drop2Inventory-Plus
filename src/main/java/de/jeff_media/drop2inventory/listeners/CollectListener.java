@@ -88,14 +88,6 @@ public class CollectListener implements Listener {
         Location location = event.getLocation();
         Player player = DropOwnerManager.getDropOwner(location);
 
-        if(main.isDebug()) {
-            System.out.println("PDC values of this item:");
-            PersistentDataContainer pdc = itemStack.getItemMeta().getPersistentDataContainer();
-            for(NamespacedKey key : pdc.getKeys()) {
-                System.out.println(key.getNamespace()+":" + key.getKey());
-            }
-        }
-
         if (!main.getPluginHooks().mayPickUp(item, player)) return;
 
         if (player == null) {
@@ -139,14 +131,7 @@ public class CollectListener implements Listener {
         if (!PermissionChecker.hasDrop2InvEnabled(killer)) return;
         int experience = event.getDroppedExp();
         EventManager.giveAdjustedXP(killer, experience);
-        System.out.println("Killed " + event.getEntity().getType()+", giving " + experience + " XP");
         event.setDroppedExp(0);
-    }
-
-    @EventHandler
-    public void onDebug(PlayerExpChangeEvent event) {
-        int amount = event.getAmount();
-        System.out.println(event.getPlayer()+" collected " + event.getAmount() + " XP");
     }
 
 }
