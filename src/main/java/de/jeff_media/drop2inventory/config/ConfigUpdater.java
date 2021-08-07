@@ -1,7 +1,9 @@
 package de.jeff_media.drop2inventory.config;
 
+import com.allatori.annotations.ControlFlowObfuscation;
+import com.allatori.annotations.ExtensiveFlowObfuscation;
+import com.allatori.annotations.StringEncryption;
 import de.jeff_media.drop2inventory.Main;
-import de.jeff_media.drop2inventory.utils.Utils;
 import org.bukkit.Material;
 import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.configuration.file.FileConfiguration;
@@ -18,12 +20,21 @@ import java.util.Map;
 import java.util.Scanner;
 
 // TODO: Switch to my new Config Updater
+@StringEncryption(StringEncryption.DISABLE)
+@ExtensiveFlowObfuscation(ExtensiveFlowObfuscation.DISABLE)
+@ControlFlowObfuscation(ControlFlowObfuscation.DISABLE)
 public class ConfigUpdater {
 
     final Main main;
 
     public ConfigUpdater(Main main) {
         this.main = main;
+    }
+
+    private static void renameFileInPluginDir(Main plugin, String oldName, String newName) {
+        File oldFile = new File(plugin.getDataFolder().getAbsolutePath() + File.separator + oldName);
+        File newFile = new File(plugin.getDataFolder().getAbsolutePath() + File.separator + newName);
+        oldFile.getAbsoluteFile().renameTo(newFile.getAbsoluteFile());
     }
 
     public void updateConfig() {
@@ -34,7 +45,7 @@ public class ConfigUpdater {
             main.getLogger().severe("Could not delete config.old.yml");
         }
 
-        Utils.renameFileInPluginDir(main, "config.yml", "config.old.yml");
+        renameFileInPluginDir(main, "config.yml", "config.old.yml");
 
         main.saveDefaultConfig();
 
@@ -131,7 +142,7 @@ public class ConfigUpdater {
                 fw.write(s + "\n");
             }
             fw.close();
-        } catch (IOException e) {
+        } catch (Throwable e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }

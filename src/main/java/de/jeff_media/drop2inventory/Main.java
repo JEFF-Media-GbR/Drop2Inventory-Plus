@@ -41,14 +41,19 @@ public class Main extends JavaPlugin {
     public static final String uid = "%%__USER__%%";
     private static Main instance;
     public EventPriority blockDropItemPrio;
+    @DoNotRename
     public boolean blocksIsWhitelist = false;
     @Getter private boolean debug = false;
+    @DoNotRename
     public ArrayList<Material> disabledBlocks;
+    @DoNotRename
     public ArrayList<String> disabledMobs;
+    @DoNotRename
     public ArrayList<String> disabledWorlds;
     public HotbarStuffer hotbarStuffer;
     public IngotCondenser ingotCondenser;
     @Getter private Messages messages;
+    @DoNotRename
     @Getter private boolean mobsIsWhitelist = false;
     @Getter private SoundUtils soundUtils;
     @Getter private Utils utils;
