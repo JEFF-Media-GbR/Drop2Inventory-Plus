@@ -1,3 +1,6 @@
+## 2.7.1
+- Fixed emeralds not being condensed when using the auto-condense feature
+
 ## 2.7.0
 - Fixed "Sweeping Edge" enchantment not giving correct amount of XP in certain forks (Paper etc.)
 

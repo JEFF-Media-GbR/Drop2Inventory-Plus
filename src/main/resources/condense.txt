@@ -10,3 +10,4 @@ redstone,9,redstone_block
 wheat,9,hay_block
 bone_meal,9,bone_block
 slime_ball,9,slime_block
+emerald,9,emerald_block
