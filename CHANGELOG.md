@@ -1,3 +1,6 @@
+## 2.8.3
+- Fixed autofarm drops being collected to players who kill other mobs nearby (BETA)
+
 ## 2.8.2
 - Fixed EliteMobs visual items were being picked up (no idea why, but EliteMobs decided to just not cancel the EntityPickupItemEvent)
 

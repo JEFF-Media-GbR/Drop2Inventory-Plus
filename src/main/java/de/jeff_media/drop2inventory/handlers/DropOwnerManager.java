@@ -47,6 +47,7 @@ public class DropOwnerManager {
     }
 
     public static void registerSimple(Player player, Location location) {
+        if(main.isDebug()) main.debug("Registering DropOwner (SIMPLE) " + player.getName() + " for location " + location);
         dropLocationMap.put(WorldBoundingBoxGenerator.getSimpleBoundingBox(location), player.getUniqueId());
     }
 
