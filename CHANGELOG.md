@@ -1,3 +1,6 @@
+## 2.8.2
+- Fixed EliteMobs visual items were being picked up (no idea why, but EliteMobs decided to just not cancel the EntityPickupItemEvent)
+
 ## 2.7.1
 - Fixed emeralds not being condensed when using the auto-condense feature
 

@@ -41,7 +41,17 @@ public class EliteMobsHook implements IPluginHook {
             if(main.isDebug()) main.debug("Item pickup forbidden because it's EliteMobs soulbound but not to this player");
             return false;
         }
+        if(isVisualItem(itemStack)) {
+            return false;
+        }
         return true;
+    }
+
+    private boolean isVisualItem(ItemStack itemStack) {
+        if(!itemStack.hasItemMeta()) return false;
+        if(!itemStack.getItemMeta().hasLore()) return false;
+        if(itemStack.getItemMeta().getLore().size()==0) return false;
+        return itemStack.getItemMeta().getLore().get(0).equals("visualItem");
     }
 
     private boolean isPickupForbiddenBySoulbind(ItemStack itemStack, Player player) {
