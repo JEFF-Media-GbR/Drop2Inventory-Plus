@@ -331,6 +331,13 @@ message-inventory-full: "&cYour inventory is full."
 #message-when-breaking-block2: "&7Подсказка: Введите &6/drop2inventory&7 или &6/drop2inv&7 чтобы отключить автоматический сбор дропов."
 #message-inventory-full: "&cВаш инвентарь полон."
 
+##### Polish
+#message-disabled: "&7Automatyczne zbieranie dropu zostało &cwyłączone&7."
+#message-enabled: "&7Automatyczne zbieranie dropu zostało &awłączone&7."
+#message-when-breaking-block: "&7Podpowiedź: Wpisz &6/drop2inventory&7 lub &6/drop2inv&7 aby włączyć automatyczne zbieranie dropu."
+#message-when-breaking-block2: "&7Podpowiedź: Wpisz &6/drop2inventory&7 lub &6/drop2inv&7 aby wyłączyć automatyczne zbieranie dropu."
+#message-inventory-full: "&cTwój ekwipunek jest pełny."
+
 ##### Spanish
 #message-disabled: "&7La coleccion automatica de dropeos ha sido &cdeshabilitada&7."
 #message-enabled: "&7La coleccion automatica de dropeos ha sido &ahabilitada&7."
