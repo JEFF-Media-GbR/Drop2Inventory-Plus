@@ -1,3 +1,6 @@
+## 2.9.0
+- Added option to play a sound when the inventory is full
+
 ## 2.8.3
 - Fixed autofarm drops being collected to players who kill other mobs nearby (BETA)
 

@@ -4,6 +4,7 @@ import com.allatori.annotations.DoNotRename;
 import de.jeff_media.drop2inventory.Main;
 import de.jeff_media.drop2inventory.config.Config;
 import de.jeff_media.drop2inventory.config.Permissions;
+import de.jeff_media.jefflib.SoundData;
 import org.apache.commons.lang.math.NumberUtils;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -107,6 +108,18 @@ public class Utils {
             }
             if (inventoryFull && main.getConfig().getBoolean(Config.WARN_WHEN_INVENTORY_IS_FULL)) {
                 main.getMessages().sendActionBarMessage(player, main.getMessages().MSG_INVENTORY_FULL);
+            }
+            if (inventoryFull && main.getConfig().getBoolean(Config.PLAY_SOUND_WHEN_INVENTORY_IS_FULL)) {
+                try {
+                    SoundData soundData = SoundData.fromConfigurationSection(main.getConfig(), "sound-inv-full-");
+                    if (main.getConfig().getBoolean(Config.PLAY_SOUND_WHEN_INVENTORY_IS_FULL_GLOBAL)) {
+                        soundData.playToWorld(player.getLocation());
+                    } else {
+                        soundData.playToPlayer(player);
+                    }
+                } catch (IllegalArgumentException ignored) {
+
+                }
             }
             if (main.getConfig().getBoolean(Config.AUTO_CONDENSE)
                     && player.hasPermission(Permissions.ALLOW_AUTO_CONDENSE)) {

@@ -33,6 +33,8 @@ public class Config {
     public static final String DEBUG = "debug";
     public static final String CONFIG_VERSION = "config-version";
     public static final String WARN_WHEN_INVENTORY_IS_FULL = "warn-when-inventory-is-full";
+    public static final String PLAY_SOUND_WHEN_INVENTORY_IS_FULL = "sound-inv-full-enabled";
+    public static final String PLAY_SOUND_WHEN_INVENTORY_IS_FULL_GLOBAL = "sound-inv-full-global";
     public static final String EVENT_PRIORITY = "event-priority";
     public static final String IGNORE_ITEMS_FROM_DISPENSERS = "ignore-items-from-dispensers";
     public static final String SOUND_GLOBAL = "sound-global";
@@ -49,6 +51,8 @@ public class Config {
         Main main = Main.getInstance();
         FileConfiguration conf = main.getConfig();
         conf.addDefault(IM_USING_OUTDATED_PLUGINS, false);
+        conf.addDefault(PLAY_SOUND_WHEN_INVENTORY_IS_FULL, true);
+        conf.addDefault(PLAY_SOUND_WHEN_INVENTORY_IS_FULL_GLOBAL, false);
         conf.addDefault(ENABLED_BY_DEFAULT, false);
         conf.addDefault(ALWAYS_ENABLED,false);
         conf.addDefault(CHECK_FOR_UPDATES, "true");

@@ -116,7 +116,7 @@ public class RegistrationListener implements Listener {
         Player killer = dead.getKiller();
         if (killer == null) return;
         if (!PermissionChecker.isAllowed(killer, new DropSubject(dead))) return;
-        DropOwnerManager.registerSimple(killer, location);
+        DropOwnerManager.registerManually(killer, location, new WorldBoundingBox(location,3,2,2,2));
     }
 
     @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)

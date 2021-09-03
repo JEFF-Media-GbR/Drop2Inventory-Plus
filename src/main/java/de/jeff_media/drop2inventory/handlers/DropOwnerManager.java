@@ -51,6 +51,11 @@ public class DropOwnerManager {
         dropLocationMap.put(WorldBoundingBoxGenerator.getSimpleBoundingBox(location), player.getUniqueId());
     }
 
+    public static void registerManually(Player player, Location location, WorldBoundingBox box) {
+        if(main.isDebug()) main.debug("Registering DropOwner (MANUALLY) " + player.getName() + " for location " + location);
+        dropLocationMap.put(box, player.getUniqueId());
+    }
+
     @DoNotRename
     public static void register(Player player, Location location, @Nullable Block block) {
         if(main.isDebug()) main.debug("Registering DropOwner " + player.getName() + " for location " + location);
