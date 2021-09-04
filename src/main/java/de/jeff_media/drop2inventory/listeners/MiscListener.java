@@ -27,6 +27,8 @@ public class MiscListener implements Listener {
         if (pdc.has(Main.HAS_SEEN_MESSAGE_TAG, PersistentDataType.BYTE)) {
             pdc.remove(Main.HAS_SEEN_MESSAGE_TAG);
         }
+
+        main.applyEnabledByDefault(player);
     }
 
 }

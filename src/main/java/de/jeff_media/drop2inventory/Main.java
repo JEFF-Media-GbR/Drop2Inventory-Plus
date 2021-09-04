@@ -17,6 +17,7 @@ import de.jeff_media.drop2inventory.utils.HotbarStuffer;
 import de.jeff_media.drop2inventory.utils.IngotCondenser;
 import de.jeff_media.drop2inventory.utils.SoundUtils;
 import de.jeff_media.drop2inventory.utils.Utils;
+import de.jeff_media.morepersistentdatatypes.DataType;
 import de.jeff_media.updatechecker.UpdateChecker;
 import de.jeff_media.updatechecker.UserAgentBuilder;
 import lombok.Getter;
@@ -32,6 +33,7 @@ import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import javax.xml.stream.events.Namespace;
 import java.io.*;
 import java.util.ArrayList;
 
@@ -69,6 +71,19 @@ public class Main extends JavaPlugin {
     @DoNotRename
     public static Main getInstance() {
         return instance;
+    }
+
+    public void applyEnabledByDefault(Player player) {
+        if(!getConfig().getBoolean(Config.ENABLED_BY_DEFAULT)) return;
+
+        PersistentDataContainer pdc = player.getPersistentDataContainer();
+
+        NamespacedKey applied = new NamespacedKey(this,"enabledbydefault_applied");
+        if(pdc.has(applied, DataType.BOOLEAN)) return;
+
+        pdc.set(applied, DataType.BOOLEAN, true);
+        pdc.set(HAS_DROP_COLLECTION_ENABLED_TAG, PersistentDataType.BYTE, (byte) 1);
+
     }
 
     public void createConfig() {

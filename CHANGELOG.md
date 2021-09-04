@@ -1,3 +1,6 @@
+## 2.9.1
+- Fixed "enabled-by-default" not working
+
 ## 2.9.0
 - Added option to play a sound when the inventory is full
 
