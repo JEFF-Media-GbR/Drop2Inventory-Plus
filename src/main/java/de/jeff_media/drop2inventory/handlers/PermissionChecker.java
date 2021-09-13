@@ -69,7 +69,7 @@ public class PermissionChecker {
         }
 
         // GameMode
-        if (player.getGameMode() == GameMode.CREATIVE) {
+        if (player.getGameMode() == GameMode.CREATIVE && !main.getConfig().getBoolean(Config.WORKS_IN_CREATIVE)) {
             main.debug("Gamemode is creative");
             return false;
         }

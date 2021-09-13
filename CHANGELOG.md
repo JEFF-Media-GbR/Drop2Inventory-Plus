@@ -1,3 +1,9 @@
+## 2.9.3
+- Added config option "works-in-creative" to also collect Drops for people in Creative Mode
+
+## 2.9.2
+- Removed warning message when the plugin cannot check for updates for any reasons
+
 ## 2.9.1
 - Fixed "enabled-by-default" not working
 

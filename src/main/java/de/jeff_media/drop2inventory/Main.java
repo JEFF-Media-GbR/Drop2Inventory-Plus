@@ -36,6 +36,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 import javax.xml.stream.events.Namespace;
 import java.io.*;
 import java.util.ArrayList;
+import java.util.function.BiConsumer;
 
 @DoNotRename
 public class Main extends JavaPlugin {
@@ -267,7 +268,8 @@ public class Main extends JavaPlugin {
                 .setDownloadLink(87784)
                 .setChangelogLink(87784)
                 .setDonationLink("https://paypal.me/mfnalex")
-                .setUserAgent(UserAgentBuilder.getDefaultUserAgent().addSpigotUserId());
+                .setUserAgent(UserAgentBuilder.getDefaultUserAgent().addSpigotUserId())
+                .onFail((commandSenders, exception) -> { });
         if (getConfig().getString(Config.CHECK_FOR_UPDATES, "true").equalsIgnoreCase("true")) {
             updateChecker.checkEveryXHours(getConfig().getDouble(Config.UPDATE_CHECK_INTERVAL)).checkNow();
         } else if (getConfig().getString(Config.CHECK_FOR_UPDATES, "true").equalsIgnoreCase("on-startup")) {

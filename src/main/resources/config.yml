@@ -116,6 +116,9 @@ permissions-per-tool: false
 # "unarmed" skill
 avoid-hotbar: false
 
+# when enabled, Drop2Inventory will also collect drops for people in Creative Mode
+works-in-creative: false
+
 # Whether to play a sound when picking up items
 sound-enabled: true
 sound-effect: ENTITY_ITEM_PICKUP
