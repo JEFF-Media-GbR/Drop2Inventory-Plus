@@ -12,6 +12,7 @@ import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Entity;
+import org.bukkit.entity.EntityType;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.entity.EntityDamageEvent;
@@ -150,7 +151,7 @@ public class PermissionChecker {
         if(entity instanceof LivingEntity) {
             LivingEntity victim = (LivingEntity) entity;
 
-            if (victim.getKiller() == null) {
+            if (victim.getKiller() == null && victim.getType() != EntityType.ARMOR_STAND) {
                 main.debug("R: Killer is null");
                 return false;
             }

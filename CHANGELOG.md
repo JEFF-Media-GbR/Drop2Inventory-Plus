@@ -1,3 +1,6 @@
+## 2.9.4
+- Added support for armor stand drops
+
 ## 2.9.3
 - Added config option "works-in-creative" to also collect Drops for people in Creative Mode
 

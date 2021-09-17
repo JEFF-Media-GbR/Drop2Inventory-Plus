@@ -37,6 +37,22 @@ public class RegistrationListener implements Listener {
     private final Main main = Main.getInstance();
 
     @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
+    public void debug(EntityDamageByEntityEvent event) {
+        Entity damager = event.getDamager();
+        //System.out.println(1);
+        if (!(damager instanceof Player)) return;
+        Player player = (Player) damager;
+        //System.out.println(2);
+        if(event.getEntityType() != EntityType.ARMOR_STAND) return;
+        if (!PermissionChecker.isAllowed(player, new DropSubject(event.getEntity()))) {
+            //System.out.println(3);
+            return;
+        }
+        //System.out.println("Registered armorstand");
+        DropOwnerManager.registerSimple(player, event.getEntity().getLocation());
+    }
+
+    @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
     public void onHarvestBlock(PlayerInteractEvent event) {
         Player player = event.getPlayer();
         if(event.getAction() != Action.RIGHT_CLICK_BLOCK) return;
