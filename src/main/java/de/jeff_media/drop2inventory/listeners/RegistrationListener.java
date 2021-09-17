@@ -37,7 +37,7 @@ public class RegistrationListener implements Listener {
     private final Main main = Main.getInstance();
 
     @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
-    public void debug(EntityDamageByEntityEvent event) {
+    public void onArmorStandDamage(EntityDamageByEntityEvent event) {
         Entity damager = event.getDamager();
         //System.out.println(1);
         if (!(damager instanceof Player)) return;
