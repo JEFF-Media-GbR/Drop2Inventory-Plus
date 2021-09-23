@@ -1,3 +1,6 @@
+## 2.9.5
+- Fixed disabling "collect-block-exp" and "collect-mob-exp" not working
+
 ## 2.9.4
 - Added support for armor stand drops
 

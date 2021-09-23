@@ -116,6 +116,7 @@ public class CollectListener implements Listener {
      */
     @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
     public void onBlockXP(BlockBreakEvent event) {
+        if(!main.getConfig().getBoolean(Config.COLLECT_BLOCK_EXP)) return;
         Player player = event.getPlayer();
         if (!PermissionChecker.hasDrop2InvEnabled(player)) return;
         int experience = event.getExpToDrop();
@@ -125,6 +126,7 @@ public class CollectListener implements Listener {
 
     @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
     public void onEntityXP(EntityDeathEvent event) {
+        if(!main.getConfig().getBoolean(Config.COLLECT_MOB_EXP)) return;
         LivingEntity dead = event.getEntity();
         Player killer = dead.getKiller();
         if (killer == null) return;
