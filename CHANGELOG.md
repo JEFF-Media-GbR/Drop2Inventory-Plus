@@ -1,3 +1,6 @@
+## 2.10.1
+- Fixed typo in default condense.txt config file that prevented the plugin from enabling
+
 ## 2.10.0
 - Added auto-condense support for raw iron, raw copper and raw gold
 

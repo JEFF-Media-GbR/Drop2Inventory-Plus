@@ -13,4 +13,4 @@ slime_ball,9,slime_block
 emerald,9,emerald_block
 raw_iron,9,raw_iron_block
 raw_copper,9,raw_copper_block
-raw_gold,9_raw_gold_block
+raw_gold,9,raw_gold_block
