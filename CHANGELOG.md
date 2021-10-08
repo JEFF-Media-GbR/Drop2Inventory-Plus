@@ -1,3 +1,6 @@
+## 2.9.6
+- Fixed drops being collected that players have dropped using Q
+
 ## 2.9.5
 - Fixed disabling "collect-block-exp" and "collect-mob-exp" not working
 

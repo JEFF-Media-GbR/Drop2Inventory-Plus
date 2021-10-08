@@ -80,6 +80,12 @@ public class CollectListener implements Listener {
      */
     public void collectDrops(ItemSpawnEvent event) {
         Item item = event.getEntity();
+
+        if(item.getThrower() != null) {
+            // Do not collect Player-thrown items
+            return;
+        }
+
         ItemStack itemStack = item.getItemStack();
         if (PDCUtils.has(itemStack, Main.IGNORED_DROP_TAG, PersistentDataType.BYTE)) {
             PDCUtils.remove(itemStack, Main.IGNORED_DROP_TAG);
