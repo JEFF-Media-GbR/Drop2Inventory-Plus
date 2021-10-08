@@ -1,3 +1,6 @@
+## 2.10.0
+- Added auto-condense support for raw iron, raw copper and raw gold
+
 ## 2.9.6
 - Fixed drops being collected that players have dropped using Q
 

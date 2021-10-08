@@ -11,3 +11,6 @@ wheat,9,hay_block
 bone_meal,9,bone_block
 slime_ball,9,slime_block
 emerald,9,emerald_block
+raw_iron,9,raw_iron_block
+raw_copper,9,raw_copper_block
+raw_gold,9_raw_gold_block
