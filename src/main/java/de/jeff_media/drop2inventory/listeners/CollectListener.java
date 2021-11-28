@@ -79,6 +79,7 @@ public class CollectListener implements Listener {
      * @param event
      */
     public void collectDrops(ItemSpawnEvent event) {
+
         Item item = event.getEntity();
 
         if(item.getThrower() != null) {

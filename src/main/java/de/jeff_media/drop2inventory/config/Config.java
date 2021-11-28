@@ -47,12 +47,14 @@ public class Config {
     public static final String DETECT_EXPLOSION_DROPS = "detect-explosion-drops";
     public static final String IM_USING_OUTDATED_PLUGINS = "im-using-outdated-plugins";
     public static final String WORKS_IN_CREATIVE = "works-in-creative";
+    public static final String DROP_WHEN_INV_FULL = "drop-to-ground-when-inv-full";
 
     public Config() {
         Main main = Main.getInstance();
         FileConfiguration conf = main.getConfig();
         conf.addDefault(IM_USING_OUTDATED_PLUGINS, false);
         conf.addDefault(WORKS_IN_CREATIVE, false);
+        conf.addDefault(DROP_WHEN_INV_FULL, true);
         conf.addDefault(PLAY_SOUND_WHEN_INVENTORY_IS_FULL, true);
         conf.addDefault(PLAY_SOUND_WHEN_INVENTORY_IS_FULL_GLOBAL, false);
         conf.addDefault(ENABLED_BY_DEFAULT, false);

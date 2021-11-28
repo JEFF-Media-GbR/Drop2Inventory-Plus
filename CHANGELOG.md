@@ -1,3 +1,6 @@
+## 2.11.0
+- Added config option to not drop items to ground when the player's inventory is full
+
 ## 2.10.1
 - Fixed typo in default condense.txt config file that prevented the plugin from enabling
 
