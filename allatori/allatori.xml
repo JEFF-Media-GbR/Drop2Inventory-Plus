@@ -11,7 +11,7 @@
         </class>
     </keep-names>-->
     <keep-names>
-        <method template="@org.bukkit.event.EventHandler *(**)" />
+        <method template="@java.lang.Override *(**)" />
     </keep-names>
 
     <property name="log-file" value="log.xml"/>
@@ -25,8 +25,8 @@
     <property name="synthetize-methods" value="disable"/>
     <property name="synthetize-fields" value="disable"/>
     <property name="remove-toString" value="enable"/>
-    <property name="string-encryption" value="disable"/>
-    <property name="string-encryption-type" value="fast"/>
+    <property name="string-encryption" value="enable"/>
+    <property name="string-encryption-type" value="strong"/>
     <property name="string-encryption-ignored-strings" value="../allatori/spigotmc-patterns.txt"/>
     <ignore-classes>
         <class template="class com.*"/>

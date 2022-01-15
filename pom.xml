@@ -6,7 +6,7 @@
 
     <groupId>de.jeff_media</groupId>
     <name>Drop2InventoryPlus</name>
-    <version>3.0.0</version>
+    <version>3.1.1</version>
     <artifactId>Drop2InventoryPlus</artifactId>
 
     <properties>
@@ -185,7 +185,7 @@
         <dependency>
             <groupId>de.jeff_media</groupId>
             <artifactId>Stepsister</artifactId>
-            <version>1.0.0-OBF-SNAPSHOT</version>
+            <version>10.0.0</version>
             <scope>compile</scope>
         </dependency>
 

@@ -1,3 +1,13 @@
+## 3.1.1
+- D2I will no longer automatically collect XP from blacklisted blocks
+
+## 3.1.0
+- Improved Discord Verification
+
+## 3.0.1
+- Added safety net for badly coded plugins illegally implementing the player interface, not even considering behaving according to @NotNull annotations...
+  - It will print a warning though, so you can ask the authors of those plugins to stop doing that, and use proper implementations instead 
+
 ## 2.11.0
 - Added config option to not drop items to ground when the player's inventory is full
 

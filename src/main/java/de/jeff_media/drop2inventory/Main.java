@@ -31,8 +31,10 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventPriority;
 import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
+import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import javax.annotation.Nullable;
 import javax.xml.stream.events.Namespace;
 import java.io.*;
 import java.util.ArrayList;
@@ -68,6 +70,7 @@ public class Main extends JavaPlugin {
     public static NamespacedKey HAS_DROP_COLLECTION_ENABLED_TAG;
     public static NamespacedKey HAS_SEEN_MESSAGE_TAG;
     public static NamespacedKey IGNORED_DROP_TAG;
+    private boolean showedWeirdPluginWarning = false;
 
     @DoNotRename
     public static Main getInstance() {
@@ -152,19 +155,43 @@ public class Main extends JavaPlugin {
         }
     }
 
+    @Nullable
+    public PersistentDataContainer getPdcAndCheckForStupidPlugins(Player p) {
+        PersistentDataContainer pdc = p.getPersistentDataContainer();
+        if(pdc == null) { // Do not remove. Stupid plugins like "WarpSystem" implement their own shitty Player class, ignoring @NotNull annotated stuff.
+            Plugin weirdPlugin = getProvidingPlugin(p.getClass());
+            if(weirdPlugin != null && !showedWeirdPluginWarning) {
+                showedWeirdPluginWarning = true;
+                String weirdPluginName = weirdPlugin.getName() + " " + weirdPlugin.getDescription().getVersion();
+                String weirdClass = p.getClass().getName();
+                getLogger().warning("");
+                getLogger().warning("Oh no - you have some weird plugin that implements the Player interface using a custom class,");
+                getLogger().warning("which is not allowed according to the Spigot API documentation. Furthermore, this custom");
+                getLogger().warning("implementation is corrupted, as it returns \"null\" for a method annotated with \"@NotNull\".");
+                getLogger().severe("The problem was caused by the following plugin: " + weirdPluginName + " (Class: " + weirdClass + ")");
+                Bukkit.getScheduler().runTaskLater(this, () -> showedWeirdPluginWarning = false, 19);
+            }
+            return null;
+        }
+        return pdc;
+    }
+
     @DoNotRename
     public boolean enabled(Player p) {
 
         if (getConfig().getBoolean(Config.ALWAYS_ENABLED)) return true;
 
-        PersistentDataContainer pdc = p.getPersistentDataContainer();
+        PersistentDataContainer pdc = getPdcAndCheckForStupidPlugins(p);
+        if(pdc == null) return false;
+
         byte value = pdc.getOrDefault(HAS_DROP_COLLECTION_ENABLED_TAG, PersistentDataType.BYTE, (byte) 0);
         return value == (byte) 1 ? true : false;
     }
 
     @DoNotRename
     public boolean hasSeenMessage(Player p) {
-        PersistentDataContainer pdc = p.getPersistentDataContainer();
+        PersistentDataContainer pdc = getPdcAndCheckForStupidPlugins(p);
+        if(pdc == null) return false;
         byte value = pdc.getOrDefault(HAS_SEEN_MESSAGE_TAG, PersistentDataType.BYTE, (byte) 0);
         return value == (byte) 1;
     }
@@ -302,7 +329,8 @@ public class Main extends JavaPlugin {
     }
 
     public void setHasSeenMessage(Player p) {
-        PersistentDataContainer pdc = p.getPersistentDataContainer();
+        PersistentDataContainer pdc = getPdcAndCheckForStupidPlugins(p);
+        if(pdc == null) return;
         pdc.set(HAS_SEEN_MESSAGE_TAG, PersistentDataType.BYTE, (byte) 1);
     }
 

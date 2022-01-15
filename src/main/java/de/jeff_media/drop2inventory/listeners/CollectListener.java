@@ -2,6 +2,7 @@ package de.jeff_media.drop2inventory.listeners;
 
 import de.jeff_media.drop2inventory.Main;
 import de.jeff_media.drop2inventory.config.Config;
+import de.jeff_media.drop2inventory.data.DropSubject;
 import de.jeff_media.drop2inventory.handlers.DropOwnerManager;
 import de.jeff_media.drop2inventory.handlers.EventManager;
 import de.jeff_media.drop2inventory.handlers.PermissionChecker;
@@ -125,7 +126,7 @@ public class CollectListener implements Listener {
     public void onBlockXP(BlockBreakEvent event) {
         if(!main.getConfig().getBoolean(Config.COLLECT_BLOCK_EXP)) return;
         Player player = event.getPlayer();
-        if (!PermissionChecker.hasDrop2InvEnabled(player)) return;
+        if (!PermissionChecker.isAllowed(player,new DropSubject(event.getBlock()))) return;
         int experience = event.getExpToDrop();
         EventManager.giveAdjustedXP(player, experience);
         event.setExpToDrop(0);
