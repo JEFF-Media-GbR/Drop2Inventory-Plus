@@ -79,15 +79,15 @@ public class Main extends JavaPlugin {
 
     public void applyEnabledByDefault(Player player) {
         if(!getConfig().getBoolean(Config.ENABLED_BY_DEFAULT)) return;
-
         PersistentDataContainer pdc = player.getPersistentDataContainer();
 
         NamespacedKey applied = new NamespacedKey(this,"enabledbydefault_applied");
-        if(pdc.has(applied, DataType.BOOLEAN)) return;
+        if(pdc.has(applied, DataType.BOOLEAN)) {
+            return;
+        }
 
         pdc.set(applied, DataType.BOOLEAN, true);
         pdc.set(HAS_DROP_COLLECTION_ENABLED_TAG, PersistentDataType.BYTE, (byte) 1);
-
     }
 
     public void createConfig() {

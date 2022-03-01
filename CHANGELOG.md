@@ -1,3 +1,18 @@
+## 3.2.2
+- Fixed player data not being saved, even when "save-playerdata" was true lol. I should stop releasing updates in the middle of the night.
+
+## 3.2.1
+- Fixed "enabled-by-default" not working in certain configurations
+
+## 3.2.0
+- Added config option "save-playerdata". It works like this:
+```yaml
+# When set to true, Drop2Inventory remembers every player's setting after the rejoined.
+# If you set this to false, players will always have the default settings after joining again,
+# regardless of whether they had enabled or disabled Drop2Inventory before.
+save-playerdata: true 
+```
+
 ## 3.1.1
 - D2I will no longer automatically collect XP from blacklisted blocks
 

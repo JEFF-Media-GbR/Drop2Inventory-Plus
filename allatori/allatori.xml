@@ -3,13 +3,6 @@
         <jar in="Drop2InventoryPlus.jar" out="Drop2InventoryPlus.jar"/>
     </input>
 
-    <!--<keep-names>
-        <class template="class *" />
-        <method template="@org.bukkit.event.EventHandler *(**)" />
-        <class template="class de.jeff_media.drop2inventory.Drop2InventoryAPI">
-            <method template="public *(**)" />
-        </class>
-    </keep-names>-->
     <keep-names>
         <method template="@java.lang.Override *(**)" />
     </keep-names>

@@ -57,6 +57,11 @@ always-enabled: false
 # If set to false, players will have to enter /drop2inv once to enable automatic drop collection
 enabled-by-default: false
 
+# When set to true, Drop2Inventory remembers every player's setting after the rejoined.
+# If you set this to false, players will always have the default settings after joining again,
+# regardless of whether they had enabled or disabled Drop2Inventory before.
+save-playerdata: true
+
 # when set to true, block drops will be automatically collected if the plugin is enabled
 collect-block-drops: true
 
