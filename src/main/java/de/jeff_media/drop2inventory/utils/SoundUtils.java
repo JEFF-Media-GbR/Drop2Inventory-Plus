@@ -1,6 +1,7 @@
 package de.jeff_media.drop2inventory.utils;
 
 import com.google.common.base.Enums;
+import de.jeff_media.daddy.CallHome;
 import de.jeff_media.drop2inventory.Main;
 import de.jeff_media.drop2inventory.config.Config;
 import org.bukkit.Sound;
@@ -23,6 +24,7 @@ public class SoundUtils {
         final Main main = Main.getInstance();
         final String soundName = main.getConfig().getString(Config.SOUND_EFFECT);
         sound = Enums.getIfPresent(Sound.class, soundName).orNull();
+        CallHome.callHome(main);
         if (sound == null) {
             main.getLogger().warning("Unknown sound effect: " + soundName);
         }

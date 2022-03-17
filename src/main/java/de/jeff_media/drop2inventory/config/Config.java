@@ -74,7 +74,7 @@ public class Config {
         conf.addDefault(DETECT_LEGACY_DROPS,true);
         conf.addDefault(DEFAULT_BOUNDING_BOX_RADIUS, 30);
         conf.addDefault(DETECT_LEGACY_DROPS_RANGE,6.0D);
-        conf.addDefault(IGNORE_ITEMS_ON_HOPPERS,true);
+        conf.addDefault(IGNORE_ITEMS_ON_HOPPERS,false);
         conf.addDefault(IGNORE_ITEMS_ON_HOPPERS_VERTICAL_RANGE,20);
         conf.addDefault(IGNORE_ITEMS_ON_HOPPERS_HORIZONTAL_RANGE, 3);
         conf.addDefault(AVOID_HOTBAR,false);

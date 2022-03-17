@@ -1,3 +1,7 @@
+## 3.2.4
+- Full 1.18.2 support
+- "ignore-items-on-hoppers" is now disabled by default because it confused many users
+
 ## 3.2.2
 - Fixed player data not being saved, even when "save-playerdata" was true lol. I should stop releasing updates in the middle of the night.
 

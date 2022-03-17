@@ -1,29 +1,49 @@
 <config>
     <input>
-        <jar in="Drop2InventoryPlus.jar" out="Drop2InventoryPlus.jar"/>
+        <jar in="Drop2InventoryPlus.jar" out="Drop2InventoryPlus-${project.version}.jar"/>
     </input>
 
+    <classpath basedir="${settings.localRepository}">
+        <jar name="org\spigotmc\spigot-api\1.18.2-R0.1-SNAPSHOT\spigot-api-1.18.2-R0.1-SNAPSHOT.jar"/>
+    </classpath>
+
     <keep-names>
-        <method template="@java.lang.Override *(**)" />
+        <method template="@java.lang.Override *(**)" /> <!-- onEnable, etc -->
+        <method template="static getHandlerList()"/> <!-- custom Event classes -->
+        <class template="class **.jefflib.**"/>
     </keep-names>
 
     <property name="log-file" value="log.xml"/>
 
-    <property name="packages-naming" value="keep"/>
+    <property name="default-package" value="de.jeff_media.drop2inventory"/>
+    <property name="force-default-package" value="enable"/>
+
+    <property name="control-flow-obfuscation" value="enable"/>
+    <property name="packages-naming" value="abc"/>
+    <property name="classes-naming" value="windows"/>
+    <property name="methods-naming" value="keywords"/>
+    <property name="fields-naming" value="keywords"/>
+    <property name="local-variables-naming" value="optimize"/>
+    <property name="skip-renaming" value="disable"/>
 
     <property name="extensive-flow-obfuscation" value="maximum"/>
-    <property name="generics" value="keep"/>
-    <property name="line-numbers" value="keep"/> <!-- For Debugging: keep -->
+    <property name="generics" value="remove"/>
+    <property name="line-numbers" value="obfuscate"/> <!-- For Debugging: keep -->
     <property name="inner-classes" value="remove"/>
+    <property name="finalize" value="enable"/>
+
     <property name="synthetize-methods" value="disable"/>
     <property name="synthetize-fields" value="disable"/>
     <property name="remove-toString" value="enable"/>
-    <property name="string-encryption" value="enable"/>
+    <property name="string-encryption" value="maximum-with-warnings"/>
     <property name="string-encryption-type" value="strong"/>
     <property name="string-encryption-ignored-strings" value="../allatori/spigotmc-patterns.txt"/>
+    <property name="output-jar-compression-level" value="9"/>
+
     <ignore-classes>
         <class template="class com.*"/>
         <class template="class org.*"/>
-        <class template="class de.jeff_media.drop2inventory.config.ConfigUpdater" />
+        <class template="class **.nms.**" />
+        <class template="class **NMS**"/>
     </ignore-classes>
 </config>

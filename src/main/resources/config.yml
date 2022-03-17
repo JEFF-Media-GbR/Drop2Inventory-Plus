@@ -172,7 +172,7 @@ detect-explosion-drops: true
 # If you set the horizontal range to 5, the hopper can also be up to 5
 # block away on the x and z axis from the item, while still being
 # detected.
-ignore-items-on-hoppers: true
+ignore-items-on-hoppers: false
 ignore-items-on-hoppers-vertical-range: 5
 ignore-items-on-hoppers-horizontal-range: 3
 
