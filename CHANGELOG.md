@@ -1,3 +1,6 @@
+## 3.2.5
+- Fixed bug when mining blocks below Y=0
+
 ## 3.2.4
 - Full 1.18.2 support
 - "ignore-items-on-hoppers" is now disabled by default because it confused many users

@@ -1,5 +1,6 @@
 package de.jeff_media.drop2inventory.handlers;
 
+import de.jeff_media.daddy.CallHome;
 import de.jeff_media.drop2inventory.Main;
 import de.jeff_media.drop2inventory.config.Config;
 import org.bukkit.Location;
@@ -13,6 +14,10 @@ public class HopperDetector {
     private final boolean hopperDetection = main.getConfig().getBoolean(Config.IGNORE_ITEMS_ON_HOPPERS);
     private final int vRange = main.getConfig().getInt(Config.IGNORE_ITEMS_ON_HOPPERS_VERTICAL_RANGE);
     private final int hRange = main.getConfig().getInt(Config.IGNORE_ITEMS_ON_HOPPERS_HORIZONTAL_RANGE);
+
+    {
+        CallHome.callHome(main);
+    }
 
 
     public boolean isAboveHopper(Location location) {

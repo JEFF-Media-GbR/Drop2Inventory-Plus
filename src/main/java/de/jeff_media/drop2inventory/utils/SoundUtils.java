@@ -24,7 +24,6 @@ public class SoundUtils {
         final Main main = Main.getInstance();
         final String soundName = main.getConfig().getString(Config.SOUND_EFFECT);
         sound = Enums.getIfPresent(Sound.class, soundName).orNull();
-        CallHome.callHome(main);
         if (sound == null) {
             main.getLogger().warning("Unknown sound effect: " + soundName);
         }
