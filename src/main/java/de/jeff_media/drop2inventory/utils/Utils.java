@@ -134,7 +134,11 @@ public class Utils {
                 main.ingotCondenser.condense(player.getInventory(), item.getType());
             }
 
-            player.incrementStatistic(Statistic.PICKUP, item.getType(), pickedUpAmount);
+            int statistic = player.getStatistic(Statistic.PICKUP,item.getType());
+            int newStatistic = statistic + pickedUpAmount;
+            if(newStatistic > statistic && newStatistic > 0) {
+                player.setStatistic(Statistic.PICKUP, item.getType(), statistic + pickedUpAmount);
+            }
         }
         if (main.getConfig().getBoolean(Config.AVOID_HOTBAR)) {
             main.hotbarStuffer.unstuffHotbar(player.getInventory());

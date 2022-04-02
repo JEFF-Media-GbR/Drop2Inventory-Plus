@@ -1,3 +1,6 @@
+## 3.3.2
+- Fixed exception when other plugins have already stored a negative Statistics value for a certain block type
+
 ## 3.3.1
 - Improved the way statistics are handled
 
