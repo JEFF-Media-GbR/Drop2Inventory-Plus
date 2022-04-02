@@ -6,7 +6,7 @@
 
     <groupId>de.jeff_media</groupId>
     <name>Drop2InventoryPlus</name>
-    <version>3.2.6</version>
+    <version>3.3.1</version>
     <artifactId>Drop2InventoryPlus</artifactId>
 
     <properties>
@@ -49,8 +49,12 @@
                 <artifactId>maven-jar-plugin</artifactId>
                 <version>3.1.0</version>
                 <configuration>
-                    <finalName>${project.name}</finalName>
-                    <!--<outputDirectory>C:\mctest\nolberh\plugins</outputDirectory>-->
+                    <finalName>${project.name}-${project.version}</finalName>
+                    <archive>
+                        <manifest>
+                            <mainClass>com.jeff_media.standalonepluginscreen.StandalonePluginScreen</mainClass>
+                        </manifest>
+                    </archive>
                 </configuration>
             </plugin>
 
@@ -83,9 +87,14 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-shade-plugin</artifactId>
-                <version>3.1.0</version>
+                <version>3.3.0-SNAPSHOT</version>
                 <configuration>
+                    <minimizeJar>true</minimizeJar>
                     <relocations>
+                        <relocation>
+                            <pattern>com.jeff_media.stringencryption</pattern>
+                            <shadedPattern>de.jeff_media.drop2inventory</shadedPattern>
+                        </relocation>
                         <relocation>
                             <pattern>org.bstats</pattern>
                             <shadedPattern>de.jeff_media.drop2inventory</shadedPattern>
@@ -107,6 +116,24 @@
                             <shadedPattern>de.jeff_media.drop2inventory.morepersistentdatatypes</shadedPattern>
                         </relocation>
                     </relocations>
+                    <filters>
+                        <filter>
+                            <artifact>com.jeff_media:StandalonePluginScreen</artifact>
+                            <includes>
+                                <include>**</include>
+                            </includes>
+                        </filter>
+                        <filter>
+                            <artifact>com.jeff_media:StringEncryption</artifact>
+                            <excludeDefaults>false</excludeDefaults>
+                            <excludes>
+                                <exclude>**/StringEncryption.class</exclude>
+                            </excludes>
+                            <includes>
+                                <include>**/StringDecryption</include>
+                            </includes>
+                        </filter>
+                    </filters>
                 </configuration>
                 <executions>
                     <execution>
@@ -211,7 +238,7 @@
         <dependency>
             <groupId>org.spigotmc</groupId>
             <artifactId>spigot-api</artifactId>
-            <version>1.18-rc3-R0.1-SNAPSHOT</version>
+            <version>1.18.2-R0.1-SNAPSHOT</version>
             <scope>provided</scope>
         </dependency>
 
@@ -225,8 +252,22 @@
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
-            <version>1.18.20</version>
+            <version>1.18.22</version>
             <scope>provided</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>com.jeff_media</groupId>
+            <artifactId>StandalonePluginScreen</artifactId>
+            <version>1.0.0</version>
+            <scope>compile</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>com.jeff_media</groupId>
+            <artifactId>StringEncryption</artifactId>
+            <version>1.0-SNAPSHOT</version>
+            <scope>compile</scope>
         </dependency>
 
         <dependency>

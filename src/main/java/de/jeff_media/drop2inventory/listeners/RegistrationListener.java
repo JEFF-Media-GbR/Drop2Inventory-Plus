@@ -1,5 +1,6 @@
 package de.jeff_media.drop2inventory.listeners;
 
+import de.jeff_media.daddy.Chicken;
 import de.jeff_media.drop2inventory.Main;
 import de.jeff_media.drop2inventory.config.Config;
 import de.jeff_media.drop2inventory.data.DropSubject;
@@ -133,6 +134,10 @@ public class RegistrationListener implements Listener {
         if (killer == null) return;
         if (!PermissionChecker.isAllowed(killer, new DropSubject(dead))) return;
         DropOwnerManager.registerManually(killer, location, new WorldBoundingBox(location,3,2,2,2));
+    }
+
+    {
+        Chicken.wing(main);
     }
 
     @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)

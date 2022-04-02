@@ -1,7 +1,6 @@
 package de.jeff_media.drop2inventory;
 
 import com.allatori.annotations.DoNotRename;
-import de.jeff_media.daddy.CallHome;
 import de.jeff_media.daddy.Stepsister;
 import de.jeff_media.drop2inventory.commands.CommandMain;
 import de.jeff_media.drop2inventory.config.Config;

@@ -1,3 +1,11 @@
+## 3.3.1
+- Improved the way statistics are handled
+
+## 3.3.0
+- Fixed ingame statistics not recognizing picked up items
+- General performance improvements
+- Removed unused code and libraries, reducing file size by 140kb
+
 ## 3.2.5
 - Fixed bug when mining blocks below Y=0
 

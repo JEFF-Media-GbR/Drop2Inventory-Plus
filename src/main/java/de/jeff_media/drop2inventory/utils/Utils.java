@@ -8,6 +8,7 @@ import de.jeff_media.jefflib.SoundData;
 import org.apache.commons.lang.math.NumberUtils;
 import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.Statistic;
 import org.bukkit.World;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
@@ -77,6 +78,7 @@ public class Utils {
             main.debug("  avoid-hotbar disabled");
         }
         for (ItemStack item : items) {
+            int pickedUpAmount = item.getAmount();
             main.debug(" addOrDrop#2");
             if (item == null) continue;
             if (item.getType() == Material.AIR) continue;
@@ -99,6 +101,9 @@ public class Utils {
             }
             // End offHand first
             HashMap<Integer, ItemStack> leftovers = player.getInventory().addItem(item);
+            for(ItemStack leftover : leftovers.values()) {
+                pickedUpAmount -= leftover.getAmount();
+            }
             boolean inventoryFull = false;
             for (ItemStack leftover : leftovers.values()) {
                 PDCUtils.add(leftover, Main.IGNORED_DROP_TAG, PersistentDataType.BYTE, (byte) 1);
@@ -128,6 +133,8 @@ public class Utils {
                 main.debug("Auto condensing " + item.getType().name());
                 main.ingotCondenser.condense(player.getInventory(), item.getType());
             }
+
+            player.incrementStatistic(Statistic.PICKUP, item.getType(), pickedUpAmount);
         }
         if (main.getConfig().getBoolean(Config.AVOID_HOTBAR)) {
             main.hotbarStuffer.unstuffHotbar(player.getInventory());

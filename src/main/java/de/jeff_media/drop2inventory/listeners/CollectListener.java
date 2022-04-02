@@ -113,6 +113,7 @@ public class CollectListener implements Listener {
 
 
         event.setCancelled(true);
+        event.getEntity().remove(); // TODO DEBUG: REMOVE THIS AGAIN
         Utils.addOrDrop(itemStack, player, location);
 
     }
