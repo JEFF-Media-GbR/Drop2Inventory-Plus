@@ -1,3 +1,9 @@
+## 3.4.0
+- Added config option "superior-skyblock-collect-only-on-own-islands" (false by default). See config.yml for more information
+
+## 3.3.3
+- Added compatibility for plugins that try to prevent players picking up items by setting the item's pickup delay to arbitrary long times (e.g. QuickShop)
+
 ## 3.3.2
 - Fixed exception when other plugins have already stored a negative Statistics value for a certain block type
 

@@ -9,7 +9,7 @@ import org.bukkit.entity.Player;
 
 public class Messages {
 
-    final public String
+    public String
             MSG_ENABLED,
             MSG_DISABLED,
             MSG_HINT_ENABLE,

@@ -42,6 +42,10 @@ public class EventManager {
 
     public static boolean mayPickUp(Player player, Item item) {
 
+        if(item.getPickupDelay() >= Short.MAX_VALUE) {
+            return false;
+        }
+
         if(Main.getInstance().getConfig().getBoolean(Config.IM_USING_OUTDATED_PLUGINS)) {
             try {
                 org.bukkit.event.player.PlayerPickupItemEvent outdatedEvent = new org.bukkit.event.player.PlayerPickupItemEvent(player, item, 0);

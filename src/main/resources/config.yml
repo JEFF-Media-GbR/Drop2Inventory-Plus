@@ -258,6 +258,13 @@ disabled-mobs:
 # as the time of writing this
 im-using-outdated-plugins: false
 
+# When set to true, and the player is inside the area of a SuperiorSkyblock2 island,
+# drops will only be collected if the player is either
+# - the island's owner, or
+# - a member of the island, or
+# - a coop player of the island
+superior-skyblock-collect-only-on-own-islands: false
+
 ##########################
 ##### Update Checker #####
 ##########################
