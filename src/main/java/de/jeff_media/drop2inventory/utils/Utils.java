@@ -32,22 +32,22 @@ public class Utils {
     }
 
     public boolean isBlockEnabled(Material mat) {
-        main.debug("Checking if " + mat.name() + " is enabled...");
-        main.debug("Whitelist: " + main.blocksIsWhitelist);
+ if(main.isDebug()) main.debug("Checking if " + mat.name() + " is enabled...");
+ if(main.isDebug()) main.debug("Whitelist: " + main.blocksIsWhitelist);
         if (!main.blocksIsWhitelist) {
             if (main.disabledBlocks.contains(mat)) {
-                main.debug("Its disabled on the blacklist!");
+ if(main.isDebug()) main.debug("Its disabled on the blacklist!");
                 return false;
             }
-            main.debug("Its enabled!");
+ if(main.isDebug()) main.debug("Its enabled!");
             return true;
         }
         if (main.disabledBlocks.contains(mat)) {
-            main.debug("Its enabled on the whitelist!");
+ if(main.isDebug()) main.debug("Its enabled on the whitelist!");
             return true;
         }
-        main.debug("Its not on the whitelist!");
-        main.debug("BTW the whitelist contains " + main.disabledBlocks.size() + " blocks");
+ if(main.isDebug()) main.debug("Its not on the whitelist!");
+ if(main.isDebug()) main.debug("BTW the whitelist contains " + main.disabledBlocks.size() + " blocks");
         return false;
     }
 
@@ -70,16 +70,16 @@ public class Utils {
     @DoNotRename
     public static void addOrDrop(ItemStack[] items, Player player, @Nullable Location dropLocation) {
         Main main = Main.getInstance();
-        main.debug("addOrDrop[] " + Arrays.toString(items) + " -> " + player);
+ if(main.isDebug()) main.debug("addOrDrop[] " + Arrays.toString(items) + " -> " + player);
         if (main.getConfig().getBoolean(Config.AVOID_HOTBAR)) {
-            main.debug("  avoid-hotbar enabled");
+ if(main.isDebug()) main.debug("  avoid-hotbar enabled");
             main.hotbarStuffer.stuffHotbar(player.getInventory());
         } else {
-            main.debug("  avoid-hotbar disabled");
+ if(main.isDebug()) main.debug("  avoid-hotbar disabled");
         }
         for (ItemStack item : items) {
             int pickedUpAmount = item.getAmount();
-            main.debug(" addOrDrop#2");
+ if(main.isDebug()) main.debug(" addOrDrop#2");
             if (item == null) continue;
             if (item.getType() == Material.AIR) continue;
             // Try offHand first (md_5 doesnt want that -> https://hub.spigotmc.org/jira/browse/SPIGOT-2436)
@@ -110,7 +110,7 @@ public class Utils {
                 if(main.getConfig().getBoolean(Config.DROP_WHEN_INV_FULL)) {
                     player.getWorld().dropItem(dropLocation == null ? player.getLocation() : dropLocation, leftover);
                 }
-                main.debug("Inventory full, dropping to world");
+ if(main.isDebug()) main.debug("Inventory full, dropping to world");
                 inventoryFull = true;
             }
             if (inventoryFull && main.getConfig().getBoolean(Config.WARN_WHEN_INVENTORY_IS_FULL)) {
@@ -130,7 +130,7 @@ public class Utils {
             }
             if (main.getConfig().getBoolean(Config.AUTO_CONDENSE)
                     && player.hasPermission(Permissions.ALLOW_AUTO_CONDENSE)) {
-                main.debug("Auto condensing " + item.getType().name());
+ if(main.isDebug()) main.debug("Auto condensing " + item.getType().name());
                 main.ingotCondenser.condense(player.getInventory(), item.getType());
             }
 

@@ -1,3 +1,6 @@
+## 3.4.1
+- Improved performance
+
 ## 3.4.0
 - Added config option "superior-skyblock-collect-only-on-own-islands" (false by default). See config.yml for more information
 

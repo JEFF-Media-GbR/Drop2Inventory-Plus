@@ -114,7 +114,7 @@ public class WorldBoundingBoxGenerator {
             ParticleUtils.draw(player, result);
         }
         if(main.isDebug()) {
-            main.debug("Created WorldBoundingBox: " + result);
+ if(main.isDebug()) main.debug("Created WorldBoundingBox: " + result);
         }
         return result;
     }

@@ -31,7 +31,7 @@ public class HopperDetector {
                 }
             }
         }
-        main.debug("No hopper nearby.");
+ if(main.isDebug()) main.debug("No hopper nearby.");
         return false;
     }
 

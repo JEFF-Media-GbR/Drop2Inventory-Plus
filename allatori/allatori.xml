@@ -9,7 +9,7 @@
 
     <property name="remove-toString" value="enable"/>
     <property name="string-encryption" value="maximum-with-warnings"/>
-    <property name="string-encryption-type" value="strong"/>
+    <property name="string-encryption-type" value="fast"/>
     <property name="string-encryption-version" value="v4" add="de.jeff_media.drop2inventory.Main"/>
     <property name="string-encryption-ignored-strings" value="../allatori/spigotmc-patterns.txt"/>
 

@@ -30,7 +30,7 @@ public class IngotCondenser {
 
 
         for (CondensationMap map : condensationMap.values()) {
-            main.debug(String.format("%d x %s = %s", map.number, map.item.name(), map.block.name()));
+ if(main.isDebug()) main.debug(String.format("%d x %s = %s", map.number, map.item.name(), map.block.name()));
         }
 
     }
@@ -61,16 +61,15 @@ public class IngotCondenser {
         CondensationMap map = condensationMap.get(mat);
 
         if (map == null) return;
-
-        main.debug("Trying to condense " + mat.name());
+ if(main.isDebug()) main.debug("Trying to condense " + mat.name());
 
         int amount = 0;
         for (ItemStack is : inv.all(map.item).values()) {
             amount += is.getAmount();
         }
-        main.debug("  Found "+amount+" times");
+ if(main.isDebug()) main.debug("  Found "+amount+" times");
         if(amount < map.number) {
-            main.debug("  Returning! Thats not enough");
+ if(main.isDebug()) main.debug("  Returning! Thats not enough");
             return;
         }
         inv.remove(map.item);

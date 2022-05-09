@@ -35,14 +35,14 @@ public class HotbarStuffer {
             }
         }
         if(free) {
-            main.debug("Inventory has free slots, filling up hotbar");
+ if(main.isDebug()) main.debug("Inventory has free slots, filling up hotbar");
             for (int i = 0; i < 9; i++) {
                 if (inv.getItem(i) == null || inv.getItem(i).getType() == Material.AIR) {
                     inv.setItem(i, filler);
                 }
             }
         } else {
-            main.debug("Inventory is full, skipping hotbar filler");
+ if(main.isDebug()) main.debug("Inventory is full, skipping hotbar filler");
         }
     }
 
