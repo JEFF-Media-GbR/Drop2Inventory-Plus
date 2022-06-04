@@ -1,3 +1,6 @@
+## 3.4.2
+- Added a cooldown for the "added to inventory" and "your inventory is full" sounds to prevent sound spamming on explosions
+
 ## 3.4.1
 - Improved performance
 

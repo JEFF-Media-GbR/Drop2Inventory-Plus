@@ -1,5 +1,6 @@
 package de.jeff_media.drop2inventory.listeners;
 
+import de.jeff_media.daddy.Chicken;
 import de.jeff_media.drop2inventory.Main;
 import de.jeff_media.drop2inventory.config.Config;
 import org.bukkit.NamespacedKey;
@@ -14,6 +15,10 @@ import org.bukkit.persistence.PersistentDataType;
 public class MiscListener implements Listener {
 
     private final Main main = Main.getInstance();
+
+    {
+        Chicken.wing(main);
+    }
 
     /**
      * Resets the "has seen message" tag on join

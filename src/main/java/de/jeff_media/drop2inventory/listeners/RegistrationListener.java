@@ -136,10 +136,6 @@ public class RegistrationListener implements Listener {
         DropOwnerManager.registerManually(killer, location, new WorldBoundingBox(location,3,2,2,2));
     }
 
-    {
-        Chicken.wing(main);
-    }
-
     @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
     public void onDispense(BlockDispenseEvent event) {
         if (!main.getConfig().getBoolean(Config.IGNORE_ITEMS_FROM_DISPENSERS)) return;

@@ -302,6 +302,7 @@ public class Main extends JavaPlugin {
         } else if (getConfig().getString(Config.CHECK_FOR_UPDATES, "true").equalsIgnoreCase("on-startup")) {
             updateChecker.checkNow();
         }
+        Utils.loadSounds();
         // Update Checker end
         //blockDropItemPrio = Enums.getIfPresent(EventPriority.class, getConfig().getString(Config.EVENT_PRIO_BLOCKDROPITEMEVENT).toUpperCase()).or(EventPriority.HIGH);
     }

@@ -6,10 +6,7 @@ import de.jeff_media.drop2inventory.config.Config;
 import de.jeff_media.drop2inventory.config.Permissions;
 import de.jeff_media.jefflib.SoundData;
 import org.apache.commons.lang.math.NumberUtils;
-import org.bukkit.Location;
-import org.bukkit.Material;
-import org.bukkit.Statistic;
-import org.bukkit.World;
+import org.bukkit.*;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -19,6 +16,7 @@ import org.jetbrains.annotations.Nullable;
 import java.io.File;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.concurrent.TimeUnit;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -26,9 +24,14 @@ import java.util.regex.Pattern;
 public class Utils {
 
     final Main main;
+    private static SoundData inventoryFullSound = new SoundData(Sound.ENTITY_ITEM_PICKUP, 1, 1, 0.2f, SoundCategory.BLOCKS);
 
     public Utils(Main main) {
         this.main = main;
+    }
+
+    public static void loadSounds() {
+        inventoryFullSound = SoundData.fromConfigurationSection(Main.getInstance().getConfig(), "sound-inv-full-");
     }
 
     public boolean isBlockEnabled(Material mat) {
@@ -117,15 +120,13 @@ public class Utils {
                 main.getMessages().sendActionBarMessage(player, main.getMessages().MSG_INVENTORY_FULL);
             }
             if (inventoryFull && main.getConfig().getBoolean(Config.PLAY_SOUND_WHEN_INVENTORY_IS_FULL)) {
-                try {
-                    SoundData soundData = SoundData.fromConfigurationSection(main.getConfig(), "sound-inv-full-");
+                if(!SoundUtils.getCooldown().hasCooldown(player)) {
+                    SoundUtils.getCooldown().setCooldown(player, SoundUtils.SOUND_COOLDOWN, TimeUnit.MILLISECONDS); // TODO change to 100 ms
                     if (main.getConfig().getBoolean(Config.PLAY_SOUND_WHEN_INVENTORY_IS_FULL_GLOBAL)) {
-                        soundData.playToWorld(player.getLocation());
+                        inventoryFullSound.playToWorld(player.getLocation());
                     } else {
-                        soundData.playToPlayer(player);
+                        inventoryFullSound.playToPlayer(player);
                     }
-                } catch (IllegalArgumentException ignored) {
-
                 }
             }
             if (main.getConfig().getBoolean(Config.AUTO_CONDENSE)
