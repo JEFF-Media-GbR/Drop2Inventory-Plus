@@ -57,12 +57,18 @@ public class RegistrationListener implements Listener {
     public void onHarvestBlock(PlayerInteractEvent event) {
         Player player = event.getPlayer();
         if(event.getAction() != Action.RIGHT_CLICK_BLOCK) return;
+        if (!PermissionChecker.isAllowed(player, new DropSubject(event.getClickedBlock()))) {
+            return;
+        }
         DropOwnerManager.registerSimple(player, event.getClickedBlock().getLocation());
     }
 
     @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
     public void onHarvestEntity(PlayerInteractAtEntityEvent event) {
         Player player = event.getPlayer();
+        if (!PermissionChecker.isAllowed(player, new DropSubject(event.getRightClicked()))) {
+            return;
+        }
         DropOwnerManager.registerSimple(player, event.getRightClicked().getLocation());
     }
 

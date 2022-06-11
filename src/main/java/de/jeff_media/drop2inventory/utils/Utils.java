@@ -5,7 +5,6 @@ import de.jeff_media.drop2inventory.Main;
 import de.jeff_media.drop2inventory.config.Config;
 import de.jeff_media.drop2inventory.config.Permissions;
 import de.jeff_media.jefflib.SoundData;
-import org.apache.commons.lang.math.NumberUtils;
 import org.bukkit.*;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
@@ -13,18 +12,15 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.persistence.PersistentDataType;
 import org.jetbrains.annotations.Nullable;
 
-import java.io.File;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.concurrent.TimeUnit;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 @DoNotRename
 public class Utils {
 
-    final Main main;
     private static SoundData inventoryFullSound = new SoundData(Sound.ENTITY_ITEM_PICKUP, 1, 1, 0.2f, SoundCategory.BLOCKS);
+    final Main main;
 
     public Utils(Main main) {
         this.main = main;
@@ -32,33 +28,6 @@ public class Utils {
 
     public static void loadSounds() {
         inventoryFullSound = SoundData.fromConfigurationSection(Main.getInstance().getConfig(), "sound-inv-full-");
-    }
-
-    public boolean isBlockEnabled(Material mat) {
- if(main.isDebug()) main.debug("Checking if " + mat.name() + " is enabled...");
- if(main.isDebug()) main.debug("Whitelist: " + main.blocksIsWhitelist);
-        if (!main.blocksIsWhitelist) {
-            if (main.disabledBlocks.contains(mat)) {
- if(main.isDebug()) main.debug("Its disabled on the blacklist!");
-                return false;
-            }
- if(main.isDebug()) main.debug("Its enabled!");
-            return true;
-        }
-        if (main.disabledBlocks.contains(mat)) {
- if(main.isDebug()) main.debug("Its enabled on the whitelist!");
-            return true;
-        }
- if(main.isDebug()) main.debug("Its not on the whitelist!");
- if(main.isDebug()) main.debug("BTW the whitelist contains " + main.disabledBlocks.size() + " blocks");
-        return false;
-    }
-
-    public boolean isMobEnabled(LivingEntity mob) {
-        if (!main.isMobsIsWhitelist()) {
-            return !main.disabledMobs.contains(mob.getType().name().toLowerCase());
-        }
-        return main.disabledMobs.contains(mob.getType().name().toLowerCase());
     }
 
     @DoNotRename
@@ -73,16 +42,16 @@ public class Utils {
     @DoNotRename
     public static void addOrDrop(ItemStack[] items, Player player, @Nullable Location dropLocation) {
         Main main = Main.getInstance();
- if(main.isDebug()) main.debug("addOrDrop[] " + Arrays.toString(items) + " -> " + player);
+        if (main.isDebug()) main.debug("addOrDrop[] " + Arrays.toString(items) + " -> " + player);
         if (main.getConfig().getBoolean(Config.AVOID_HOTBAR)) {
- if(main.isDebug()) main.debug("  avoid-hotbar enabled");
+            if (main.isDebug()) main.debug("  avoid-hotbar enabled");
             main.hotbarStuffer.stuffHotbar(player.getInventory());
         } else {
- if(main.isDebug()) main.debug("  avoid-hotbar disabled");
+            if (main.isDebug()) main.debug("  avoid-hotbar disabled");
         }
         for (ItemStack item : items) {
             int pickedUpAmount = item.getAmount();
- if(main.isDebug()) main.debug(" addOrDrop#2");
+            if (main.isDebug()) main.debug(" addOrDrop#2");
             if (item == null) continue;
             if (item.getType() == Material.AIR) continue;
             // Try offHand first (md_5 doesnt want that -> https://hub.spigotmc.org/jira/browse/SPIGOT-2436)
@@ -104,23 +73,23 @@ public class Utils {
             }
             // End offHand first
             HashMap<Integer, ItemStack> leftovers = player.getInventory().addItem(item);
-            for(ItemStack leftover : leftovers.values()) {
+            for (ItemStack leftover : leftovers.values()) {
                 pickedUpAmount -= leftover.getAmount();
             }
             boolean inventoryFull = false;
             for (ItemStack leftover : leftovers.values()) {
                 PDCUtils.add(leftover, Main.IGNORED_DROP_TAG, PersistentDataType.BYTE, (byte) 1);
-                if(main.getConfig().getBoolean(Config.DROP_WHEN_INV_FULL)) {
+                if (main.getConfig().getBoolean(Config.DROP_WHEN_INV_FULL)) {
                     player.getWorld().dropItem(dropLocation == null ? player.getLocation() : dropLocation, leftover);
                 }
- if(main.isDebug()) main.debug("Inventory full, dropping to world");
+                if (main.isDebug()) main.debug("Inventory full, dropping to world");
                 inventoryFull = true;
             }
             if (inventoryFull && main.getConfig().getBoolean(Config.WARN_WHEN_INVENTORY_IS_FULL)) {
                 main.getMessages().sendActionBarMessage(player, main.getMessages().MSG_INVENTORY_FULL);
             }
             if (inventoryFull && main.getConfig().getBoolean(Config.PLAY_SOUND_WHEN_INVENTORY_IS_FULL)) {
-                if(!SoundUtils.getCooldown().hasCooldown(player)) {
+                if (!SoundUtils.getCooldown().hasCooldown(player)) {
                     SoundUtils.getCooldown().setCooldown(player, SoundUtils.SOUND_COOLDOWN, TimeUnit.MILLISECONDS); // TODO change to 100 ms
                     if (main.getConfig().getBoolean(Config.PLAY_SOUND_WHEN_INVENTORY_IS_FULL_GLOBAL)) {
                         inventoryFullSound.playToWorld(player.getLocation());
@@ -129,15 +98,14 @@ public class Utils {
                     }
                 }
             }
-            if (main.getConfig().getBoolean(Config.AUTO_CONDENSE)
-                    && player.hasPermission(Permissions.ALLOW_AUTO_CONDENSE)) {
- if(main.isDebug()) main.debug("Auto condensing " + item.getType().name());
+            if (main.getConfig().getBoolean(Config.AUTO_CONDENSE) && player.hasPermission(Permissions.ALLOW_AUTO_CONDENSE)) {
+                if (main.isDebug()) main.debug("Auto condensing " + item.getType().name());
                 main.ingotCondenser.condense(player.getInventory(), item.getType());
             }
 
-            int statistic = player.getStatistic(Statistic.PICKUP,item.getType());
+            int statistic = player.getStatistic(Statistic.PICKUP, item.getType());
             int newStatistic = statistic + pickedUpAmount;
-            if(newStatistic > statistic && newStatistic > 0) {
+            if (newStatistic > statistic && newStatistic > 0) {
                 player.setStatistic(Statistic.PICKUP, item.getType(), statistic + pickedUpAmount);
             }
         }
@@ -166,22 +134,47 @@ public class Utils {
         } else return p.hasPermission(Permissions.ALLOW_TOOL_HAND);
     }
 
-
-
     public static @Nullable Player getNearestPlayer(Location location) {
         World world = location.getWorld();
         double bestDistance = Double.MAX_VALUE;
         Player nearestPlayer = null;
 
-        for(Player player : world.getPlayers()) {
+        for (Player player : world.getPlayers()) {
             double distance = player.getLocation().distanceSquared(location);
-            if(distance < bestDistance) {
+            if (distance < bestDistance) {
                 bestDistance = distance;
                 nearestPlayer = player;
             }
         }
 
         return nearestPlayer;
+    }
+
+    public boolean isBlockEnabled(Material mat) {
+        if (main.isDebug()) main.debug("Checking if " + mat.name() + " is enabled...");
+        if (main.isDebug()) main.debug("Whitelist: " + main.blocksIsWhitelist);
+        if (!main.blocksIsWhitelist) {
+            if (main.disabledBlocks.contains(mat)) {
+                if (main.isDebug()) main.debug("Its disabled on the blacklist!");
+                return false;
+            }
+            if (main.isDebug()) main.debug("Its enabled!");
+            return true;
+        }
+        if (main.disabledBlocks.contains(mat)) {
+            if (main.isDebug()) main.debug("Its enabled on the whitelist!");
+            return true;
+        }
+        if (main.isDebug()) main.debug("Its not on the whitelist!");
+        if (main.isDebug()) main.debug("BTW the whitelist contains " + main.disabledBlocks.size() + " blocks");
+        return false;
+    }
+
+    public boolean isMobEnabled(LivingEntity mob) {
+        if (!main.isMobsIsWhitelist()) {
+            return !main.disabledMobs.contains(mob.getType().name().toLowerCase());
+        }
+        return main.disabledMobs.contains(mob.getType().name().toLowerCase());
     }
 
 

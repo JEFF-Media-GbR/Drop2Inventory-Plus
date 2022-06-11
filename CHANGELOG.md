@@ -1,3 +1,6 @@
+## 3.5.1
+- Fixed players with no permission for drop2inventory.use but still having Drop2Inventory enabled being able to collect drops for a second after right-clicking a block
+
 ## 3.4.2
 - Added a cooldown for the "added to inventory" and "your inventory is full" sounds to prevent sound spamming on explosions
 
