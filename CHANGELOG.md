@@ -1,3 +1,9 @@
+## 3.6.1
+- Fixed custom items from EcoItems getting condensed
+
+## 3.6.0
+- Added config option "collect-fishing-drops" to enable/disable collection of fishing drops. Disabled by default because enabling this will get rid of the "fish flying towards player" animation
+
 ## 3.5.2
 - Fixed dead players being able to collect items
 

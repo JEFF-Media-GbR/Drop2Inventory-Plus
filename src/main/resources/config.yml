@@ -75,6 +75,10 @@ collect-mob-drops: true
 # when set to true, mob/entity experience orbs will be automatically collected if the plugin is enabled
 collect-mob-exp: true
 
+# when set to true, fishes / drops caught via fishing will be automatically collected if the plugin is enabled
+# Note: Disabled by default because this also removes the "drop flying towards player" animation
+collect-fishing-drops: false
+
 # the default radius in which Drop2Inventory looks for drops.
 # You only need to raise this value if you have problems when drops from other plugins aren't detected.
 # Note: It does NOT hurt performance to set this to a high value! (But NEVER change it to a value

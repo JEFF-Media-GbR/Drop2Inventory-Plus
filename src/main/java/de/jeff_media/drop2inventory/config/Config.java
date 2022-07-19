@@ -27,6 +27,8 @@ public class Config {
     public static final String DISABLED_BLOCKS = "disabled-blocks";
     public static final String ENABLED_BLOCKS = "enabled-blocks";
     public static final String DISABLED_MOBS = "disabled-mobs";
+
+    public static final String COLLECT_FISHING_DROPS = "collect-fishing-drops";
     public static final String ENABLED_MOBS = "enabled-mobs";
     public static final String IGNORE_DROPS_FROM_MOBS_KILLED_BY_LAVA = "ignore-drops-from-mobs-killed-by-lava";
     public static final String IGNORE_DROPS_FROM_MOBS_KILLED_BY_MAGMA = "ignore-drops-from-mobs-killed-by-magma";
@@ -70,6 +72,7 @@ public class Config {
         conf.addDefault(SHOW_MESSAGE_AGAIN_AFTER_LOGOUT, true);
         conf.addDefault(COLLECT_BLOCK_DROPS, true);
         conf.addDefault(COLLECT_MOB_DROPS, true);
+        conf.addDefault(COLLECT_FISHING_DROPS, false);
         conf.addDefault(COLLECT_BLOCK_EXP, true);
         conf.addDefault(COLLECT_MOB_EXP, true);
         conf.addDefault(AUTO_CONDENSE,false);

@@ -24,6 +24,7 @@ import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDeathEvent;
 import org.bukkit.event.entity.EntityExplodeEvent;
 import org.bukkit.event.hanging.HangingBreakByEntityEvent;
+import org.bukkit.event.player.PlayerFishEvent;
 import org.bukkit.event.player.PlayerInteractAtEntityEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.vehicle.VehicleDestroyEvent;
@@ -70,6 +71,27 @@ public class RegistrationListener implements Listener {
             return;
         }
         DropOwnerManager.registerSimple(player, event.getRightClicked().getLocation());
+    }
+
+    @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
+    public void onFish(PlayerFishEvent event) {
+        if(!main.getConfig().getBoolean(Config.COLLECT_FISHING_DROPS)) {
+            return;
+        }
+        if(event.getState() != PlayerFishEvent.State.CAUGHT_ENTITY && event.getState() != PlayerFishEvent.State.CAUGHT_FISH) {
+            main.debug("PlayerFishEvent ignored, state: " + event.getState());
+            return;
+        }
+        if(event.getCaught() == null) {
+            main.debug("PlayerFishEvent ignored, caught is null");
+            return;
+        }
+        if(!PermissionChecker.isAllowed(event.getPlayer(), new DropSubject(event.getCaught()))) {
+            main.debug("PlayerFishEvent ignored, caught is not allowed");
+            return;
+        }
+        DropOwnerManager.registerSimple(event.getPlayer(),event.getCaught().getLocation());
+
     }
 
     @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)

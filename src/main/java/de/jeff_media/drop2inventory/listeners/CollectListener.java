@@ -100,6 +100,10 @@ public class CollectListener implements Listener {
 
         if (!main.getPluginHooks().mayPickUp(item, player)) return;
 
+        if(main.isDebug()) {
+            main.debug("ItemSpawn: " + item.getItemStack() + " at " + location + " owned by " + player);
+        }
+
         if (player == null) {
             if (main.isDebug()) main.debug("  Don't pick up: no player found");
             return;
