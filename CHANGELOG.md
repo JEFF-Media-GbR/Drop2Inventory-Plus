@@ -1,3 +1,6 @@
+## 3.5.2
+- Fixed dead players being able to collect items
+
 ## 3.5.1
 - Fixed players with no permission for drop2inventory.use but still having Drop2Inventory enabled being able to collect drops for a second after right-clicking a block
 

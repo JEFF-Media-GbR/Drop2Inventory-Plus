@@ -43,7 +43,9 @@ public class DropOwnerManager {
     }
 
     public static @Nullable Player getDropOwner(Location location) {
-        return getDropOwner(location, dropLocationMap);
+        Player player = getDropOwner(location, dropLocationMap);
+        if(player == null || player.isDead()) return null;
+        return player;
     }
 
     public static void registerSimple(Player player, Location location) {
