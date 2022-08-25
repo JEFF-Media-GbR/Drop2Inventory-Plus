@@ -26,11 +26,14 @@
 
     <property name="control-flow-obfuscation" value="enable"/>
     <property name="packages-naming" value="abc"/>
-    <property name="classes-naming" value="windows"/>
     <property name="methods-naming" value="keywords"/>
     <property name="fields-naming" value="keywords"/>
     <property name="local-variables-naming" value="optimize"/>
     <property name="skip-renaming" value="disable"/>
+
+    <property name="classes-naming-prefix" value="Main$"/>
+    <property name="methods-naming-prefix" value="$"/>
+    <property name="fields-naming-prefix" value="$"/>
 
     <property name="extensive-flow-obfuscation" value="maximum"/>
     <property name="generics" value="remove"/>

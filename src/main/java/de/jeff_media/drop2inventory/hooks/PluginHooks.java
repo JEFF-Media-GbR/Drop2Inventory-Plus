@@ -10,7 +10,8 @@ public class PluginHooks {
     private final Main main = Main.getInstance();
 
     private final IPluginHook[] hooks = {
-            new EliteMobsHook()
+            new EliteMobsHook(),
+            new QuickShopHook()
     };
 
     public PluginHooks() {

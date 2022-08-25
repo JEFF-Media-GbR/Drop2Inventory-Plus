@@ -1,5 +1,9 @@
-## 3.6.1
+## 3.7.1
+- Fixed hologram item getting duplicated when creating a new QuickShop shop while having D2I enabled
+
+## 3.7.0
 - Fixed custom items from EcoItems getting condensed
+- Adjusted obfuscation settings to not use class names anymore that Windows is too stupid to use
 
 ## 3.6.0
 - Added config option "collect-fishing-drops" to enable/disable collection of fishing drops. Disabled by default because enabling this will get rid of the "fish flying towards player" animation
