@@ -121,7 +121,7 @@ public class RegistrationListener implements Listener {
      */
     @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
     public void damageEntity(EntityDamageByEntityEvent event) {
-        if (!(event instanceof Hanging) && event.getEntityType() != EntityType.ITEM_FRAME) return;
+        if (!(event.getEntity() instanceof ItemFrame)) return;
         if (event.getDamager().getType() != EntityType.PLAYER) return;
         Player player = (Player) event.getDamager();
         if (!PermissionChecker.isAllowed(player, new DropSubject(event.getEntity()))) {

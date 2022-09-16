@@ -6,7 +6,7 @@
 
     <groupId>de.jeff_media</groupId>
     <name>Drop2InventoryPlus</name>
-    <version>3.7.1</version>
+    <version>3.7.2</version>
     <artifactId>Drop2InventoryPlus</artifactId>
 
     <properties>
@@ -92,10 +92,6 @@
                     <minimizeJar>true</minimizeJar>
                     <relocations>
                         <relocation>
-                            <pattern>com.jeff_media.stringencryption</pattern>
-                            <shadedPattern>de.jeff_media.drop2inventory</shadedPattern>
-                        </relocation>
-                        <relocation>
                             <pattern>org.bstats</pattern>
                             <shadedPattern>de.jeff_media.drop2inventory</shadedPattern>
                         </relocation>
@@ -124,13 +120,14 @@
                             </includes>
                         </filter>
                         <filter>
-                            <artifact>com.jeff_media:StringEncryption</artifact>
+                            <artifact>com.jeff_media:StringTransformation</artifact>
                             <excludeDefaults>false</excludeDefaults>
                             <excludes>
-                                <exclude>**/StringEncryption.class</exclude>
+                                <exclude>**/Encryptor.class</exclude>
+                                <exclude>**/encryptors/**</exclude>
                             </excludes>
                             <includes>
-                                <include>**/StringDecryption</include>
+                                <include>**</include>
                             </includes>
                         </filter>
                     </filters>
@@ -150,24 +147,41 @@
                 <artifactId>exec-maven-plugin</artifactId>
                 <version>1.2.1</version>
                 <executions>
+<!--                    <execution>-->
+<!--                        <id>string-encryption</id>-->
+<!--                        <phase>package</phase>-->
+<!--                        <goals>-->
+<!--                            <goal>exec</goal>-->
+<!--                        </goals>-->
+<!--                        <configuration>-->
+<!--                            <executable>java</executable>-->
+<!--                            <arguments>-->
+<!--                                <argument>-Xms128m</argument>-->
+<!--                                <argument>-Xmx512m</argument>-->
+<!--                                <argument>-jar</argument>-->
+<!--                                <argument>C:\Users\mfnal\.m2\repository\com\jeff_media\StringTransformationJar\1.0-SNAPSHOT\StringTransformationJar-1.0-SNAPSHOT.jar</argument>-->
+<!--                                <argument>target/Drop2InventoryPlus-${project.version}.jar</argument>-->
+<!--                            </arguments>-->
+<!--                        </configuration>-->
+<!--                    </execution>-->
                     <execution>
                         <id>run-allatori</id>
                         <phase>package</phase>
                         <goals>
                             <goal>exec</goal>
                         </goals>
+                        <configuration>
+                            <executable>java</executable>
+                            <arguments>
+                                <argument>-Xms128m</argument>
+                                <argument>-Xmx512m</argument>
+                                <argument>-jar</argument>
+                                <argument>${basedir}/lib/allatori.jar</argument>
+                                <argument>${basedir}/target/allatori.xml</argument>
+                            </arguments>
+                        </configuration>
                     </execution>
                 </executions>
-                <configuration>
-                    <executable>java</executable>
-                    <arguments>
-                        <argument>-Xms128m</argument>
-                        <argument>-Xmx512m</argument>
-                        <argument>-jar</argument>
-                        <argument>${basedir}/lib/allatori.jar</argument>
-                        <argument>${basedir}/target/allatori.xml</argument>
-                    </arguments>
-                </configuration>
             </plugin>
 
         </plugins>
@@ -263,12 +277,12 @@
             <scope>compile</scope>
         </dependency>
 
-<!--        <dependency>-->
-<!--            <groupId>com.jeff_media</groupId>-->
-<!--            <artifactId>StringEncryption</artifactId>-->
-<!--            <version>2.0-SNAPSHOT</version>-->
-<!--            <scope>compile</scope>-->
-<!--        </dependency>-->
+        <dependency>
+            <groupId>com.jeff_media</groupId>
+            <artifactId>StringTransformation</artifactId>
+            <version>4.0</version>
+            <scope>compile</scope>
+        </dependency>
 
         <dependency>
             <groupId>org.bstats</groupId>
