@@ -1,3 +1,24 @@
+## 3.8.0
+- "inventory-full" message can now be shown as title or actionbar
+- Fixed some plugins not being able to prohibit auto-pickup
+- Improved "auto-condense" feature
+  - Players can toggle it on/off using /d2i autocondense 
+  - The current setting "auto-condense" in config.yml was renamed to "force-autosmelt" and is now a global option, it works like this:
+    - Players will always need the permission "drop2inventory.autocondense" to use auto-condense
+    - If the global option is set to true, players will have auto-condense enabled and cannot disable it
+    - If the global option is set to false, players will have auto-condense disabled by default and can toggle it themselves using /d2i autosmelt
+  - Blocks to be condensed can now be configured using condense.yml
+
+**TODO:**
+- Added Auto-smelt
+  - Works like auto-condense, but for smelting
+  - Players can toggle it on/off using /d2i autosmelt
+  - The setting "force-auto-smelt" in config.yml is a global option, it works like this:
+    - Players will always need the permission "drop2inventory.autosmelt" to use auto-smelt
+    - If the global option is set to true, players will have auto-smelt enabled and cannot disable it
+    - If the global option is set to false, players will have auto-smelt disabled by default and can toggle it themselves using /d2i autosmelt
+- Material blacklist, similar to disabled-blocks or disabled-blocks, but for the actual drop type
+
 ## 3.7.1
 - Fixed hologram item getting duplicated when creating a new QuickShop shop while having D2I enabled
 
@@ -73,7 +94,7 @@ save-playerdata: true
 - Added config option to not drop items to ground when the player's inventory is full
 
 ## 2.10.1
-- Fixed typo in default condense.txt config file that prevented the plugin from enabling
+- Fixed typo in default condense.csv config file that prevented the plugin from enabling
 
 ## 2.10.0
 - Added auto-condense support for raw iron, raw copper and raw gold

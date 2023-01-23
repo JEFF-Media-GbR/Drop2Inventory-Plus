@@ -6,7 +6,7 @@
 
     <groupId>de.jeff_media</groupId>
     <name>Drop2InventoryPlus</name>
-    <version>3.7.2</version>
+    <version>3.8.0</version>
     <artifactId>Drop2InventoryPlus</artifactId>
 
     <properties>
@@ -100,7 +100,7 @@
                             <shadedPattern>de.jeff_media.drop2inventory</shadedPattern>
                         </relocation>
                         <relocation>
-                            <pattern>de.jeff_media.jefflib</pattern>
+                            <pattern>com.jeff_media.jefflib</pattern>
                             <shadedPattern>de.jeff_media.drop2inventory</shadedPattern>
                         </relocation>
                         <relocation>
@@ -245,7 +245,7 @@
         <dependency>
             <groupId>org.spigotmc</groupId>
             <artifactId>spigot</artifactId>
-            <version>1.18-rc3-R0.1-SNAPSHOT</version>
+            <version>1.19.3-R0.1-SNAPSHOT</version>
             <scope>provided</scope>
         </dependency>
 
@@ -257,9 +257,9 @@
         </dependency>
 
         <dependency>
-            <groupId>de.jeff_media</groupId>
+            <groupId>com.jeff_media</groupId>
             <artifactId>JeffLib</artifactId>
-            <version>8.0.0-SNAPSHOT</version>
+            <version>12.0.0</version>
             <scope>compile</scope>
         </dependency>
 

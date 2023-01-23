@@ -1,0 +1,52 @@
+# Items that get automatically condensed using auto-condense.
+# By default, this list contains all items that where the condensed version can be reverted
+# into the original ingredients, e.g. iron_nugget -> iron_ingot, but not quartz -> quartz_block.
+
+gold_nugget:
+  required: 9
+  result: gold_ingot
+iron_nugget:
+  required: 9
+  result: iron_ingot
+diamond:
+  required: 9
+  result: diamond_block
+coal:
+  required: 9
+  result: coal_block
+iron_ingot:
+  required: 9
+  result: iron_block
+gold_ingot:
+  required: 9
+  result: gold_block
+lapis_lazuli:
+  required: 9
+  result: lapis_block
+netherite_ingot:
+  required: 9
+  result: netherite_block
+redstone:
+  required: 9
+  result: redstone_block
+wheat:
+  required: 9
+  result: hay_block
+bone_meal:
+  required: 9
+  result: bone_block
+slime_ball:
+  required: 9
+  result: slime_block
+emerald:
+  required: 9
+  result: emerald_block
+raw_iron:
+  required: 9
+  result: iron_block
+raw_copper:
+  required: 9
+  result: copper_block
+raw_gold:
+  required: 9
+  result: gold_block

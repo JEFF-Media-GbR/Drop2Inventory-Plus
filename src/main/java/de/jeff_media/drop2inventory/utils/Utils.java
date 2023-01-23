@@ -4,7 +4,7 @@ import com.allatori.annotations.DoNotRename;
 import de.jeff_media.drop2inventory.Main;
 import de.jeff_media.drop2inventory.config.Config;
 import de.jeff_media.drop2inventory.config.Permissions;
-import de.jeff_media.jefflib.SoundData;
+import com.jeff_media.jefflib.data.SoundData;
 import org.bukkit.*;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
@@ -19,7 +19,7 @@ import java.util.concurrent.TimeUnit;
 @DoNotRename
 public class Utils {
 
-    private static SoundData inventoryFullSound = new SoundData(Sound.ENTITY_ITEM_PICKUP, 1, 1, 0.2f, SoundCategory.BLOCKS);
+    private static SoundData inventoryFullSound = new SoundData(Sound.ENTITY_ITEM_PICKUP.getKey().toString(), 1, 1, 0.2f, SoundCategory.BLOCKS);
     final Main main;
 
     public Utils(Main main) {
@@ -37,6 +37,24 @@ public class Utils {
         ItemStack[] items = new ItemStack[1];
         items[0] = item;
         addOrDrop(items, player, dropLocation);
+    }
+
+    public enum MessageType {
+        ACTIONBAR, TITLE;
+
+        public static MessageType fromString(String str) {
+            if(str == null) return ACTIONBAR;
+            switch (str.toLowerCase()) {
+                case "actionbar":
+                case "action_bar":
+                case "true":
+                    return ACTIONBAR;
+                case "title":
+                    return TITLE;
+                default:
+                    return null;
+            }
+        }
     }
 
     @DoNotRename
@@ -85,8 +103,19 @@ public class Utils {
                 if (main.isDebug()) main.debug("Inventory full, dropping to world");
                 inventoryFull = true;
             }
-            if (inventoryFull && main.getConfig().getBoolean(Config.WARN_WHEN_INVENTORY_IS_FULL)) {
-                main.getMessages().sendActionBarMessage(player, main.getMessages().MSG_INVENTORY_FULL);
+            MessageType type = MessageType.fromString(main.getConfig().getString(main.getMessages().MSG_INVENTORY_FULL, "actionbar"));
+            if (inventoryFull && type != null) {
+                switch (type) {
+                    case ACTIONBAR:
+                        main.getMessages().sendActionBarMessage(player, main.getMessages().MSG_INVENTORY_FULL);
+                        break;
+                    case TITLE:
+                        String[] split = main.getMessages().MSG_INVENTORY_FULL.split("\n");
+                        String line1 = split[0];
+                        String line2 = split.length > 1 ? split[1] : "";
+                        player.sendTitle(line1, line2, 10, 70, 20);
+                        break;
+                }
             }
             if (inventoryFull && main.getConfig().getBoolean(Config.PLAY_SOUND_WHEN_INVENTORY_IS_FULL)) {
                 if (!SoundUtils.getCooldown().hasCooldown(player)) {
@@ -98,7 +127,7 @@ public class Utils {
                     }
                 }
             }
-            if (main.getConfig().getBoolean(Config.AUTO_CONDENSE) && player.hasPermission(Permissions.ALLOW_AUTO_CONDENSE)) {
+            if (main.ingotCondenser.hasEnabled(player)) {
                 if (main.isDebug()) main.debug("Auto condensing " + item.getType().name());
                 main.ingotCondenser.condense(player.getInventory(), item.getType());
             }

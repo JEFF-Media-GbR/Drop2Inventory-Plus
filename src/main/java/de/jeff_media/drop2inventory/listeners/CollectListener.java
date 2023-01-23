@@ -9,7 +9,7 @@ import de.jeff_media.drop2inventory.handlers.PermissionChecker;
 import de.jeff_media.drop2inventory.hooks.SuperiorSkyblock2Hook;
 import de.jeff_media.drop2inventory.utils.PDCUtils;
 import de.jeff_media.drop2inventory.utils.Utils;
-import de.jeff_media.jefflib.PluginUtils;
+import com.jeff_media.jefflib.PluginUtils;
 import org.bukkit.Location;
 import org.bukkit.NamespacedKey;
 import org.bukkit.entity.Item;
@@ -98,8 +98,6 @@ public class CollectListener implements Listener {
         Location location = event.getLocation();
         Player player = DropOwnerManager.getDropOwner(location);
 
-        if (!main.getPluginHooks().mayPickUp(item, player)) return;
-
         if(main.isDebug()) {
             main.debug("ItemSpawn: " + item.getItemStack() + " at " + location + " owned by " + player);
         }
@@ -108,6 +106,13 @@ public class CollectListener implements Listener {
             if (main.isDebug()) main.debug("  Don't pick up: no player found");
             return;
         }
+
+        if (!main.getPluginHooks().mayPickUp(item, player)) {
+            if (main.isDebug()) main.debug("  Don't pick up: prohibited by a plugin hook");
+            return;
+        }
+
+
         if (main.getHopperDetector().isAboveHopper(location)) {
             if (main.isDebug()) main.debug("  Don't pick up: above hopper");
             return;

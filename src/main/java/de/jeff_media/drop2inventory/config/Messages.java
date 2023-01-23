@@ -14,7 +14,9 @@ public class Messages {
             MSG_DISABLED,
             MSG_HINT_ENABLE,
             MSG_HINT_DISABLE,
-            MSG_INVENTORY_FULL;
+            MSG_INVENTORY_FULL,
+			MSG_AUTOCONDENSE_ENABLED,
+			MSG_AUTOCONDENSE_DISABLED;
     final Main plugin;
 
     public Messages(Main plugin) {
@@ -34,6 +36,12 @@ public class Messages {
 
 		MSG_INVENTORY_FULL = getMsg("inventory-full",
 				"&cYour inventory is full.");
+
+		MSG_AUTOCONDENSE_ENABLED = getMsg("autocondense-enabled",
+				"&7Automatic item condensing has been &aenabled&7.");
+
+		MSG_AUTOCONDENSE_DISABLED = getMsg("autocondense-disabled",
+				"&7Automatic item condensing has been &adisabled&7.");
 
 
 	}

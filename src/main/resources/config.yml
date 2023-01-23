@@ -13,7 +13,7 @@
 #   Allows to toggle Drop2Inventory for other players
 #
 # drop2inventory.autocondense
-#   Allows to use the auto-condense feature to turn ingots into blocks (see condense.txt)
+#   Allows to use the auto-condense feature (/d2i autocondense) to turn ingots into blocks (see condense.csv)
 #
 # drop2inventory.tool.<tool>
 #   Allows to use Drop2Inventory for the specified tool when "permissions-per-tool" is enabled
@@ -42,6 +42,11 @@
 # /drop2inv reload
 #   Permission: drop2inventory.reload
 #   Reloads the config file
+#
+# /drop2inv autocondense
+#   Permissions: drop2inventory.autocondense
+#   Toggle auto-condense feature for the current player to automatically turn items into blocks.
+#   This will only work for items that are defined in the condense.csv file.
 #
 # /drop2inv debug
 #   Permission: drop2inventory.debug
@@ -85,13 +90,20 @@ collect-fishing-drops: false
 # that would lead to new chunks being loaded. I suggest a maximum value of about 50 blocks).
 default-detection-radius: 10
 
-# WILL BE OBSOLUTE in the future because it will be toggleable per player with a permission
-# when set to true, items will automatically converted to blocks when mining them
-# if the player has the permission "drop2inventory.autocondense"
-# e.g. 9 diamonds -> 1 diamond_block etc
-auto-condense: false
+# when set to true, items will automatically be condensed to blocks when mining them if the player has the permission "drop2inventory.autocondense".
+# when set to false, players with the mentioned permission can toggle autocondense themselves using /d2i autocondense
+# e.g. 9 diamonds -> 1 diamond_block etc.
+# You can configure which items should be converted in the condense.yml file
+force-auto-condense: false
+
+# when set to true, items will automatically be smelted when mining them if the player has the permission "drop2inventory.autosmelt".
+# when set to false, players with the mentioned permission can toggle autosmelt themselves using /d2i autosmelt
+# e.g. 1 iron_ore -> 1 iron_ingot
+force-auto-smelt: false
 
 # shows an actionbar message to a player once their inventory is full
+# when set to "true" or "actionbar", the message will be shown as action bar message
+# when set to "title", the message will be shown as title message. Use \n for a multiline title (e.g. "First line\nSecond line")
 warn-when-inventory-is-full: true
 
 # when set to true, players with automatic drop collection DISABLED will be
@@ -310,6 +322,8 @@ message-enabled: "&7Automatic drop collection has been &aenabled&7."
 message-when-breaking-block: "&7Hint: Type &6/drop2inventory&7 or &6/drop2inv&7 to enable automatic drop collection."
 message-when-breaking-block2: "&7Hint: Type &6/drop2inventory&7 or &6/drop2inv&7 to disable automatic drop collection."
 message-inventory-full: "&cYour inventory is full."
+message-autocondense-disabled: "&7Automatic item condensing has been &cdisabled&7."
+message-autocondense-enabled: "&7Automatic item condensing has been &aenabled&7."
 
 ##### Azerbaijan Turkish
 #message-disabled: "&7Avtomatik toplamaq &cdeaktifləşdirildi&7."
@@ -317,6 +331,8 @@ message-inventory-full: "&cYour inventory is full."
 #message-when-breaking-block: "&7Məsləhət: avtomatik toplamağı aktifləşdirmək üçün &6/drop2inventory&7 ya da &6/drop2inv& yazın."
 #message-when-breaking-block2: "&7Məsləhət: avtomatik toplamağı deaktifləşdirmək üçün &6/drop2inventory&7 ya da &6/drop2inv& yazın."
 #message-inventory-full: "&cƏşya çantanız doludur."
+#message-autocondense-disabled: "&7Automatic item condensing has been &cdisabled&7."
+#message-autocondense-enabled: "&7Automatic item condensing has been &aenabled&7."
 
 ##### Chinese Simplified
 #message-disabled: "&7自动掉落物收集已 &c关闭&7."
@@ -324,6 +340,8 @@ message-inventory-full: "&cYour inventory is full."
 #message-when-breaking-block: "&7提示: 输入 &6/drop2inventory&7 或 &6/drop2inv&7 以启用自动掉落物收集."
 #message-when-breaking-block2: "&7提示: 输入 &6/drop2inventory&7 或 &6/drop2inv&7 以关闭自动掉落物收集."
 #message-inventory-full: "&cYour inventory is full."
+#message-autocondense-disabled: "&7Automatic item condensing has been &cdisabled&7."
+#message-autocondense-enabled: "&7Automatic item condensing has been &aenabled&7."
 
 ##### German
 #message-disabled: "&7Automatisches Einsammeln &cdeaktiviert&7."
@@ -331,6 +349,8 @@ message-inventory-full: "&cYour inventory is full."
 #message-when-breaking-block: "&7Hinweis: Benutze &6/drop2inventory&7 oder &6/drop2inv&7 um das automatische Einsammeln zu aktivieren."
 #message-when-breaking-block2: "&7Hinweis: Benutze &6/drop2inventory&7 oder &6/drop2inv&7 um das automatische Einsammeln zu deaktivieren."
 #message-inventory-full: "&cDein Inventar ist voll."
+#message-autocondense-disabled: "&7Automatische Itemkompression wurde &cdeaktiviert&7."
+#message-autocondense-enabled: "&7Automatische Itemkompression wurde &aaktiviert&7."
 
 ##### Korean
 #message-disabled: "&7아이템 자동 줍기 기능이 &c비활성화 &7되었습니다."
@@ -338,6 +358,8 @@ message-inventory-full: "&cYour inventory is full."
 #message-when-breaking-block: "&e/drop2inventory &7 또는 &6/drop2inv&7 명령어를 사용하여 아이템 자동 수집를 활성화 하세요."
 #message-when-breaking-block2: "&e/drop2inventory &7 또는 &6/drop2inv&7 명령어를 사용하여 아이템 자동 수집를 비활성화 하세요."
 #message-inventory-full: "&c현재 인벤토리가 가득 찼습니다."
+#message-autocondense-disabled: "&7Automatic item condensing has been &cdisabled&7."
+#message-autocondense-enabled: "&7Automatic item condensing has been &aenabled&7."
 
 ##### Pirate Speak
 #message-disabled: "&7Automatic drop collection 'ave been &cdisabled&7."
@@ -345,6 +367,8 @@ message-inventory-full: "&cYour inventory is full."
 #message-when-breaking-block: "&7'int: Type &6/drop2inventory&7 or &6/drop2inv&7 to enable automatic drop collection."
 #message-when-breaking-block2: "&7'int: Type &6/drop2inventory&7 or &6/drop2inv&7 to disable automatic drop collection."
 #message-inventory-full: "&cYer inventory be full."
+#message-autocondense-disabled: "&7Automatic item condensing has been &cdisabled&7."
+#message-autocondense-enabled: "&7Automatic item condensing has been &aenabled&7."
 
 ##### Russian
 #message-disabled: "&7Автоматический сбор дропов &cотключен&7."
@@ -352,6 +376,8 @@ message-inventory-full: "&cYour inventory is full."
 #message-when-breaking-block: "&7Подсказка: Введите &6/drop2inventory&7 или &6/drop2inv&7 чтобы включить автоматический сбор дропов."
 #message-when-breaking-block2: "&7Подсказка: Введите &6/drop2inventory&7 или &6/drop2inv&7 чтобы отключить автоматический сбор дропов."
 #message-inventory-full: "&cВаш инвентарь полон."
+#message-autocondense-disabled: "&7Automatic item condensing has been &cdisabled&7."
+#message-autocondense-enabled: "&7Automatic item condensing has been &aenabled&7."
 
 ##### Polish
 #message-disabled: "&7Automatyczne zbieranie dropu zostało &cwyłączone&7."
@@ -359,6 +385,8 @@ message-inventory-full: "&cYour inventory is full."
 #message-when-breaking-block: "&7Podpowiedź: Wpisz &6/drop2inventory&7 lub &6/drop2inv&7 aby włączyć automatyczne zbieranie dropu."
 #message-when-breaking-block2: "&7Podpowiedź: Wpisz &6/drop2inventory&7 lub &6/drop2inv&7 aby wyłączyć automatyczne zbieranie dropu."
 #message-inventory-full: "&cTwój ekwipunek jest pełny."
+#message-autocondense-disabled: "&7Automatic item condensing has been &cdisabled&7."
+#message-autocondense-enabled: "&7Automatic item condensing has been &aenabled&7."
 
 ##### Spanish
 #message-disabled: "&7La coleccion automatica de dropeos ha sido &cdeshabilitada&7."
@@ -366,6 +394,8 @@ message-inventory-full: "&cYour inventory is full."
 #message-when-breaking-block: "&7Drop2Inventory: Utiliza &6/drop2inventory&7 o &6/drop2inv&7 para habilitar la coleccion automatica de dropeos."
 #message-when-breaking-block2: "&7Drop2Inventory: Utiliza &6/drop2inventory&7 o &6/drop2inv&7 para deshabilitar la coleccion automatica de dropeos."
 #message-inventory-full: "&cYour inventory is full."
+#message-autocondense-disabled: "&7Automatic item condensing has been &cdisabled&7."
+#message-autocondense-enabled: "&7Automatic item condensing has been &aenabled&7."
 
 ##### Swedish
 #message-disabled: "&7Automatisk droppinsamling har &cinaktiverats&7."
@@ -373,6 +403,8 @@ message-inventory-full: "&cYour inventory is full."
 #message-when-breaking-block: "&7Tips: Skriv &6/drop2inventory&7 eller &6/drop2inv&7 för att aktivera automatisk droppinsamling."
 #message-when-breaking-block2: "&7Tips: Skriv &6/drop2inventory&7 eller &6/drop2inv&7 för att inaktivera automatisk droppinsamling."
 #message-inventory-full: "&cDitt inventarium är fullt."
+#message-autocondense-disabled: "&7Automatic item condensing has been &cdisabled&7."
+#message-autocondense-enabled: "&7Automatic item condensing has been &aenabled&7."
 
 ##### Turkish
 #message-disabled: "&7Otomatik toplama &cdeaktifleştirildi&7."
@@ -380,6 +412,8 @@ message-inventory-full: "&cYour inventory is full."
 #message-when-breaking-block: "&7İpucu: Otomatik toplamayı aktifleştirmek için &6/drop2inventory&7 ya da &6/drop2inv&7 yazınız."
 #message-when-breaking-block2: "&7İpucu: Otomatik toplamayı deaktifleştirmek için &6/drop2inventory&7 ya da &6/drop2inv&7 yazınız."
 #message-inventory-full: "&cEnvanterin dolu."
+#message-autocondense-disabled: "&7Automatic item condensing has been &cdisabled&7."
+#message-autocondense-enabled: "&7Automatic item condensing has been &aenabled&7."
 
 #########################
 #####     Done!     #####

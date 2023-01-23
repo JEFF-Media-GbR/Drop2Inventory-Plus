@@ -10,7 +10,7 @@ public class Config {
     public static final String COLLECT_BLOCK_EXP = "collect-block-exp";
     public static final String COLLECT_MOB_DROPS = "collect-mob-drops";
     public static final String COLLECT_MOB_EXP = "collect-mob-exp";
-    public static final String AUTO_CONDENSE = "auto-condense";
+    public static final String AUTO_CONDENSE = "force-auto-condense";
     public static final String SHOW_MESSAGE_WHEN_BREAKING_BLOCK = "show-message-when-breaking-block";
     public static final String SHOW_MESSAGE_WHEN_BREAKING_BLOCK_AND_COLLECTION_IS_ENABLED = "show-message-when-breaking-block-and-collection-is-enabled";
     public static final String SHOW_MESSAGE_AGAIN_AFTER_LOGOUT = "show-message-again-after-logout";

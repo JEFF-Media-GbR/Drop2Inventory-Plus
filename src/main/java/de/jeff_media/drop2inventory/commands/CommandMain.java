@@ -4,8 +4,10 @@ import de.jeff_media.drop2inventory.Main;
 import de.jeff_media.drop2inventory.config.Config;
 import de.jeff_media.drop2inventory.config.Messages;
 import de.jeff_media.drop2inventory.config.Permissions;
+import de.jeff_media.morepersistentdatatypes.DataType;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.NamespacedKey;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -14,7 +16,8 @@ import org.jetbrains.annotations.NotNull;
 
 public class CommandMain implements CommandExecutor {
 	
-	final Main main;
+	private final Main main;
+
 	
 	public CommandMain(Main main) {
 		this.main = main;
@@ -33,6 +36,10 @@ public class CommandMain implements CommandExecutor {
 
 		if(args.length>0 && args[0].equalsIgnoreCase("reload")) {
 			return CommandReload.run(main,sender,command,args);
+		}
+		
+		if(args.length>0 && args[0].equalsIgnoreCase("autocondense")) {
+			return autoCondenseToggle(command, sender);
 		}
 
 		if(args.length>0 && sender.hasPermission(Permissions.ALLOW_TOGGLE_OTHERS)) {
@@ -75,6 +82,45 @@ public class CommandMain implements CommandExecutor {
 		}
 		return true;
 		
+	}
+
+	private static void noPermission(Command command, CommandSender sender) {
+		sender.sendMessage(command.getPermissionMessage() != null ? command.getPermissionMessage() : ChatColor.RED + "You don't have permission to do that.");
+	}
+
+
+
+	private boolean autoCondenseToggle(Command command, CommandSender sender) {
+		// It's globally enabled, players cannot disable it
+		if(main.getConfig().getBoolean(Config.AUTO_CONDENSE)) {
+			if(main.isDebug()) main.debug("AutoCondense is globally enabled, players cannot disable it");
+			noPermission(command, sender);
+			return true;
+		}
+
+		// No permission to toggle
+		if(!sender.hasPermission(Permissions.ALLOW_AUTO_CONDENSE)) {
+			if(main.isDebug()) main.debug("No permission to toggle");
+			noPermission(command, sender);
+			return true;
+		}
+
+		if(!(sender instanceof Player)) {
+			Messages.sendMessage(sender,"You must be a player to run this command.");
+			return true;
+		}
+
+		Player player = (Player) sender;
+		boolean hadEnabled = main.ingotCondenser.hasEnabled(player);
+		boolean nowEnabled = !hadEnabled;
+		if(nowEnabled) {
+			player.getPersistentDataContainer().set(main.ingotCondenser.getAutoCondenseKey(), DataType.BOOLEAN, true);
+			Messages.sendMessage(player, main.getMessages().MSG_AUTOCONDENSE_ENABLED);
+		} else {
+			player.getPersistentDataContainer().remove(main.ingotCondenser.getAutoCondenseKey());
+			Messages.sendMessage(player, main.getMessages().MSG_AUTOCONDENSE_DISABLED);
+		}
+		return true;
 	}
 
 }

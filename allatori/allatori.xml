@@ -1,6 +1,6 @@
 <config>
     <input>
-        <jar in="Drop2InventoryPlus-${project.version}.jar" out="Drop2InventoryPlus-${project.version}.jar"/>
+        <jar in="Drop2InventoryPlus-${project.version}.jar" out="Drop2InventoryPlus-${project.version}-obf.jar"/>
     </input>
 
     <classpath basedir="C:\Users\mfnal\.m2\repository">

@@ -1,5 +1,4 @@
-gold_nugget,9,gold_ingot
-iron_nugget,9,iron_ingot
+# item, amount needed, condensed item
 diamond,9,diamond_block
 coal,9,coal_block
 iron_ingot,9,iron_block

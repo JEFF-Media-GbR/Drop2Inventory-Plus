@@ -3,6 +3,7 @@ package de.jeff_media.drop2inventory;
 import com.allatori.annotations.DoNotRename;
 import de.jeff_media.daddy.Stepsister;
 import de.jeff_media.drop2inventory.commands.CommandMain;
+import de.jeff_media.drop2inventory.commands.CommandMainTabCompleter;
 import de.jeff_media.drop2inventory.config.Config;
 import de.jeff_media.drop2inventory.config.ConfigUpdater;
 import de.jeff_media.drop2inventory.config.Messages;
@@ -270,6 +271,7 @@ public class Main extends JavaPlugin {
         Metrics metrics = new Metrics(this, 9970);
 
         this.getCommand("drop2inventory").setExecutor(commandMain);
+        this.getCommand("drop2inventory").setTabCompleter(new CommandMainTabCompleter());
 
         if (Bukkit.getPluginManager().getPlugin("PlaceholderAPI") != null) {
             new Placeholders(this).register();

@@ -3,7 +3,7 @@ package de.jeff_media.drop2inventory.utils;
 import com.google.common.base.Enums;
 import de.jeff_media.drop2inventory.Main;
 import de.jeff_media.drop2inventory.config.Config;
-import de.jeff_media.jefflib.cooldown.Cooldown;
+import com.jeff_media.jefflib.data.Cooldown;
 import lombok.Getter;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
