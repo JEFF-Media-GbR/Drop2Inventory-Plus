@@ -343,6 +343,13 @@ message-autocondense-enabled: "&7Automatic item condensing has been &aenabled&7.
 #message-autocondense-disabled: "&7Automatic item condensing has been &cdisabled&7."
 #message-autocondense-enabled: "&7Automatic item condensing has been &aenabled&7."
 
+##### Dutch
+#message-disabled: "&7Automatische drop-collectie is &cuitgeschakeld&7."
+#message-enabled: "&7Automatisch verzamelen van drop-outs is &ingeschakeld&7."
+#message-when-breaking-block: "&7Hint: Typ &6/drop2inventory&7 of &6/drop2inv&7 om automatische drop-collectie in te schakelen."
+#message-when-breaking-block2: "&7Hint: Typ &6/drop2inventory&7 of &6/drop2inv&7 om het automatisch verzamelen van drop-outs uit te schakelen."
+#message-inventory-full: "&cJe inventaris is vol."
+
 ##### German
 #message-disabled: "&7Automatisches Einsammeln &cdeaktiviert&7."
 #message-enabled: "&7Automatisches Einsammeln &aaktiviert&7."
