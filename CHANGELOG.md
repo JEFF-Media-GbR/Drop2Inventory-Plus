@@ -18,6 +18,7 @@
     - If the global option is set to true, players will have auto-smelt enabled and cannot disable it
     - If the global option is set to false, players will have auto-smelt disabled by default and can toggle it themselves using /d2i autosmelt
 - Material blacklist, similar to disabled-blocks or disabled-blocks, but for the actual drop type
+- Add "enabled by default" for both autosmelt and autocondense
 
 ## 3.7.1
 - Fixed hologram item getting duplicated when creating a new QuickShop shop while having D2I enabled

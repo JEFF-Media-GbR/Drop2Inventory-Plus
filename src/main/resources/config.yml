@@ -90,11 +90,21 @@ collect-fishing-drops: false
 # that would lead to new chunks being loaded. I suggest a maximum value of about 50 blocks).
 default-detection-radius: 10
 
+# Whether autocondense is enabled by default for new players
+# If set to false, players will have to enter "/d2i autocondense" once to enable it
+# TODO: Not implemented yet
+auto-condense-enabled-by-default: false
+
 # when set to true, items will automatically be condensed to blocks when mining them if the player has the permission "drop2inventory.autocondense".
 # when set to false, players with the mentioned permission can toggle autocondense themselves using /d2i autocondense
 # e.g. 9 diamonds -> 1 diamond_block etc.
 # You can configure which items should be converted in the condense.yml file
 force-auto-condense: false
+
+# Whether autosmelt is enabled by default for new players
+# If set to false, players will have to enter "/d2i autosmelt" once to enable it
+# TODO: Not implemented yet
+auto-smelt-enabled-by-default: false
 
 # when set to true, items will automatically be smelted when mining them if the player has the permission "drop2inventory.autosmelt".
 # when set to false, players with the mentioned permission can toggle autosmelt themselves using /d2i autosmelt
