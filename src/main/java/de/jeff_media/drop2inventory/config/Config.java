@@ -10,7 +10,10 @@ public class Config {
     public static final String COLLECT_BLOCK_EXP = "collect-block-exp";
     public static final String COLLECT_MOB_DROPS = "collect-mob-drops";
     public static final String COLLECT_MOB_EXP = "collect-mob-exp";
-    public static final String AUTO_CONDENSE = "force-auto-condense";
+    public static final String AUTO_CONDENSE_ENABLED_BY_DEFAULT = "auto-condense-enabled-by-default";
+    public static final String FORCE_AUTO_CONDENSE = "force-auto-condense";
+    public static final String AUTO_SMELT_ENABLED_BY_DEFAULT = "auto-smelt-enabled-by-default";
+    public static final String FORCE_AUTO_SMELT = "force-auto-smelt";
     public static final String SHOW_MESSAGE_WHEN_BREAKING_BLOCK = "show-message-when-breaking-block";
     public static final String SHOW_MESSAGE_WHEN_BREAKING_BLOCK_AND_COLLECTION_IS_ENABLED = "show-message-when-breaking-block-and-collection-is-enabled";
     public static final String SHOW_MESSAGE_AGAIN_AFTER_LOGOUT = "show-message-again-after-logout";
@@ -75,7 +78,7 @@ public class Config {
         conf.addDefault(COLLECT_FISHING_DROPS, false);
         conf.addDefault(COLLECT_BLOCK_EXP, true);
         conf.addDefault(COLLECT_MOB_EXP, true);
-        conf.addDefault(AUTO_CONDENSE,false);
+        conf.addDefault(FORCE_AUTO_CONDENSE,false);
         conf.addDefault(DETECT_LEGACY_DROPS,true);
         conf.addDefault(DEFAULT_BOUNDING_BOX_RADIUS, 30);
         conf.addDefault(DETECT_LEGACY_DROPS_RANGE,6.0D);

@@ -91,6 +91,19 @@ public class Main extends JavaPlugin {
         pdc.set(HAS_DROP_COLLECTION_ENABLED_TAG, PersistentDataType.BYTE, (byte) 1);
     }
 
+    public void applyAutoCondenseEnabledByDefault(Player player) {
+        if(!getConfig().getBoolean(Config.AUTO_CONDENSE_ENABLED_BY_DEFAULT)) return;
+        PersistentDataContainer pdc = player.getPersistentDataContainer();
+
+        NamespacedKey applied = new NamespacedKey(this,"autocondense_enabledbydefault_applied");
+        if(pdc.has(applied, DataType.BOOLEAN)) {
+            return;
+        }
+
+        pdc.set(applied, DataType.BOOLEAN, true);
+        pdc.set(ingotCondenser.getAutoCondenseKey(), DataType.BOOLEAN, true);
+    }
+
     public void createConfig() {
 
         migrateFromFreeVersion();

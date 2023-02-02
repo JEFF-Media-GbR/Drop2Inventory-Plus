@@ -15,7 +15,6 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
 import java.io.*;
-import java.nio.file.Files;
 import java.util.HashMap;
 import java.util.Locale;
 
@@ -49,11 +48,11 @@ public class IngotCondenser {
     public boolean hasEnabled(Player player) {
         if(main.isDebug()) {
             System.out.println("IngotCondenser.hasEnabled: " + player.getName());
-            System.out.println("Config: " + main.getConfig().getBoolean(Config.AUTO_CONDENSE));
+            System.out.println("Config: " + main.getConfig().getBoolean(Config.FORCE_AUTO_CONDENSE));
             System.out.println("Permission: " + player.hasPermission(Permissions.ALLOW_AUTO_CONDENSE));
             System.out.println("PDC: " + player.getPersistentDataContainer().has(autoCondenseKey, DataType.BOOLEAN));
         }
-        return (main.getConfig().getBoolean(Config.AUTO_CONDENSE) || player.getPersistentDataContainer().has(autoCondenseKey, DataType.BOOLEAN)) && player.hasPermission(Permissions.ALLOW_AUTO_CONDENSE);
+        return (main.getConfig().getBoolean(Config.FORCE_AUTO_CONDENSE) || player.getPersistentDataContainer().has(autoCondenseKey, DataType.BOOLEAN)) && player.hasPermission(Permissions.ALLOW_AUTO_CONDENSE);
     }
 
     void initFromFile() throws IOException {

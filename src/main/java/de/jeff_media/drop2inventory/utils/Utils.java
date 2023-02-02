@@ -206,5 +206,10 @@ public class Utils {
         return main.disabledMobs.contains(mob.getType().name().toLowerCase());
     }
 
+    public ItemStack getAutoSmaltedIfApplicable(ItemStack item, Player player) {
+        boolean forceAutoSmelt = main.getConfig().getBoolean(Config.FORCE_AUTO_SMELT);
+        boolean hasPermission = player.hasPermission(Permissions.ALLOW_AUTO_SMELT);
+    }
+
 
 }

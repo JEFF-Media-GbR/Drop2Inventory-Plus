@@ -13,7 +13,6 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -26,7 +25,7 @@ public class CommandMainTabCompleter implements TabCompleter {
         if(commandSender.hasPermission(Permissions.ALLOW_RELOAD)) {
             commands.add("reload");
         }
-        if(commandSender.hasPermission(Permissions.ALLOW_AUTO_CONDENSE) && !Main.getInstance().getConfig().getBoolean(Config.AUTO_CONDENSE)) {
+        if(commandSender.hasPermission(Permissions.ALLOW_AUTO_CONDENSE) && !Main.getInstance().getConfig().getBoolean(Config.FORCE_AUTO_CONDENSE)) {
             commands.add("autocondense");
         }
         if(commandSender.hasPermission(Permissions.ALLOW_TOGGLE_DEBUG)) {

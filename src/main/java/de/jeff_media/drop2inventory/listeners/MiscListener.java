@@ -39,6 +39,7 @@ public class MiscListener implements Listener {
         }
 
         main.applyEnabledByDefault(player);
+        main.applyAutoCondenseEnabledByDefault(player);
     }
 
     private void resetPlayerData(Player player) {

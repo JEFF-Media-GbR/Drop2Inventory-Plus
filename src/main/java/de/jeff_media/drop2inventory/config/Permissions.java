@@ -8,6 +8,10 @@ public class Permissions {
     public static final String ALLOW_TOGGLE_OTHERS = PREFIX+"others";
     public static final String ALLOW_TOGGLE_DEBUG = PREFIX+"debug";
     public static final String ALLOW_AUTO_CONDENSE = PREFIX+"autocondense";
+    public static final String ALLOW_AUTO_SMELT = PREFIX+"autosmelt";
+    {
+        // TODO: Finish autosmelt shit
+    }
     public static final String ALLOW_TOOL_PICKAXE = PREFIX+"tool.pickaxe";
     public static final String ALLOW_TOOL_AXE = PREFIX+"tool.axe";
     public static final String ALLOW_TOOL_HOE = PREFIX+"tool.hoe";

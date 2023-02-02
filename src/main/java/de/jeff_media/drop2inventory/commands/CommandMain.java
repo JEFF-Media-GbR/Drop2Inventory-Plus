@@ -7,7 +7,6 @@ import de.jeff_media.drop2inventory.config.Permissions;
 import de.jeff_media.morepersistentdatatypes.DataType;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
-import org.bukkit.NamespacedKey;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -92,7 +91,7 @@ public class CommandMain implements CommandExecutor {
 
 	private boolean autoCondenseToggle(Command command, CommandSender sender) {
 		// It's globally enabled, players cannot disable it
-		if(main.getConfig().getBoolean(Config.AUTO_CONDENSE)) {
+		if(main.getConfig().getBoolean(Config.FORCE_AUTO_CONDENSE)) {
 			if(main.isDebug()) main.debug("AutoCondense is globally enabled, players cannot disable it");
 			noPermission(command, sender);
 			return true;

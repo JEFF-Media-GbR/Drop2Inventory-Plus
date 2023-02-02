@@ -16,7 +16,9 @@ public class Messages {
             MSG_HINT_DISABLE,
             MSG_INVENTORY_FULL,
 			MSG_AUTOCONDENSE_ENABLED,
-			MSG_AUTOCONDENSE_DISABLED;
+			MSG_AUTOCONDENSE_DISABLED,
+			MSG_AUTOSMELT_ENABLED,
+			MSG_AUTOSMELT_DISABLED;
     final Main plugin;
 
     public Messages(Main plugin) {
@@ -42,6 +44,12 @@ public class Messages {
 
 		MSG_AUTOCONDENSE_DISABLED = getMsg("autocondense-disabled",
 				"&7Automatic item condensing has been &adisabled&7.");
+
+		MSG_AUTOSMELT_ENABLED = getMsg("autosmelt-enabled",
+				"&7Automatic smelting has been &aenabled&7.");
+
+		MSG_AUTOSMELT_DISABLED = getMsg("autosmelt-disabled",
+				"&7Automatic smelting has been &adisabled&7.");
 
 
 	}
