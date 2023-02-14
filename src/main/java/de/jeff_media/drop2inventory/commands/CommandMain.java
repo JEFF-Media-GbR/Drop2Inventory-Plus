@@ -41,6 +41,10 @@ public class CommandMain implements CommandExecutor {
 			return autoCondenseToggle(command, sender);
 		}
 
+		if(args.length>0 && args[0].equalsIgnoreCase("autosmelt")) {
+			return autoSmeltToggle(command, sender);
+		}
+
 		if(args.length>0 && sender.hasPermission(Permissions.ALLOW_TOGGLE_OTHERS)) {
 			Player player = Bukkit.getPlayer(args[0]);
 			if(player == null) {
@@ -118,6 +122,39 @@ public class CommandMain implements CommandExecutor {
 		} else {
 			player.getPersistentDataContainer().remove(main.ingotCondenser.getAutoCondenseKey());
 			Messages.sendMessage(player, main.getMessages().MSG_AUTOCONDENSE_DISABLED);
+		}
+		return true;
+	}
+
+	private boolean autoSmeltToggle(Command command, CommandSender sender) {
+		// It's globally enabled, players cannot disable it
+		if(main.getConfig().getBoolean(Config.FORCE_AUTO_SMELT)) {
+			if(main.isDebug()) main.debug("AutoSmelt is globally enabled, players cannot disable it");
+			noPermission(command, sender);
+			return true;
+		}
+
+		// No permission to toggle
+		if(!sender.hasPermission(Permissions.ALLOW_AUTO_SMELT)) {
+			if(main.isDebug()) main.debug("No permission to toggle");
+			noPermission(command, sender);
+			return true;
+		}
+
+		if(!(sender instanceof Player)) {
+			Messages.sendMessage(sender,"You must be a player to run this command.");
+			return true;
+		}
+
+		Player player = (Player) sender;
+		boolean hadEnabled = main.autoSmelter.hasEnabled(player);
+		boolean nowEnabled = !hadEnabled;
+		if(nowEnabled) {
+			player.getPersistentDataContainer().set(main.autoSmelter.getAutoSmeltKey(), DataType.BOOLEAN, true);
+			Messages.sendMessage(player, main.getMessages().MSG_AUTOSMELT_ENABLED);
+		} else {
+			player.getPersistentDataContainer().remove(main.autoSmelter.getAutoSmeltKey());
+			Messages.sendMessage(player, main.getMessages().MSG_AUTOSMELT_DISABLED);
 		}
 		return true;
 	}

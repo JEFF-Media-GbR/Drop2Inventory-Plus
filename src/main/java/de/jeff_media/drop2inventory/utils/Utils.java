@@ -72,6 +72,16 @@ public class Utils {
             if (main.isDebug()) main.debug(" addOrDrop#2");
             if (item == null) continue;
             if (item.getType() == Material.AIR) continue;
+
+            if(main.autoSmelter.hasEnabled(player)) {
+                if (main.isDebug()) main.debug("Auto smelting " + item.getType().name());
+                ItemStack smeltResult = main.autoSmelter.transform(player, item);
+                if(smeltResult != null) {
+                    if (main.isDebug()) main.debug("  smelted to " + smeltResult.getType().name());
+                    item = smeltResult;
+                }
+            }
+
             // Try offHand first (md_5 doesnt want that -> https://hub.spigotmc.org/jira/browse/SPIGOT-2436)
             ItemStack offHandItem = player.getInventory().getItemInOffHand();
             if (offHandItem != null && offHandItem.getType() == item.getType()) {
@@ -127,6 +137,7 @@ public class Utils {
                     }
                 }
             }
+
             if (main.ingotCondenser.hasEnabled(player)) {
                 if (main.isDebug()) main.debug("Auto condensing " + item.getType().name());
                 main.ingotCondenser.condense(player.getInventory(), item.getType());
@@ -206,9 +217,12 @@ public class Utils {
         return main.disabledMobs.contains(mob.getType().name().toLowerCase());
     }
 
-    public ItemStack getAutoSmaltedIfApplicable(ItemStack item, Player player) {
+    public ItemStack getAutoSmeltedIfApplicable(ItemStack item, Player player) {
         boolean forceAutoSmelt = main.getConfig().getBoolean(Config.FORCE_AUTO_SMELT);
         boolean hasPermission = player.hasPermission(Permissions.ALLOW_AUTO_SMELT);
+
+        // TODO
+        return null;
     }
 
 

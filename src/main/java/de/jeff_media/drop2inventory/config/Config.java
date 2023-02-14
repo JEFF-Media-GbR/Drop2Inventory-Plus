@@ -14,6 +14,7 @@ public class Config {
     public static final String FORCE_AUTO_CONDENSE = "force-auto-condense";
     public static final String AUTO_SMELT_ENABLED_BY_DEFAULT = "auto-smelt-enabled-by-default";
     public static final String FORCE_AUTO_SMELT = "force-auto-smelt";
+    public static final String AUTOSMELT_GIVES_XP = "autosmelt-gives-experience";
     public static final String SHOW_MESSAGE_WHEN_BREAKING_BLOCK = "show-message-when-breaking-block";
     public static final String SHOW_MESSAGE_WHEN_BREAKING_BLOCK_AND_COLLECTION_IS_ENABLED = "show-message-when-breaking-block-and-collection-is-enabled";
     public static final String SHOW_MESSAGE_AGAIN_AFTER_LOGOUT = "show-message-again-after-logout";
@@ -64,6 +65,7 @@ public class Config {
         conf.addDefault(WORKS_IN_CREATIVE, false);
         conf.addDefault(SAVE_PLAYERDATA, true);
         conf.addDefault(DROP_WHEN_INV_FULL, true);
+        conf.addDefault(AUTOSMELT_GIVES_XP, true);
         conf.addDefault(PLAY_SOUND_WHEN_INVENTORY_IS_FULL, true);
         conf.addDefault(PLAY_SOUND_WHEN_INVENTORY_IS_FULL_GLOBAL, false);
         conf.addDefault(ENABLED_BY_DEFAULT, false);

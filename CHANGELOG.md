@@ -1,24 +1,25 @@
-## 3.8.0
-- "inventory-full" message can now be shown as title or actionbar
-- Fixed some plugins not being able to prohibit auto-pickup
+## 4.0.0
+- Added Auto-smelt
+  - Works like auto-condense, but for smelting. Supports all cooking recipes, both builtin and added through plugins
+  - Granting experience for auto-smelting is toggleable
+  - Players can toggle it on/off using /d2i autosmelt
+  - The setting "force-auto-smelt" in config.yml is a global option, it works like this:
+    - Players will always need the permission "drop2inventory.autosmelt" to use auto-smelt
+    - If the global option is set to true, players will have auto-smelt enabled and cannot disable it
+    - If the global option is set to false, players will have auto-smelt disabled by default and can toggle it themselves using /d2i autosmelt
 - Improved "auto-condense" feature
   - Players can toggle it on/off using /d2i autocondense 
   - The current setting "auto-condense" in config.yml was renamed to "force-autosmelt" and is now a global option, it works like this:
     - Players will always need the permission "drop2inventory.autocondense" to use auto-condense
     - If the global option is set to true, players will have auto-condense enabled and cannot disable it
     - If the global option is set to false, players will have auto-condense disabled by default and can toggle it themselves using /d2i autosmelt
-  - Blocks to be condensed can now be configured using condense.yml
-
-**TODO:**
-- Added Auto-smelt
-  - Works like auto-condense, but for smelting
-  - Players can toggle it on/off using /d2i autosmelt
-  - The setting "force-auto-smelt" in config.yml is a global option, it works like this:
-    - Players will always need the permission "drop2inventory.autosmelt" to use auto-smelt
-    - If the global option is set to true, players will have auto-smelt enabled and cannot disable it
-    - If the global option is set to false, players will have auto-smelt disabled by default and can toggle it themselves using /d2i autosmelt
+  - Blocks to be condensed can now be configured using condense.yml. By default it includes all "revertible" vanilla recipes, e.g. iron_ingot -> iron_block, but not quartz -> quartz_block
+- Auto-smelt and Auto-condense work fine together. For example if you mine a gold_ore, it will be smelted into a gold_ingot, and then condensed into a gold_block in case you already had 8 gold_ingots in your inventory
 - Material blacklist, similar to disabled-blocks or disabled-blocks, but for the actual drop type
 - Add "enabled by default" for both autosmelt and autocondense
+- "inventory-full" message can now be shown as title or actionbar
+- Fixed some plugins not being able to prohibit auto-pickup
+- Fixed "coins" items from "Coins" plugin being picked up
 
 ## 3.7.1
 - Fixed hologram item getting duplicated when creating a new QuickShop shop while having D2I enabled

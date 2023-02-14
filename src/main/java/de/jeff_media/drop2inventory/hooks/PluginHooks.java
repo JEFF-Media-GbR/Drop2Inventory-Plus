@@ -11,7 +11,8 @@ public class PluginHooks {
 
     private final IPluginHook[] hooks = {
             new EliteMobsHook(),
-            new QuickShopHook()
+            new QuickShopHook(),
+            new CoinsHook()
     };
 
     public PluginHooks() {

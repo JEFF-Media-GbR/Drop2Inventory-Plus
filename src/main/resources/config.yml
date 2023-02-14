@@ -52,7 +52,9 @@
 #   Permission: drop2inventory.debug
 #   Toggle debug mode
 
-
+##########################
+#####    General     #####
+##########################
 
 # When set to true, Drop2Inventory is always enabled and cannot be disabled by players
 # I suggest you set it to true if you use Drop2Inventory to reduce server lag
@@ -89,26 +91,6 @@ collect-fishing-drops: false
 # Note: It does NOT hurt performance to set this to a high value! (But NEVER change it to a value
 # that would lead to new chunks being loaded. I suggest a maximum value of about 50 blocks).
 default-detection-radius: 10
-
-# Whether autocondense is enabled by default for new players
-# If set to false, players will have to enter "/d2i autocondense" once to enable it
-# TODO: Not implemented yet
-auto-condense-enabled-by-default: false
-
-# when set to true, items will automatically be condensed to blocks when mining them if the player has the permission "drop2inventory.autocondense".
-# when set to false, players with the mentioned permission can toggle autocondense themselves using /d2i autocondense
-# e.g. 9 diamonds -> 1 diamond_block etc.
-# You can configure which items should be converted in the condense.yml file
-force-auto-condense: false
-
-# Whether autosmelt is enabled by default for new players
-# If set to false, players will have to enter "/d2i autosmelt" once to enable it
-auto-smelt-enabled-by-default: false
-
-# when set to true, items will automatically be smelted when mining them if the player has the permission "drop2inventory.autosmelt".
-# when set to false, players with the mentioned permission can toggle autosmelt themselves using /d2i autosmelt
-# e.g. 1 iron_ore -> 1 iron_ingot
-force-auto-smelt: false
 
 # shows an actionbar message to a player once their inventory is full
 # when set to "true" or "actionbar", the message will be shown as action bar message
@@ -167,6 +149,53 @@ sound-inv-full-volume: 1.0
 sound-inv-full-pitch: 1.0
 sound-inv-full-pitch-variant: 0.2
 sound-inv-full-global: false
+
+##########################
+#####  Auto Condense #####
+##########################
+
+# Auto Condense can automatically condense items picked up by D2I into blocks (e.g. iron ingots into iron blocks)
+# Players need the permission "drop2inventory.autocondense" to use this feature
+# It can also be toggled with "/drop2inv autocondense" for each player, unless you set "force-auto-condense" to true
+#
+# By default, only items will be condensed that can be "reversed" into the original item, e.g.
+# iron ingots into iron blocks and iron blocks into iron ingots, but not quartz into quartz blocks.
+#
+# You can add or remove condense recipes in the condense.yml file.
+
+# Whether autocondense is enabled by default for new players (they still need to have the permission)
+# If set to false, players will have to enter "/d2i autocondense" once to enable it
+auto-condense-enabled-by-default: false
+
+# When set to true, players cannot disable auto-condense for themselves
+force-auto-condense: false
+
+##########################
+#####   Auto Smelt   #####
+##########################
+
+# Auto Smelt can automatically smelt items picked up by D2I into their smelted version
+# (e.g. mining copper ore yields 2-5 raw copper and then gets turned into 2-5 copper ingots)
+# Players need the permission "drop2inventory.autosmelt" to use this feature
+# It can also be toggled with "/drop2inv autosmelt" for each player, unless you set "force-auto-smelt" to true
+#
+# This works for all items that can be smelted in a furnace, including ores, logs, etc and custom smelting recipes.
+#
+# You can add or remove condense recipes in the condense.yml file.
+
+# Whether autosmelt is enabled by default for new players
+# If set to false, players will have to enter "/d2i autosmelt" once to enable it
+auto-smelt-enabled-by-default: false
+
+# when set to true, items will automatically be smelted when mining them if the player has the permission "drop2inventory.autosmelt".
+# when set to false, players with the mentioned permission can toggle autosmelt themselves using /d2i autosmelt
+# e.g. 1 iron_ore -> 1 iron_ingot
+force-auto-smelt: false
+
+# Whether auto-smelting yields experience
+# Please note that not every block always gives a full experience point, e.g. sand -> glass only yields 0.1 experience,
+# so players will have to mine 10 sand to get a full experience point.
+autosmelt-gives-experience: true
 
 #################################
 #####     Event priority    #####

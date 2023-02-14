@@ -28,6 +28,9 @@ public class CommandMainTabCompleter implements TabCompleter {
         if(commandSender.hasPermission(Permissions.ALLOW_AUTO_CONDENSE) && !Main.getInstance().getConfig().getBoolean(Config.FORCE_AUTO_CONDENSE)) {
             commands.add("autocondense");
         }
+        if(commandSender.hasPermission(Permissions.ALLOW_AUTO_SMELT) && !Main.getInstance().getConfig().getBoolean(Config.FORCE_AUTO_SMELT)) {
+            commands.add("autosmelt");
+        }
         if(commandSender.hasPermission(Permissions.ALLOW_TOGGLE_DEBUG)) {
             commands.add("debug");
         }

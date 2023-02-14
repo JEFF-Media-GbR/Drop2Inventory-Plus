@@ -14,6 +14,7 @@ import de.jeff_media.drop2inventory.hooks.PluginHooks;
 import de.jeff_media.drop2inventory.listeners.CollectListener;
 import de.jeff_media.drop2inventory.listeners.MiscListener;
 import de.jeff_media.drop2inventory.listeners.RegistrationListener;
+import de.jeff_media.drop2inventory.utils.AutoSmelter;
 import de.jeff_media.drop2inventory.utils.HotbarStuffer;
 import de.jeff_media.drop2inventory.utils.IngotCondenser;
 import de.jeff_media.drop2inventory.utils.SoundUtils;
@@ -58,6 +59,7 @@ public class Main extends JavaPlugin {
     public ArrayList<String> disabledWorlds;
     public HotbarStuffer hotbarStuffer;
     public IngotCondenser ingotCondenser;
+    public AutoSmelter autoSmelter;
     @Getter private Messages messages;
     @DoNotRename
     @Getter private boolean mobsIsWhitelist = false;
@@ -102,6 +104,19 @@ public class Main extends JavaPlugin {
 
         pdc.set(applied, DataType.BOOLEAN, true);
         pdc.set(ingotCondenser.getAutoCondenseKey(), DataType.BOOLEAN, true);
+    }
+
+    public void applyAutoSmeltEnabledByDefault(Player player) {
+        if(!getConfig().getBoolean(Config.AUTO_SMELT_ENABLED_BY_DEFAULT)) return;
+        PersistentDataContainer pdc = player.getPersistentDataContainer();
+
+        NamespacedKey applied = new NamespacedKey(this,"autosmelt_enabledbydefault_applied");
+        if(pdc.has(applied, DataType.BOOLEAN)) {
+            return;
+        }
+
+        pdc.set(applied, DataType.BOOLEAN, true);
+        pdc.set(autoSmelter.getAutoSmeltKey(), DataType.BOOLEAN, true);
     }
 
     public void createConfig() {
@@ -299,6 +314,7 @@ public class Main extends JavaPlugin {
         soundUtils = new SoundUtils();
         messages = new Messages(this);
         ingotCondenser = new IngotCondenser(this);
+        autoSmelter = new AutoSmelter(this);
         hopperDetector = new HopperDetector();
 
         // Update Checker start

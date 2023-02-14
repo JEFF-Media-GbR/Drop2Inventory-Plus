@@ -1,6 +1,6 @@
 <config>
     <input>
-        <jar in="Drop2InventoryPlus-${project.version}.jar" out="Drop2InventoryPlus-${project.version}-obf.jar"/>
+        <jar in="Drop2InventoryPlus-${project.version}.jar" out="Drop2InventoryPlus-${project.version}.jar"/>
     </input>
 
     <classpath basedir="C:\Users\mfnal\.m2\repository">
@@ -37,7 +37,7 @@
 
     <property name="extensive-flow-obfuscation" value="maximum"/>
     <property name="generics" value="remove"/>
-    <property name="line-numbers" value="obfuscate"/> <!-- For Debugging: keep -->
+    <property name="line-numbers" value="keep"/> <!-- For Debugging: keep -->
     <property name="inner-classes" value="remove"/>
     <property name="finalize" value="enable"/>
 
