@@ -85,8 +85,12 @@ public class AutoSmelter {
                 materialChoices = Collections.emptySet();
             }
             float xp = cookingRecipe.getExperience();
-            for(Material material : materialChoices) {
-                smeltRecipeDataMap.put(material, new SmeltRecipeData(/*input, *//*materialChoices, */output, xp));
+            if(materialChoices != null) {
+                for (Material material : materialChoices) {
+                    smeltRecipeDataMap.put(material, new SmeltRecipeData(/*input, *//*materialChoices, */output, xp));
+                }
+            } else {
+                // TODO: Maybe the line below this?
             }
             // smeltRecipeDataMap.put(input.getType(), new SmeltRecipeData(/*input, *//*materialChoices, */output, xp));
         }
