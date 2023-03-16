@@ -262,8 +262,6 @@ disabled-worlds:
 #################################
 
 # You can disable automatic drop collection for certain blocks.
-# This can be helpful if you use plugins that change certain block drops
-# because Drop2Inventory only detects "vanilla" drops.
 # Each block's material name has to be on a separate line, starting
 # with a hyphen and followed by a space
 
@@ -283,8 +281,6 @@ disabled-blocks:
 #################################
 
 # You can disable automatic drop collection for certain mob types.
-# This can be helpful if you use plugins that change certain mob drops
-# because Drop2Inventory only detects "vanilla" drops.
 # Each mob's name has to be on a separate line, starting
 # with a hyphen and followed by a space
 #
