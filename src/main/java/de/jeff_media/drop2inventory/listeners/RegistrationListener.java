@@ -1,6 +1,5 @@
 package de.jeff_media.drop2inventory.listeners;
 
-import de.jeff_media.daddy.Chicken;
 import de.jeff_media.drop2inventory.Main;
 import de.jeff_media.drop2inventory.config.Config;
 import de.jeff_media.drop2inventory.data.DropSubject;

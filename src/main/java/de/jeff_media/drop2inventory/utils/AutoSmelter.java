@@ -60,40 +60,44 @@ public class AutoSmelter {
     }
 
     private void loadRecipes() {
-        Iterator<Recipe> iterator = Bukkit.recipeIterator();
-        while(iterator.hasNext()) {
-            Recipe recipe = iterator.next();
-            //if(!(recipe instanceof FurnaceRecipe)) continue;
-            //FurnaceRecipe cookingRecipe = (FurnaceRecipe) recipe;
-            if(!(recipe instanceof CookingRecipe)) continue;
-            CookingRecipe cookingRecipe = (CookingRecipe) recipe;
-            if(main.isDebug()) {
-                main.debug("Found cooking recipe: " + recipe2String(cookingRecipe)/*cookingRecipe.getInput().getType() + " -> " + cookingRecipe.getResult().getType()*/);
+        try { // TODO
+            Iterator<Recipe> iterator = Bukkit.recipeIterator();
+            while (iterator.hasNext()) {
+                try { // TODO
+                    Recipe recipe = iterator.next();
+                    //if(!(recipe instanceof FurnaceRecipe)) continue;
+                    //FurnaceRecipe cookingRecipe = (FurnaceRecipe) recipe;
+                    if (!(recipe instanceof CookingRecipe)) continue;
+                    CookingRecipe cookingRecipe = (CookingRecipe) recipe;
+                    if (main.isDebug()) {
+                        main.debug("Found cooking recipe: " + recipe2String(cookingRecipe)/*cookingRecipe.getInput().getType() + " -> " + cookingRecipe.getResult().getType()*/);
+                    }
+                    ItemStack output = cookingRecipe.getResult().clone();
+                    //ItemStack input = cookingRecipe.getInput();
+                    RecipeChoice choice = cookingRecipe.getInputChoice();
+                    Set<Material> materialChoices = null;
+                    if (choice != null) {
+                        if (choice instanceof RecipeChoice.MaterialChoice) {
+                            RecipeChoice.MaterialChoice materialChoice = (RecipeChoice.MaterialChoice) choice;
+                            materialChoices = new HashSet<>(materialChoice.getChoices());
+                        } else {
+                            main.debug("Unknown RecipeChoice type: " + choice.getClass().getName());
+                        }
+                    } else {
+                        materialChoices = Collections.emptySet();
+                    }
+                    float xp = cookingRecipe.getExperience();
+                    if (materialChoices != null) {
+                        for (Material material : materialChoices) {
+                            smeltRecipeDataMap.put(material, new SmeltRecipeData(/*input, *//*materialChoices, */output, xp));
+                        }
+                    } else {
+                        // TODO: Maybe the line below this?
+                    }
+                    // smeltRecipeDataMap.put(input.getType(), new SmeltRecipeData(/*input, *//*materialChoices, */output, xp));
+                } catch (Throwable t) { }
             }
-            ItemStack output = cookingRecipe.getResult().clone();
-            //ItemStack input = cookingRecipe.getInput();
-            RecipeChoice choice = cookingRecipe.getInputChoice();
-            Set<Material> materialChoices = null;
-            if(choice != null) {
-                if(choice instanceof RecipeChoice.MaterialChoice) {
-                    RecipeChoice.MaterialChoice materialChoice = (RecipeChoice.MaterialChoice) choice;
-                    materialChoices = new HashSet<>(materialChoice.getChoices());
-                } else {
-                    main.debug("Unknown RecipeChoice type: " + choice.getClass().getName());
-                }
-            } else {
-                materialChoices = Collections.emptySet();
-            }
-            float xp = cookingRecipe.getExperience();
-            if(materialChoices != null) {
-                for (Material material : materialChoices) {
-                    smeltRecipeDataMap.put(material, new SmeltRecipeData(/*input, *//*materialChoices, */output, xp));
-                }
-            } else {
-                // TODO: Maybe the line below this?
-            }
-            // smeltRecipeDataMap.put(input.getType(), new SmeltRecipeData(/*input, *//*materialChoices, */output, xp));
-        }
+        } catch (Throwable t) { }
     }
 
     public boolean hasEnabled(Player player) {

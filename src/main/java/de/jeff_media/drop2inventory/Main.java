@@ -1,7 +1,7 @@
 package de.jeff_media.drop2inventory;
 
 import com.allatori.annotations.DoNotRename;
-import de.jeff_media.daddy.Stepsister;
+import de.jeff_media.daddy.Daddy_Stepsister;
 import de.jeff_media.drop2inventory.commands.CommandMain;
 import de.jeff_media.drop2inventory.commands.CommandMainTabCompleter;
 import de.jeff_media.drop2inventory.config.Config;
@@ -257,8 +257,10 @@ public class Main extends JavaPlugin {
 
     public void onEnable() {
 
-        Stepsister.init(this);
-        Stepsister.createVerificationFile();
+        Daddy_Stepsister.init(this);
+        if(Daddy_Stepsister.allows(null)) {
+            Daddy_Stepsister.createVerificationFile();
+        }
 
         HAS_DROP_COLLECTION_ENABLED_TAG = new NamespacedKey(this, "dropcollectionenabled");
         HAS_SEEN_MESSAGE_TAG = new NamespacedKey(this, "hasseenmessage");

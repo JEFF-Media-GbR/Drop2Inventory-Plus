@@ -21,6 +21,14 @@
 - Fixed some plugins not being able to prohibit auto-pickup
 - Fixed "coins" items from "Coins" plugin being picked up
 
+## 4.1.1
+- Fixed plugin not enabling when other plugins add crafting recipes using a "null" MaterialChoice
+- Fixed warning about async tasks
+
+## 4.1.0
+- Added 1.19.4 support
+- Fixed plugin not enabling when other plugins add crafting recipes using a "null" MaterialChoice
+
 ## 3.7.1
 - Fixed hologram item getting duplicated when creating a new QuickShop shop while having D2I enabled
 

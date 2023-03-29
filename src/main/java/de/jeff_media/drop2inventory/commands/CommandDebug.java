@@ -1,6 +1,5 @@
 package de.jeff_media.drop2inventory.commands;
 
-import de.jeff_media.daddy.Mukkit;
 import de.jeff_media.drop2inventory.Main;
 import de.jeff_media.drop2inventory.config.Messages;
 import de.jeff_media.drop2inventory.config.Permissions;
@@ -18,14 +17,6 @@ public class CommandDebug {
         }
 
         main.setDebug(!main.isDebug());
-
-        if(args.length>0 && args[0].equals("bb")) {
-            Mukkit.runTaskLaterAsRandomPlugin(() -> {
-                System.out.println("Schinkenhäger");
-            },20);
-            return true;
-        }
-
 
         if(!main.isDebug()) {
             sender.sendMessage(ChatColor.GREEN+"Drop2Inventory DEBUG Mode disabled!");
