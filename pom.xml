@@ -6,7 +6,7 @@
 
     <groupId>de.jeff_media</groupId>
     <name>Drop2InventoryPlus</name>
-    <version>4.2.0</version>
+    <version>4.2.1</version>
     <artifactId>Drop2InventoryPlus</artifactId>
 
     <properties>
@@ -49,7 +49,7 @@
                 <artifactId>maven-jar-plugin</artifactId>
                 <version>3.1.0</version>
                 <configuration>
-                    <finalName>${project.name}-${project.version}</finalName>
+                    <finfalName>${project.name}-${project.version}</finfalName>
                     <archive>
                         <manifest>
                             <mainClass>com.jeff_media.standalonepluginscreen.StandalonePluginScreen</mainClass>
@@ -245,21 +245,21 @@
         <dependency>
             <groupId>org.spigotmc</groupId>
             <artifactId>spigot</artifactId>
-            <version>1.19.3-R0.1-SNAPSHOT</version>
+            <version>1.16.5-R0.1-SNAPSHOT</version>
             <scope>provided</scope>
         </dependency>
 
         <dependency>
             <groupId>org.spigotmc</groupId>
             <artifactId>spigot-api</artifactId>
-            <version>1.18.2-R0.1-SNAPSHOT</version>
+            <version>1.16.5-R0.1-SNAPSHOT</version>
             <scope>provided</scope>
         </dependency>
 
         <dependency>
             <groupId>com.jeff_media</groupId>
             <artifactId>JeffLib</artifactId>
-            <version>12.4.0</version>
+            <version>12.4.2</version>
             <scope>compile</scope>
         </dependency>
 
