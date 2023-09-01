@@ -1,3 +1,9 @@
+## 4.3.0
+- Added "run-commands.yml" file
+  - Lets you run commands on certain events, currently only supports "inventory-full"
+- Changed default "default-detection-radius" to 1
+  - This will fix drops from auto-farms (like cactus farms) being picked up randomly
+
 ## 4.0.0
 - Added Auto-smelt
   - Works like auto-condense, but for smelting. Supports all cooking recipes, both builtin and added through plugins

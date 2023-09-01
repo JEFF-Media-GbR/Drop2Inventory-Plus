@@ -77,7 +77,7 @@ public class WorldBoundingBoxGenerator {
 
     private WorldBoundingBox get() {
 
-        int lifeTime = 10; // TODO: Adjust this, It was originally set to 2
+        int lifeTime = 2; // TODO: Adjust this, It was originally set to 2
         int radius = main.getConfig().getInt(Config.DEFAULT_BOUNDING_BOX_RADIUS); // TODO: This was normally set to 1
         int radiusYMin = main.getConfig().getInt(Config.DEFAULT_BOUNDING_BOX_RADIUS); // TODO: This was normally set to 0
         int radiusYMax = main.getConfig().getInt(Config.DEFAULT_BOUNDING_BOX_RADIUS); // TODO: This was normally set to 1 or 2
@@ -95,6 +95,7 @@ public class WorldBoundingBoxGenerator {
             if(BLOCKS_NEEDING_A_LONG_TIME.contains(mat)) {
                 lifeTime += 500;
                 radiusYMax += 20;
+                radius += 10;
             }
 
         }

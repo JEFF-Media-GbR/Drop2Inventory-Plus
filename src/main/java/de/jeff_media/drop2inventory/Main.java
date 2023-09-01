@@ -1,6 +1,7 @@
 package de.jeff_media.drop2inventory;
 
 import com.allatori.annotations.DoNotRename;
+import com.jeff_media.cesspool.yamlcommands.CommandList;
 import de.jeff_media.daddy.Daddy_Stepsister;
 import de.jeff_media.drop2inventory.commands.CommandMain;
 import de.jeff_media.drop2inventory.commands.CommandMainTabCompleter;
@@ -29,6 +30,7 @@ import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.command.CommandSender;
+import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventPriority;
 import org.bukkit.persistence.PersistentDataContainer;
@@ -69,6 +71,7 @@ public class Main extends JavaPlugin {
     boolean usingMatchingConfig = true;
     @Getter private HopperDetector hopperDetector;
     @Getter private PluginHooks pluginHooks;
+    @Getter private CommandList invFullCommands = CommandList.EMPTY;
 
     public static NamespacedKey HAS_DROP_COLLECTION_ENABLED_TAG;
     public static NamespacedKey HAS_SEEN_MESSAGE_TAG;
@@ -336,8 +339,26 @@ public class Main extends JavaPlugin {
             updateChecker.checkNow();
         }
         Utils.loadSounds();
+
+        loadRunCommands();
+
         // Update Checker end
         //blockDropItemPrio = Enums.getIfPresent(EventPriority.class, getConfig().getString(Config.EVENT_PRIO_BLOCKDROPITEMEVENT).toUpperCase()).or(EventPriority.HIGH);
+    }
+
+    private void loadRunCommands() {
+        com.jeff_media.jefflib.data.Config commandConfig = new com.jeff_media.jefflib.data.Config("run-commands.yml");
+        invFullCommands = getCommandList(commandConfig, "inventory-full");
+    }
+
+    private CommandList getCommandList(ConfigurationSection config, String name) {
+        if(config.isConfigurationSection(name)) {
+            boolean enabled = config.getBoolean(name + ".enabled", false);
+            if(enabled && config.isSet(name + ".commands")) {
+                return CommandList.of(config, name + ".commands");
+            }
+        }
+        return CommandList.EMPTY;
     }
 
     public void setDebug(boolean debug) {

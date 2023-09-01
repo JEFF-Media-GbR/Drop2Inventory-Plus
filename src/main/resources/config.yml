@@ -90,7 +90,7 @@ collect-fishing-drops: false
 # You only need to raise this value if you have problems when drops from other plugins aren't detected.
 # Note: It does NOT hurt performance to set this to a high value! (But NEVER change it to a value
 # that would lead to new chunks being loaded. I suggest a maximum value of about 50 blocks).
-default-detection-radius: 10
+default-detection-radius: 1
 
 # shows an actionbar message to a player once their inventory is full
 # when set to "true" or "actionbar", the message will be shown as action bar message

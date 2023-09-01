@@ -82,7 +82,7 @@ public class Config {
         conf.addDefault(COLLECT_MOB_EXP, true);
         conf.addDefault(FORCE_AUTO_CONDENSE,false);
         conf.addDefault(DETECT_LEGACY_DROPS,true);
-        conf.addDefault(DEFAULT_BOUNDING_BOX_RADIUS, 30);
+        conf.addDefault(DEFAULT_BOUNDING_BOX_RADIUS, 2);
         conf.addDefault(DETECT_LEGACY_DROPS_RANGE,6.0D);
         conf.addDefault(IGNORE_ITEMS_ON_HOPPERS,false);
         conf.addDefault(IGNORE_ITEMS_ON_HOPPERS_VERTICAL_RANGE,20);

@@ -148,6 +148,9 @@ public class Utils {
             if (newStatistic > statistic && newStatistic > 0) {
                 player.setStatistic(Statistic.PICKUP, item.getType(), statistic + pickedUpAmount);
             }
+            if(inventoryFull) {
+                main.getInvFullCommands().run(player);
+            }
         }
         if (main.getConfig().getBoolean(Config.AVOID_HOTBAR)) {
             main.hotbarStuffer.unstuffHotbar(player.getInventory());

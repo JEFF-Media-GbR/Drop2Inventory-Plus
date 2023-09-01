@@ -1,0 +1,11 @@
+# Commands to run on certain events. All commands support PlaceholderAPI %placeholders%.
+# If PlaceholderAPI is not supported, only some essential placeholders will work (e.g. %player_name%).
+
+# Commands to run when the inventory is full.
+inventory-full:
+  enabled: false
+  commands:
+  - sender: console
+    command: tellraw %player_name% {"text":"Your inventory is full!","color":"red"}
+  - sender: player
+    command: "say My inventory is full :<"

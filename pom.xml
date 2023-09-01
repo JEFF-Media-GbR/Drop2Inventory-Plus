@@ -6,7 +6,7 @@
 
     <groupId>de.jeff_media</groupId>
     <name>Drop2InventoryPlus</name>
-    <version>4.2.1</version>
+    <version>4.3.0</version>
     <artifactId>Drop2InventoryPlus</artifactId>
 
     <properties>
@@ -19,8 +19,11 @@
         <maven.build.timestamp.format>yyyyMMddHHmm</maven.build.timestamp.format>
         <config.version>${maven.build.timestamp}</config.version>
 
+        <cesspool.version>1.0-SNAPSHOT</cesspool.version>
+
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <java.version>1.8</java.version>
+
     </properties>
 
     <build>
@@ -49,7 +52,7 @@
                 <artifactId>maven-jar-plugin</artifactId>
                 <version>3.1.0</version>
                 <configuration>
-                    <finfalName>${project.name}-${project.version}</finfalName>
+                    <finalName>${project.name}-${project.version}</finalName>
                     <archive>
                         <manifest>
                             <mainClass>com.jeff_media.standalonepluginscreen.StandalonePluginScreen</mainClass>
@@ -110,6 +113,10 @@
                         <relocation>
                             <pattern>de.jeff_media.morepersistentdatatypes</pattern>
                             <shadedPattern>de.jeff_media.drop2inventory.morepersistentdatatypes</shadedPattern>
+                        </relocation>
+                        <relocation>
+                            <pattern>com.jeff_media.cesspool</pattern>
+                            <shadedPattern>de.jeff_media.drop2inventory.cesspool</shadedPattern>
                         </relocation>
                     </relocations>
                     <filters>
@@ -260,6 +267,13 @@
             <groupId>com.jeff_media</groupId>
             <artifactId>JeffLib</artifactId>
             <version>12.4.2</version>
+            <scope>compile</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>com.jeff-media.cesspool</groupId>
+            <artifactId>yaml-commands</artifactId>
+            <version>${cesspool.version}</version>
             <scope>compile</scope>
         </dependency>
 
