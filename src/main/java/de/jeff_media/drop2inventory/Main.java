@@ -1,7 +1,7 @@
 package de.jeff_media.drop2inventory;
 
 import com.allatori.annotations.DoNotRename;
-import com.jeff_media.cesspool.yamlcommands.CommandList;
+import com.jeff_media.cesspool.config.CommandList;
 import de.jeff_media.daddy.Daddy_Stepsister;
 import de.jeff_media.drop2inventory.commands.CommandMain;
 import de.jeff_media.drop2inventory.commands.CommandMainTabCompleter;

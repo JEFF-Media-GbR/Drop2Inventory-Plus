@@ -272,7 +272,7 @@
 
         <dependency>
             <groupId>com.jeff-media.cesspool</groupId>
-            <artifactId>yaml-commands</artifactId>
+            <artifactId>cesspool</artifactId>
             <version>${cesspool.version}</version>
             <scope>compile</scope>
         </dependency>
