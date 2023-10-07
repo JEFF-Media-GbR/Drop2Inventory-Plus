@@ -6,7 +6,7 @@
 
     <groupId>de.jeff_media</groupId>
     <name>Drop2InventoryPlus</name>
-    <version>4.3.0</version>
+    <version>4.3.1</version>
     <artifactId>Drop2InventoryPlus</artifactId>
 
     <properties>
@@ -90,7 +90,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-shade-plugin</artifactId>
-                <version>3.3.0-SNAPSHOT</version>
+                <version>3.5.1</version>
                 <configuration>
                     <minimizeJar>true</minimizeJar>
                     <relocations>
@@ -264,9 +264,9 @@
         </dependency>
 
         <dependency>
-            <groupId>com.jeff_media</groupId>
-            <artifactId>JeffLib</artifactId>
-            <version>12.4.2</version>
+            <groupId>com.jeff-media.jefflib</groupId>
+            <artifactId>jefflib</artifactId>
+            <version>13.0.1</version>
             <scope>compile</scope>
         </dependency>
 

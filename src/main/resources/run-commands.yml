@@ -1,6 +1,8 @@
 # Commands to run on certain events. All commands support PlaceholderAPI %placeholders%.
 # If PlaceholderAPI is not supported, only some essential placeholders will work (e.g. %player_name%).
 
+# See here for the format on how to declare commands: https://github.com/mfnalex/cesspool/blob/master/yaml-commands/README.md
+
 # Commands to run when the inventory is full.
 inventory-full:
   enabled: false
