@@ -18,6 +18,7 @@ public class Messages {
 			MSG_AUTOCONDENSE_ENABLED,
 			MSG_AUTOCONDENSE_DISABLED,
 			MSG_AUTOSMELT_ENABLED,
+	MSG_NO_PERMS,
 			MSG_AUTOSMELT_DISABLED;
     final Main plugin;
 
@@ -50,6 +51,9 @@ public class Messages {
 
 		MSG_AUTOSMELT_DISABLED = getMsg("autosmelt-disabled",
 				"&7Automatic smelting has been &adisabled&7.");
+
+		MSG_NO_PERMS = getMsg("no-permission",
+				"&cYou don't have permissions to do that.");
 
 
 	}

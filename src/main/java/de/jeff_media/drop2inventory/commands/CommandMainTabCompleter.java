@@ -22,6 +22,15 @@ public class CommandMainTabCompleter implements TabCompleter {
     @Override
     public List<String> onTabComplete(@NotNull CommandSender commandSender, @NotNull Command command, @NotNull String s, @NotNull String[] strings) {
         List<String> commands = new ArrayList<>();
+
+        if(strings.length == 2) {
+            if(strings[0].equalsIgnoreCase("autocondense") || strings[0].equalsIgnoreCase("autosmelt")) {
+                commands.add("on");
+                commands.add("off");
+                return StringUtil.copyPartialMatches(strings[1], commands, new ArrayList<>());
+            }
+        }
+
         if(commandSender.hasPermission(Permissions.ALLOW_RELOAD)) {
             commands.add("reload");
         }
@@ -36,6 +45,10 @@ public class CommandMainTabCompleter implements TabCompleter {
         }
         if(commandSender.hasPermission(Permissions.ALLOW_TOGGLE_OTHERS)) {
             commands.addAll(Bukkit.getOnlinePlayers().stream().filter(player -> player != commandSender).map(HumanEntity::getName).collect(Collectors.toList()));
+        }
+        if(commandSender.hasPermission(Permissions.ALLOW_USE)) {
+            commands.add("on");
+            commands.add("off");
         }
         return StringUtil.copyPartialMatches(strings[0], commands, new ArrayList<>());
     }

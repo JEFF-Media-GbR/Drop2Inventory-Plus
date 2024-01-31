@@ -12,7 +12,8 @@ public class CommandDebug {
     static boolean run(Main main, CommandSender sender, Command command, String[] args)  {
 
         if(!sender.hasPermission(Permissions.ALLOW_TOGGLE_DEBUG)) {
-            Messages.sendMessage(sender,command.getPermissionMessage());
+            //Messages.sendMessage(sender,command.getPermissionMessage());
+            Messages.sendMessage(sender, main.getMessages().MSG_NO_PERMS);
             return true;
         }
 
