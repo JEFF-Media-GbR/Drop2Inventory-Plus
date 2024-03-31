@@ -7,7 +7,6 @@ import org.bukkit.Bukkit;
 import org.bukkit.entity.ExperienceOrb;
 import org.bukkit.entity.Item;
 import org.bukkit.entity.Player;
-import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -57,7 +56,17 @@ public class EventManager {
         }
 
         Drop2InventoryPickupItemEvent event = new Drop2InventoryPickupItemEvent(player, item, 0);
+        if(stackContainsNossrParty()) return true;
         Bukkit.getPluginManager().callEvent(event);
         return !event.isCancelled();
+    }
+
+    private static boolean stackContainsNossrParty() {
+        StackTraceElement[] stackTrace = Thread.currentThread().getStackTrace();
+        for (StackTraceElement element : stackTrace) {
+            if(element.getClassName().contains("com.gmail.nossr50.party")) {
+                return true;
+            }
+        }
     }
 }
