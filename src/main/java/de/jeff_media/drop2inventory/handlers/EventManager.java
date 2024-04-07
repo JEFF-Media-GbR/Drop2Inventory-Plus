@@ -64,9 +64,10 @@ public class EventManager {
     private static boolean stackContainsNossrParty() {
         StackTraceElement[] stackTrace = Thread.currentThread().getStackTrace();
         for (StackTraceElement element : stackTrace) {
-            if(element.getClassName().contains("com.gmail.nossr50.party")) {
+            if(element.getClassName().startsWith("com.gmail.nossr50.party")) {
                 return true;
             }
         }
+        return false;
     }
 }
