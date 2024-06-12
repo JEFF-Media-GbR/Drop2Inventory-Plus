@@ -276,15 +276,16 @@ disabled-worlds:
 
 disabled-blocks:
 
-#################################
-#### disabled/enabled mobs  ####
-#################################
+#########################################
+#### disabled/enabled mobs/entities  ####
+#########################################
 
 # You can disable automatic drop collection for certain mob types.
 # Each mob's name has to be on a separate line, starting
 # with a hyphen and followed by a space
 #
 # Note: Drops from entities (item frames, minecarts, etc.) count as mob drops.
+# See here for a full list of all entity types: https://hub.spigotmc.org/javadocs/bukkit/org/bukkit/entity/EntityType.html
 
 # Example:
 #

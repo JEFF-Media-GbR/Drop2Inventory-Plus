@@ -6,6 +6,7 @@ import de.jeff_media.drop2inventory.config.Config;
 import de.jeff_media.drop2inventory.config.Permissions;
 import com.jeff_media.jefflib.data.SoundData;
 import org.bukkit.*;
+import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -213,7 +214,7 @@ public class Utils {
         return false;
     }
 
-    public boolean isMobEnabled(LivingEntity mob) {
+    public boolean isMobEnabled(Entity mob) {
         if (!main.isMobsIsWhitelist()) {
             return !main.disabledMobs.contains(mob.getType().name().toLowerCase());
         }

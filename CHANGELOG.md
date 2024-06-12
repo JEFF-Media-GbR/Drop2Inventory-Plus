@@ -1,3 +1,8 @@
+## 4.5.0
+- Shearing entities now collects drops properly
+- Entity Blacklist/Whitelist now works for all entity types (not just living entities)
+  - That means you can now blacklist / whitelist minecarts, boats, itemframes, etc 
+
 ## 4.3.0
 - Added "run-commands.yml" file
   - Lets you run commands on certain events, currently only supports "inventory-full"

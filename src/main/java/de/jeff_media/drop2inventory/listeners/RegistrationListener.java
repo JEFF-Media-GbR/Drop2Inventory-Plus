@@ -26,6 +26,7 @@ import org.bukkit.event.hanging.HangingBreakByEntityEvent;
 import org.bukkit.event.player.PlayerFishEvent;
 import org.bukkit.event.player.PlayerInteractAtEntityEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
+import org.bukkit.event.player.PlayerShearEntityEvent;
 import org.bukkit.event.vehicle.VehicleDestroyEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -70,6 +71,15 @@ public class RegistrationListener implements Listener {
             return;
         }
         DropOwnerManager.registerSimple(player, event.getRightClicked().getLocation());
+    }
+
+    @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
+    public void onShear(PlayerShearEntityEvent event) {
+        Player player = event.getPlayer();
+        if (!PermissionChecker.isAllowed(player, new DropSubject(event.getEntity()), true)) {
+            return;
+        }
+        DropOwnerManager.registerSimple(player, event.getEntity().getLocation());
     }
 
     @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)

@@ -314,8 +314,8 @@ public class Main extends JavaPlugin {
     }
 
     public void reload() {
-        createConfig();
         reloadConfig();
+        createConfig();
         soundUtils = new SoundUtils();
         messages = new Messages(this);
         ingotCondenser = new IngotCondenser(this);
