@@ -36,7 +36,6 @@
     <property name="methods-naming-prefix" value="$"/>
     <property name="fields-naming-prefix" value="$"/>
 
-    <property name="extensive-flow-obfuscation" value="maximum"/>
     <property name="generics" value="remove"/>
     <property name="line-numbers" value="keep"/> <!-- For Debugging: keep -->
     <property name="inner-classes" value="remove"/>
