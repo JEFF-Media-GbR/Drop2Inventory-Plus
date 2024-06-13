@@ -1,6 +1,6 @@
 <config>
     <input>
-        <jar in="Drop2InventoryPlus-${project.version}.jar" out="Drop2InventoryPlus-${project.version}-obf.jar"/>
+        <jar in="Drop2InventoryPlus-${project.version}.jar" out="Drop2InventoryPlus-${project.version}.jar"/>
     </input>
 
     <classpath basedir="C:\Users\mfnal\.m2\repository">
@@ -24,7 +24,8 @@
     <property name="default-package" value="de.jeff_media.drop2inventory"/>
     <property name="force-default-package" value="enable"/>
 
-    <property name="control-flow-obfuscation" value="enable"/>
+    <property name="control-flow-obfuscation" value="disable"/>
+    <property name="extensive-flow-obfuscation" value="disable"/>
     <property name="packages-naming" value="abc"/>
     <property name="methods-naming" value="keywords"/>
     <property name="fields-naming" value="keywords"/>
