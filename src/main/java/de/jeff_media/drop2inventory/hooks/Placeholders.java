@@ -64,6 +64,12 @@ public class Placeholders extends PlaceholderExpansion {
             case "enabled":
                 return main.enabled(player) ? "true" : "false";
 
+            case "smelting_enabled":
+                return main.autoSmelter.hasEnabled(player) ? "true" : "false";
+
+            case "condense_enabled":
+                return main.ingotCondenser.hasEnabled(player) ? "true" : "false";
+
         }
 
         return null;

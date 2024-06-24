@@ -1,4 +1,9 @@
 # Placeholders
-**%drop2inventory_enabled%**
+### `%drop2inventory_enabled%`
+Whether the player has automatic drop collection enabled
 
-Whether the player has Drop2Inventory enabled
+### `%drop2inventory_smelting_enabled%`
+Whether the player has AutoSmelt enabled
+
+### `%drop2inventory_condense_enabled%`
+Whether the player has AutoCondense enabled
