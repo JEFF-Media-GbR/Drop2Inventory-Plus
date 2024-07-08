@@ -457,6 +457,18 @@ message-no-permission: "&cYou don't have permissions to do that."
 #message-autosmelt-enabled: "&7Automatic smelting has been &aenabled&7."
 #message-no-permission: "&cYou don't have permissions to do that."
 
+##### Portuguese (Brazil)
+#message-disabled: "&7A coleta automática de drops foi &cdesativada&7."
+#message-enabled: "&7A coleta automática de drops foi &aativada&7."
+#message-when-breaking-block: "&7Dica: Use &6/drop2inventory&7 ou &6/drop2inv&7 para ativar a coleta automática de drops."
+#message-when-breaking-block2: "&7Dica: Use &6/drop2inventory&7 ou &6/drop2inv&7 para desativar a coleta automática de drops."
+#message-inventory-full: "&cSeu inventário está cheio."
+#message-autocondense-disabled: "&7A compactação automática de itens foi &cdesativada&7."
+#message-autocondense-enabled: "&7A compactação automática de itens foi &aativada&7."
+#message-autosmelt-disabled: "&7A fundição automática foi &cdesativada&7."
+#message-autosmelt-enabled: "&7A fundição automática foi &aativada&7."
+#message-no-permission: "&cVocê não tem permissão para fazer isso."
+
 ##### Spanish
 #message-disabled: "&7La coleccion automatica de dropeos ha sido &cdeshabilitada&7."
 #message-enabled: "&7La coleccion automatica de dropeos ha sido &ahabilitada&7."
