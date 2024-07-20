@@ -150,7 +150,8 @@ public class CollectListener implements Listener {
 
     @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
     public void onEntityXP(EntityDeathEvent event) {
-        if(!main.getConfig().getBoolean(Config.COLLECT_MOB_EXP)) return;
+        if(!main.getConfig().getBoolean(Config.COLLECT_MOB_EXP) && !(event.getEntity() instanceof Player)) return;
+        if(!main.getConfig().getBoolean(Config.COLLECT_PLAYER_EXP) && (event.getEntity() instanceof Player)) return;
         LivingEntity dead = event.getEntity();
         Player killer = dead.getKiller();
         if (killer == null) return;

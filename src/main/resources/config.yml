@@ -76,11 +76,17 @@ collect-block-drops: true
 collect-block-exp: true
 
 # when set to true, mob/entity drops will be automatically collected if the plugin is enabled
-# Note: Drops from entities (item frames, minecarts, etc.) count as mob drops
+# Note: Drops from entities (item frames, minecarts, etc.) count as mob drops, however drops from killed players have their own setting
 collect-mob-drops: true
 
 # when set to true, mob/entity experience orbs will be automatically collected if the plugin is enabled
 collect-mob-exp: true
+
+# when set to true, inventory contents of killed players will be automatically collected if the plugin is enabled
+collect-player-drops: true
+
+# when set to true, experience orbs of killed players will be automatically collected if the plugin is enabled
+collect-player-exp: true
 
 # when set to true, fishes / drops caught via fishing will be automatically collected if the plugin is enabled
 # Note: Disabled by default because this also removes the "drop flying towards player" animation

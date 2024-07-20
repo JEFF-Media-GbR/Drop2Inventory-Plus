@@ -166,8 +166,13 @@ public class PermissionChecker {
             return false;
         }
 
-        if (!main.getConfig().getBoolean(Config.COLLECT_MOB_DROPS)) {
+        if (!main.getConfig().getBoolean(Config.COLLECT_MOB_DROPS) && !(entity instanceof Player)) {
             if (main.isDebug()) main.debug("Collect mob drops is disabled");
+            return false;
+        }
+
+        if (!main.getConfig().getBoolean(Config.COLLECT_PLAYER_DROPS) && (entity instanceof Player)) {
+            if (main.isDebug()) main.debug("Collect player drops is disabled");
             return false;
         }
 
