@@ -73,6 +73,7 @@ public class Utils {
             if (main.isDebug()) main.debug(" addOrDrop#2");
             if (item == null) continue;
             if (item.getType() == Material.AIR) continue;
+            if (item.getAmount() == 0) continue;
 
             if(main.autoSmelter.hasEnabled(player)) {
                 if (main.isDebug()) main.debug("Auto smelting " + item.getType().name());

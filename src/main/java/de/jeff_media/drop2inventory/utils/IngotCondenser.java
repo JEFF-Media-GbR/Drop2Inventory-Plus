@@ -116,8 +116,12 @@ public class IngotCondenser {
         }
         int blocks = amount / map.number;
         int items = amount % map.number;
-        inv.addItem(new ItemStack(map.block, blocks));
-        inv.addItem(new ItemStack(map.item, items));
+        if(blocks > 0) {
+            inv.addItem(new ItemStack(map.block, blocks));
+        }
+        if(items > 0) {
+            inv.addItem(new ItemStack(map.item, items));
+        }
     }
 
     void condense(Inventory inv) {
