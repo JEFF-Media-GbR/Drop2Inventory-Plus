@@ -10,6 +10,8 @@ public class Config {
     public static final String COLLECT_BLOCK_EXP = "collect-block-exp";
     public static final String COLLECT_MOB_DROPS = "collect-mob-drops";
     public static final String COLLECT_MOB_EXP = "collect-mob-exp";
+    public static final String COLLECT_PLAYER_DROPS = "collect-player-drops";
+    public static final String COLLECT_PLAYER_EXP = "collect-player-exp";
     public static final String AUTO_CONDENSE_ENABLED_BY_DEFAULT = "auto-condense-enabled-by-default";
     public static final String FORCE_AUTO_CONDENSE = "force-auto-condense";
     public static final String AUTO_SMELT_ENABLED_BY_DEFAULT = "auto-smelt-enabled-by-default";
@@ -77,9 +79,11 @@ public class Config {
         conf.addDefault(SHOW_MESSAGE_AGAIN_AFTER_LOGOUT, true);
         conf.addDefault(COLLECT_BLOCK_DROPS, true);
         conf.addDefault(COLLECT_MOB_DROPS, true);
+        conf.addDefault(COLLECT_PLAYER_DROPS, true);
         conf.addDefault(COLLECT_FISHING_DROPS, false);
         conf.addDefault(COLLECT_BLOCK_EXP, true);
         conf.addDefault(COLLECT_MOB_EXP, true);
+        conf.addDefault(COLLECT_PLAYER_EXP, true);
         conf.addDefault(FORCE_AUTO_CONDENSE,false);
         conf.addDefault(DETECT_LEGACY_DROPS,true);
         conf.addDefault(DEFAULT_BOUNDING_BOX_RADIUS, 2);
