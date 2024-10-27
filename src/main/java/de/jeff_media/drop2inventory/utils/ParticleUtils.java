@@ -1,5 +1,6 @@
 package de.jeff_media.drop2inventory.utils;
 
+import com.jeff_media.jefflib.EnumUtils;
 import de.jeff_media.drop2inventory.Main;
 import de.jeff_media.drop2inventory.data.WorldBoundingBox;
 import org.bukkit.Location;
@@ -14,7 +15,7 @@ import java.util.Set;
 
 public class ParticleUtils {
 
-    private static Particle particleType = Particle.VILLAGER_HAPPY;
+    private static Particle particleType = EnumUtils.getIfPresent(Particle.class, "VILLAGER_HAPPY").orElse(EnumUtils.getIfPresent(Particle.class, "HAPPY_VILLAGER").orElse(null));
     private static int particleCount = 1;
 
     public static void draw(Player player, WorldBoundingBox worldBoundingBox) {
