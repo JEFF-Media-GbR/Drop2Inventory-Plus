@@ -23,11 +23,19 @@ jobs:
         uses: actions/setup-java@v4
         with:
           distribution: temurin
-          java-version: '21'
+          java-version: '25'
           cache: maven
 
+      - name: Build Spigot 26.2 with BuildTools
+        shell: bash
+        run: |
+          curl --fail --silent --show-error --location \
+            --output BuildTools.jar \
+            https://hub.spigotmc.org/jenkins/job/BuildTools/lastSuccessfulBuild/artifact/target/BuildTools.jar
+          java -jar BuildTools.jar --rev 26.2
+
       - name: Build plugin
-        run: mvn -B -DskipTests -Dexec.skip=true clean package
+        run: mvn -B -DskipTests clean package
 
       - name: Locate plugin JAR
         id: jar
