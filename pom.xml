@@ -130,8 +130,8 @@
         </repository>
 
         <repository>
-            <id>jeff-media-gbr</id>
-            <url>https://repo.jeff-media.de/maven2</url>
+            <id>jeff-media-public</id>
+            <url>https://repo.jeff-media.com/public/</url>
         </repository>
 
         <repository>
@@ -142,12 +142,6 @@
         <repository>
             <id>bg-repo</id>
             <url>https://repo.bg-software.com/repository/api/</url>
-        </repository>
-
-        <repository>
-            <id>jeff-media-public</id>
-            <name>JEFF Media GbR Repository</name>
-            <url>https://repo.jeff-media.com/public</url>
         </repository>
 
     </repositories>
