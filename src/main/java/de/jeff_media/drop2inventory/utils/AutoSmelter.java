@@ -1,6 +1,5 @@
 package de.jeff_media.drop2inventory.utils;
 
-import com.jeff_media.jefflib.NumberUtils;
 import de.jeff_media.drop2inventory.Main;
 import de.jeff_media.drop2inventory.config.Config;
 import de.jeff_media.drop2inventory.config.Permissions;
@@ -133,7 +132,7 @@ public class AutoSmelter {
     }
 
     private void applyExp(Player player, float exp) {
-        if(NumberUtils.isZeroOrNegative(exp)) return;
+        if(exp <= 0.000001f) return;
         float currentToGive = experienceToGive.getOrDefault(player.getUniqueId(), 0f);
         if(main.isDebug()) {
             main.debug("  XP left to give: " + currentToGive);
@@ -154,7 +153,7 @@ public class AutoSmelter {
         if(main.isDebug()) {
             main.debug("  XP left to give after subtracting: " + currentToGive);
         }
-        if(NumberUtils.isZeroOrNegative(currentToGive)) {
+        if(currentToGive <= 0.000001f) {
             if(main.isDebug()) {
                 main.debug("  XP left to give is zero or negative, removing from map");
             }

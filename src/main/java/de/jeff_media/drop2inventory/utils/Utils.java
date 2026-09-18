@@ -4,8 +4,8 @@ import com.allatori.annotations.DoNotRename;
 import de.jeff_media.drop2inventory.Main;
 import de.jeff_media.drop2inventory.config.Config;
 import de.jeff_media.drop2inventory.config.Permissions;
-import com.jeff_media.jefflib.data.SoundData;
 import org.bukkit.*;
+import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
@@ -15,12 +15,18 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.concurrent.TimeUnit;
+import java.util.concurrent.ThreadLocalRandom;
 
 @DoNotRename
 public class Utils {
 
-    private static SoundData inventoryFullSound = new SoundData(Sound.ENTITY_ITEM_PICKUP.getKey().toString(), 1, 1, 0.2f, SoundCategory.BLOCKS);
+    private static String inventoryFullSound = Sound.ENTITY_ITEM_PICKUP.getKey().toString();
+    private static float inventoryFullVolume = 1;
+    private static float inventoryFullPitch = 1;
+    private static float inventoryFullPitchVariant = 0.2f;
+    private static SoundCategory inventoryFullSoundCategory = SoundCategory.BLOCKS;
     final Main main;
 
     public Utils(Main main) {
@@ -28,7 +34,43 @@ public class Utils {
     }
 
     public static void loadSounds() {
-        inventoryFullSound = SoundData.fromConfigurationSection(Main.getInstance().getConfig(), "sound-inv-full-");
+        ConfigurationSection config = Main.getInstance().getConfig();
+        String soundName = config.getString("sound-inv-full-effect");
+        if (soundName == null || soundName.isEmpty()) {
+            throw new IllegalArgumentException("No sound effect defined");
+        }
+        try {
+            soundName = Sound.valueOf(soundName.toUpperCase(Locale.ROOT)).getKey().getKey();
+        } catch (IllegalArgumentException ignored) {
+            // Custom sound names are allowed.
+        }
+        inventoryFullSound = soundName.toLowerCase(Locale.ROOT);
+        inventoryFullVolume = (float) config.getDouble("sound-inv-full-volume", 1.0D);
+        inventoryFullPitch = (float) config.getDouble("sound-inv-full-pitch", 1.0D);
+        inventoryFullPitchVariant = (float) config.getDouble("sound-inv-full-pitch-variant", 1.0D);
+        String categoryName = config.getString("sound-inv-full-sound-category", SoundCategory.MASTER.name());
+        try {
+            inventoryFullSoundCategory = SoundCategory.valueOf(categoryName.toUpperCase(Locale.ROOT));
+        } catch (IllegalArgumentException exception) {
+            throw new IllegalArgumentException("Unknown sound category: " + categoryName, exception);
+        }
+    }
+
+    private static float getInventoryFullSoundPitch() {
+        if (inventoryFullPitchVariant <= 0.000001f) {
+            return inventoryFullPitch;
+        }
+        return (float) (inventoryFullPitch - (inventoryFullPitchVariant / 2) + ThreadLocalRandom.current().nextDouble(0, inventoryFullPitchVariant));
+    }
+
+    private static void playInventoryFullSound(Player player, boolean global) {
+        Location location = player.getLocation();
+        float pitch = getInventoryFullSoundPitch();
+        if (global) {
+            player.getWorld().playSound(location, inventoryFullSound, inventoryFullSoundCategory, inventoryFullVolume, pitch);
+        } else {
+            player.playSound(location, inventoryFullSound, inventoryFullSoundCategory, inventoryFullVolume, pitch);
+        }
     }
 
     @DoNotRename
@@ -130,13 +172,9 @@ public class Utils {
                 }
             }
             if (inventoryFull && main.getConfig().getBoolean(Config.PLAY_SOUND_WHEN_INVENTORY_IS_FULL)) {
-                if (!SoundUtils.getCooldown().hasCooldown(player)) {
-                    SoundUtils.getCooldown().setCooldown(player, SoundUtils.SOUND_COOLDOWN, TimeUnit.MILLISECONDS); // TODO change to 100 ms
-                    if (main.getConfig().getBoolean(Config.PLAY_SOUND_WHEN_INVENTORY_IS_FULL_GLOBAL)) {
-                        inventoryFullSound.playToWorld(player.getLocation());
-                    } else {
-                        inventoryFullSound.playToPlayer(player);
-                    }
+                if (!SoundUtils.hasCooldown(player)) {
+                    SoundUtils.setCooldown(player, SoundUtils.SOUND_COOLDOWN, TimeUnit.MILLISECONDS); // TODO change to 100 ms
+                    playInventoryFullSound(player, main.getConfig().getBoolean(Config.PLAY_SOUND_WHEN_INVENTORY_IS_FULL_GLOBAL));
                 }
             }
 

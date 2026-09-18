@@ -1,6 +1,5 @@
 package de.jeff_media.drop2inventory.utils;
 
-import com.jeff_media.jefflib.EnumUtils;
 import de.jeff_media.drop2inventory.Main;
 import de.jeff_media.drop2inventory.data.WorldBoundingBox;
 import org.bukkit.Location;
@@ -15,8 +14,19 @@ import java.util.Set;
 
 public class ParticleUtils {
 
-    private static Particle particleType = EnumUtils.getIfPresent(Particle.class, "VILLAGER_HAPPY").orElse(EnumUtils.getIfPresent(Particle.class, "HAPPY_VILLAGER").orElse(null));
+    private static Particle particleType = getParticle("VILLAGER_HAPPY", "HAPPY_VILLAGER");
     private static int particleCount = 1;
+
+    private static Particle getParticle(String... names) {
+        for (String name : names) {
+            try {
+                return Particle.valueOf(name);
+            } catch (IllegalArgumentException ignored) {
+                // Try the next compatibility name.
+            }
+        }
+        return null;
+    }
 
     public static void draw(Player player, WorldBoundingBox worldBoundingBox) {
         BoundingBox box = worldBoundingBox.getBoundingBox();

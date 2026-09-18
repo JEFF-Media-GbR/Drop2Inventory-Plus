@@ -9,7 +9,7 @@ import de.jeff_media.drop2inventory.handlers.PermissionChecker;
 import de.jeff_media.drop2inventory.hooks.SuperiorSkyblock2Hook;
 import de.jeff_media.drop2inventory.utils.PDCUtils;
 import de.jeff_media.drop2inventory.utils.Utils;
-import com.jeff_media.jefflib.PluginUtils;
+import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.NamespacedKey;
 import org.bukkit.entity.Item;
@@ -122,7 +122,17 @@ public class CollectListener implements Listener {
             return;
         }
         if(main.getConfig().getBoolean(Config.SUPERIOR_SKYBLOCK_ONLY_ON_OWN_ISLANDS)) {
-            boolean isInForeignIsland = PluginUtils.whenInstalled("SuperiorSkyblock2", () -> SuperiorSkyblock2Hook.isInForeignIsland(player, location), false);
+            boolean isInForeignIsland = false;
+            try {
+                if (Bukkit.getPluginManager().getPlugin("SuperiorSkyblock2") != null
+                        && Bukkit.getPluginManager().isPluginEnabled("SuperiorSkyblock2")) {
+                    try {
+                        isInForeignIsland = SuperiorSkyblock2Hook.isInForeignIsland(player, location);
+                    } catch (Exception ignored) {
+                    }
+                }
+            } catch (Exception | Error ignored) {
+            }
             if(isInForeignIsland) return;
         }
 

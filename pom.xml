@@ -6,7 +6,7 @@
 
     <groupId>de.jeff_media</groupId>
     <name>Drop2InventoryPlus</name>
-    <version>4.8.0</version>
+    <version>5.0.0-RC1</version>
     <artifactId>Drop2InventoryPlus</artifactId>
 
     <properties>
@@ -100,10 +100,6 @@
                         </relocation>
                         <relocation>
                             <pattern>de.jeff_media.updatechecker</pattern>
-                            <shadedPattern>de.jeff_media.drop2inventory</shadedPattern>
-                        </relocation>
-                        <relocation>
-                            <pattern>com.jeff_media.jefflib</pattern>
                             <shadedPattern>de.jeff_media.drop2inventory</shadedPattern>
                         </relocation>
                         <relocation>
@@ -261,13 +257,6 @@
             <artifactId>spigot-api</artifactId>
             <version>1.21.3-R0.1-SNAPSHOT</version>
             <scope>provided</scope>
-        </dependency>
-
-        <dependency>
-            <groupId>com.jeff-media.jefflib</groupId>
-            <artifactId>jefflib</artifactId>
-            <version>14.2.3</version>
-            <scope>compile</scope>
         </dependency>
 
         <dependency>

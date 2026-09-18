@@ -1,6 +1,5 @@
 package de.jeff_media.drop2inventory.commands;
 
-import com.jeff_media.jefflib.CommandUtils;
 import de.jeff_media.drop2inventory.Main;
 import de.jeff_media.drop2inventory.config.Messages;
 import de.jeff_media.drop2inventory.config.Permissions;

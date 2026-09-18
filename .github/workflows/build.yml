@@ -1,0 +1,46 @@
+name: Build plugin
+
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+    branches:
+      - master
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+
+    steps:
+      - name: Check out source
+        uses: actions/checkout@v4
+
+      - name: Set up Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '21'
+          cache: maven
+
+      - name: Build plugin
+        run: mvn -B -DskipTests -Dexec.skip=true clean package
+
+      - name: Locate plugin JAR
+        id: jar
+        shell: bash
+        run: |
+          jar_path="$(find target -maxdepth 1 -type f -name '*.jar' ! -name '*-sources.jar' ! -name '*-javadoc.jar' -print -quit)"
+          test -n "$jar_path"
+          echo "path=$jar_path" >> "$GITHUB_OUTPUT"
+
+      - name: Upload plugin JAR
+        uses: actions/upload-artifact@v4
+        with:
+          name: Drop2InventoryPlus-jar
+          path: ${{ steps.jar.outputs.path }}
+          if-no-files-found: error
+          retention-days: 14

@@ -31,6 +31,7 @@ import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.ConfigurationSection;
+import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventPriority;
 import org.bukkit.persistence.PersistentDataContainer;
@@ -347,7 +348,11 @@ public class Main extends JavaPlugin {
     }
 
     private void loadRunCommands() {
-        com.jeff_media.jefflib.data.Config commandConfig = new com.jeff_media.jefflib.data.Config("run-commands.yml");
+        File commandFile = new File(getDataFolder(), "run-commands.yml");
+        if (!commandFile.exists()) {
+            saveResource("run-commands.yml", false);
+        }
+        YamlConfiguration commandConfig = YamlConfiguration.loadConfiguration(commandFile);
         invFullCommands = getCommandList(commandConfig, "inventory-full");
     }
 

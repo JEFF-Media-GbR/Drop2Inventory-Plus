@@ -1,6 +1,5 @@
 package de.jeff_media.drop2inventory.utils;
 
-import com.jeff_media.jefflib.EnumUtils;
 import de.jeff_media.drop2inventory.Main;
 import de.jeff_media.drop2inventory.config.Config;
 import de.jeff_media.drop2inventory.config.Permissions;
@@ -66,12 +65,12 @@ public class IngotCondenser {
         }
         YamlConfiguration yaml = YamlConfiguration.loadConfiguration(file);
         for(String key : yaml.getKeys(false)) {
-            Material item = EnumUtils.getIfPresent(Material.class,key.toUpperCase(Locale.ROOT)).orElse(null);
+            Material item = parseMaterial(key);
             if(item == null) {
                 main.getLogger().warning("Invalid material in condense.yml: " + key);
                 continue;
             }
-            Material block = EnumUtils.getIfPresent(Material.class, yaml.getString(key + ".result", "").toUpperCase(Locale.ROOT)).orElse(null);
+            Material block = parseMaterial(yaml.getString(key + ".result", ""));
             if(block == null) {
                 main.getLogger().warning("Invalid material in condense.yml: " + key);
                 continue;
@@ -81,6 +80,14 @@ public class IngotCondenser {
             } else {
                 main.getLogger().warning("Invalid amount in condense.yml: " + yaml.get(key + ".amount"));
             }
+        }
+    }
+
+    private static Material parseMaterial(String value) {
+        try {
+            return Material.valueOf(value.toUpperCase(Locale.ROOT));
+        } catch (IllegalArgumentException exception) {
+            return null;
         }
     }
 
