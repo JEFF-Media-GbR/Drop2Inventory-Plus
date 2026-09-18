@@ -1,13 +1,11 @@
 package de.jeff_media.drop2inventory.utils;
 
-import com.allatori.annotations.DoNotRename;
 import de.jeff_media.drop2inventory.Main;
 import de.jeff_media.drop2inventory.config.Config;
 import de.jeff_media.drop2inventory.config.Permissions;
 import org.bukkit.*;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Entity;
-import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.persistence.PersistentDataType;
@@ -19,7 +17,6 @@ import java.util.Locale;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.ThreadLocalRandom;
 
-@DoNotRename
 public class Utils {
 
     private static String inventoryFullSound = Sound.ENTITY_ITEM_PICKUP.getKey().toString();
@@ -73,7 +70,6 @@ public class Utils {
         }
     }
 
-    @DoNotRename
     public static void addOrDrop(ItemStack item, Player player, @Nullable Location dropLocation) {
         //main.debug("addOrDrop: " + item.toString() + " -> " + player.getName());
 
@@ -100,7 +96,6 @@ public class Utils {
         }
     }
 
-    @DoNotRename
     public static void addOrDrop(ItemStack[] items, Player player, @Nullable Location dropLocation) {
         Main main = Main.getInstance();
         if (main.isDebug()) main.debug("addOrDrop[] " + Arrays.toString(items) + " -> " + player);

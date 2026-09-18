@@ -1,10 +1,9 @@
 package de.jeff_media.drop2inventory.utils;
 
+import com.jeff_media.morepersistentdatatypes.DataType;
 import de.jeff_media.drop2inventory.Main;
 import de.jeff_media.drop2inventory.config.Config;
 import de.jeff_media.drop2inventory.config.Permissions;
-import de.jeff_media.morepersistentdatatypes.DataType;
-import lombok.Getter;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
@@ -26,13 +25,17 @@ public class AutoSmelter {
     private final Main main;
 
     private final Map<Material, SmeltRecipeData> smeltRecipeDataMap = new EnumMap<>(Material.class);
-    @Getter private final NamespacedKey autoSmeltKey;
+    private final NamespacedKey autoSmeltKey;
     private final Map<UUID, Float> experienceToGive = new HashMap<>();
 
     public AutoSmelter(Main main) {
         this.main = main;
         this.autoSmeltKey = new NamespacedKey(main, "has-autosmelt-enabled");
         loadRecipes();
+    }
+
+    public NamespacedKey getAutoSmeltKey() {
+        return autoSmeltKey;
     }
 
     private static class SmeltRecipeData {

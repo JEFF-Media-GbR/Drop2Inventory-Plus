@@ -1,8 +1,10 @@
 package de.jeff_media.drop2inventory;
 
-import com.allatori.annotations.DoNotRename;
 import com.jeff_media.cesspool.config.CommandList;
-import de.jeff_media.daddy.Daddy_Stepsister;
+import com.jeff_media.morepersistentdatatypes.DataType;
+import com.jeff_media.updatechecker.UpdateCheckSource;
+import com.jeff_media.updatechecker.UpdateChecker;
+import com.jeff_media.updatechecker.UserAgentBuilder;
 import de.jeff_media.drop2inventory.commands.CommandMain;
 import de.jeff_media.drop2inventory.commands.CommandMainTabCompleter;
 import de.jeff_media.drop2inventory.config.Config;
@@ -20,10 +22,6 @@ import de.jeff_media.drop2inventory.utils.HotbarStuffer;
 import de.jeff_media.drop2inventory.utils.IngotCondenser;
 import de.jeff_media.drop2inventory.utils.SoundUtils;
 import de.jeff_media.drop2inventory.utils.Utils;
-import de.jeff_media.morepersistentdatatypes.DataType;
-import de.jeff_media.updatechecker.UpdateChecker;
-import de.jeff_media.updatechecker.UserAgentBuilder;
-import lombok.Getter;
 import org.bstats.bukkit.Metrics;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -39,49 +37,74 @@ import org.bukkit.persistence.PersistentDataType;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import javax.annotation.Nullable;
+import org.jetbrains.annotations.Nullable;
 import javax.xml.stream.events.Namespace;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.function.BiConsumer;
 
-@DoNotRename
 public class Main extends JavaPlugin {
 
     public static final String uid = "%%__USER__%%";
     private static Main instance;
     public EventPriority blockDropItemPrio;
-    @DoNotRename
     public boolean blocksIsWhitelist = false;
-    @Getter private boolean debug = false;
-    @DoNotRename
+    private boolean debug = false;
     public ArrayList<Material> disabledBlocks;
-    @DoNotRename
     public ArrayList<String> disabledMobs;
-    @DoNotRename
     public ArrayList<String> disabledWorlds;
     public HotbarStuffer hotbarStuffer;
     public IngotCondenser ingotCondenser;
     public AutoSmelter autoSmelter;
-    @Getter private Messages messages;
-    @DoNotRename
-    @Getter private boolean mobsIsWhitelist = false;
-    @Getter private SoundUtils soundUtils;
-    @Getter private Utils utils;
+    private Messages messages;
+    private boolean mobsIsWhitelist = false;
+    private SoundUtils soundUtils;
+    private Utils utils;
     private UpdateChecker updateChecker;
     boolean usingMatchingConfig = true;
-    @Getter private HopperDetector hopperDetector;
-    @Getter private PluginHooks pluginHooks;
-    @Getter private CommandList invFullCommands = CommandList.EMPTY;
+    private HopperDetector hopperDetector;
+    private PluginHooks pluginHooks;
+    private CommandList invFullCommands = CommandList.EMPTY;
 
     public static NamespacedKey HAS_DROP_COLLECTION_ENABLED_TAG;
     public static NamespacedKey HAS_SEEN_MESSAGE_TAG;
     public static NamespacedKey IGNORED_DROP_TAG;
     private boolean showedWeirdPluginWarning = false;
 
-    @DoNotRename
     public static Main getInstance() {
         return instance;
+    }
+
+    public boolean isDebug() {
+        return debug;
+    }
+
+    public Messages getMessages() {
+        return messages;
+    }
+
+    public boolean isMobsIsWhitelist() {
+        return mobsIsWhitelist;
+    }
+
+    public SoundUtils getSoundUtils() {
+        return soundUtils;
+    }
+
+    public Utils getUtils() {
+        return utils;
+    }
+
+    public HopperDetector getHopperDetector() {
+        return hopperDetector;
+    }
+
+    public PluginHooks getPluginHooks() {
+        return pluginHooks;
+    }
+
+    public CommandList getInvFullCommands() {
+        return invFullCommands;
     }
 
     public void applyEnabledByDefault(Player player) {
@@ -209,7 +232,6 @@ public class Main extends JavaPlugin {
         return pdc;
     }
 
-    @DoNotRename
     public boolean enabled(Player p) {
 
         if (getConfig().getBoolean(Config.ALWAYS_ENABLED)) return true;
@@ -221,7 +243,6 @@ public class Main extends JavaPlugin {
         return value == (byte) 1 ? true : false;
     }
 
-    @DoNotRename
     public boolean hasSeenMessage(Player p) {
         PersistentDataContainer pdc = getPdcAndCheckForStupidPlugins(p);
         if(pdc == null) return false;
@@ -260,11 +281,6 @@ public class Main extends JavaPlugin {
     }
 
     public void onEnable() {
-
-        Daddy_Stepsister.init(this);
-        if(Daddy_Stepsister.allows(null)) {
-            Daddy_Stepsister.createVerificationFile();
-        }
 
         HAS_DROP_COLLECTION_ENABLED_TAG = new NamespacedKey(this, "dropcollectionenabled");
         HAS_SEEN_MESSAGE_TAG = new NamespacedKey(this, "hasseenmessage");
@@ -328,11 +344,11 @@ public class Main extends JavaPlugin {
         if (updateChecker != null) {
             updateChecker.stop();
         }
-        updateChecker = UpdateChecker.init(this, "https://api.jeff-media.de/drop2inventoryplus/drop2inventoryplus-latest-version.txt")
+        updateChecker = new UpdateChecker(this, UpdateCheckSource.SPIGOT, "87784")
                 .setDownloadLink(87784)
                 .setChangelogLink(87784)
                 .setDonationLink("https://paypal.me/mfnalex")
-                .setUserAgent(UserAgentBuilder.getDefaultUserAgent().addSpigotUserId())
+                .setUserAgent(UserAgentBuilder.getDefaultUserAgent())
                 .onFail((commandSenders, exception) -> { });
         if (getConfig().getString(Config.CHECK_FOR_UPDATES, "true").equalsIgnoreCase("true")) {
             updateChecker.checkEveryXHours(getConfig().getDouble(Config.UPDATE_CHECK_INTERVAL)).checkNow();

@@ -3,9 +3,11 @@ package de.jeff_media.drop2inventory.utils;
 import com.google.common.base.Enums;
 import de.jeff_media.drop2inventory.Main;
 import de.jeff_media.drop2inventory.config.Config;
+import org.bukkit.Registry;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 
+import java.util.Locale;
 import java.util.Map;
 import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
@@ -38,8 +40,8 @@ public class SoundUtils {
 
     public SoundUtils() {
         final Main main = Main.getInstance();
-        final String soundName = main.getConfig().getString(Config.SOUND_EFFECT);
-        sound = Enums.getIfPresent(Sound.class, soundName).orNull();
+        final String soundName = main.getConfig().getString(Config.SOUND_EFFECT, "ENTITY_ITEM_PICKUP");
+        sound = Registry.SOUNDS.match(soundName.toLowerCase(Locale.ROOT));
         if (sound == null) {
             main.getLogger().warning("Unknown sound effect: " + soundName);
         }

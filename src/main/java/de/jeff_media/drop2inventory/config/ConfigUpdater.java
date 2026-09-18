@@ -1,8 +1,5 @@
 package de.jeff_media.drop2inventory.config;
 
-import com.allatori.annotations.ControlFlowObfuscation;
-import com.allatori.annotations.ExtensiveFlowObfuscation;
-import com.allatori.annotations.StringEncryption;
 import de.jeff_media.drop2inventory.Main;
 import org.bukkit.Material;
 import org.bukkit.configuration.InvalidConfigurationException;
@@ -20,9 +17,6 @@ import java.util.Map;
 import java.util.Scanner;
 
 // TODO: Switch to my new Config Updater
-@StringEncryption(StringEncryption.DISABLE)
-@ExtensiveFlowObfuscation(ExtensiveFlowObfuscation.DISABLE)
-@ControlFlowObfuscation(ControlFlowObfuscation.DISABLE)
 public class ConfigUpdater {
 
     final Main main;

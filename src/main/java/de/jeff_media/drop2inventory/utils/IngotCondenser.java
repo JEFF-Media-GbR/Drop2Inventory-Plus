@@ -1,11 +1,10 @@
 package de.jeff_media.drop2inventory.utils;
 
+import com.jeff_media.morepersistentdatatypes.DataType;
 import de.jeff_media.drop2inventory.Main;
 import de.jeff_media.drop2inventory.config.Config;
 import de.jeff_media.drop2inventory.config.Permissions;
 import de.jeff_media.drop2inventory.hooks.EcoItemsHook;
-import de.jeff_media.morepersistentdatatypes.DataType;
-import lombok.Getter;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.configuration.file.YamlConfiguration;
@@ -25,7 +24,7 @@ public class IngotCondenser {
 
     final Main main;
     final HashMap<Material, CondensationMap> condensationMap = new HashMap<>();
-    @Getter private final NamespacedKey autoCondenseKey;
+    private final NamespacedKey autoCondenseKey;
 
     public IngotCondenser(Main main) {
         this.main = main;
@@ -42,6 +41,10 @@ public class IngotCondenser {
                 main.debug(String.format("%d x %s = %s", map.number, map.item.name(), map.block.name()));
         }
 
+    }
+
+    public NamespacedKey getAutoCondenseKey() {
+        return autoCondenseKey;
     }
 
     public boolean hasEnabled(Player player) {

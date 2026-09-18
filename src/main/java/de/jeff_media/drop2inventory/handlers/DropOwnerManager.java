@@ -1,6 +1,5 @@
 package de.jeff_media.drop2inventory.handlers;
 
-import com.allatori.annotations.DoNotRename;
 import de.jeff_media.drop2inventory.Main;
 import de.jeff_media.drop2inventory.data.WorldBoundingBox;
 import org.bukkit.Bukkit;
@@ -15,7 +14,6 @@ import java.util.*;
 /**
  * Manages who the owner is of drops that have not yet been spawned.
  */
-@DoNotRename
 public class DropOwnerManager {
 
     private final static HashMap<WorldBoundingBox, UUID> dropLocationMap = new HashMap<>();
@@ -58,7 +56,6 @@ public class DropOwnerManager {
         dropLocationMap.put(box, player.getUniqueId());
     }
 
-    @DoNotRename
     public static void register(Player player, Location location, @Nullable Block block) {
         if(main.isDebug()) main.debug("Registering DropOwner " + player.getName() + " for location " + location);
         WorldBoundingBox boundingBox = WorldBoundingBoxGenerator.getAppropriateBoundingBox(location, block, player);
